@@ -76,7 +76,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
       ) : (
         <div>
           {varResult && <p>{`${metricKey}: ${varResult}`}</p>}
-          {graph && <img height={300} width={300} src={graph} alt={`${metricKey} Graph`} />}
+          {graph && <img height={300} width={500} src={graph} alt={`${metricKey} Graph`} />}
         </div>
       )}
     </div>

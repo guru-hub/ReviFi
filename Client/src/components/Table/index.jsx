@@ -60,7 +60,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   return (
     <div>
       <div>
-        <h2> Crypto Portfolio Allocation </h2>
+        <h2> Portfolio Allocation </h2>
       </div>
       <table>
         <thead>
@@ -125,12 +125,12 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         <tfoot>
           <tr>
             <td colSpan="0">
-              <strong>Total Allocation percentage:</strong>
+              <strong>Total Allocation %:</strong>
             </td>
             <td>{currentTotalAllocation}%</td>
             <td>
               <button className={styles["btn"]} onClick={onConfirm}>
-                Confirm
+                Confirm Balance
               </button>
             </td>
           </tr>
