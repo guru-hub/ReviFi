@@ -6,7 +6,6 @@ import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-
 const HistoricalPerformance = () => {
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
