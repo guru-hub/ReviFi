@@ -40,13 +40,13 @@ const FinMetrics = () => {
         {selectedMetric && (
           <div>
             <ul className={styles.list}>
+              <Tooltip title={tooltip} placement="top-start">
+                <QuestionMarkIcon fontSize="small" />
+              </Tooltip>
               <li className={styles.listItem}>
                 <div style={{ maxWidth: '100%' }}>
                   <CalculateFinMetrics metricKey={selectedMetric} />
                 </div>
-                <Tooltip title={tooltip} placement="top-start">
-                  <QuestionMarkIcon fontSize="small" />
-                </Tooltip>
               </li>
             </ul>
           </div>
