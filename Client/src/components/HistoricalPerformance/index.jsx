@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from 'react'
+import styles from "./styles.module.css";
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+
+const HistoricalPerformance = () => {
+  const [value, setValue] = useState('1W');
+  const isConfirmed = useSelector((state) => state.data.isConfirmed);
+  const cryptoData = useSelector((state) => state.data.crypto);
+  const [varResult, setVarResult] = useState('');
+  const [graph, setGraph] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const SymbolToId = {
+    BTC: 'bitcoin',
+    ETH: 'ethereum',
+    BNB: 'binancecoin',
+    USDT: 'tether',
+    SOL: 'solana',
+    LTC: 'litecoin',
+    XRP: 'ripple',
+    TRX: 'tron',
+    ADA: 'cardano',
+    DOT: 'polkadot',
+    ',': '%2C%20',
+  };
+
+  useEffect(() => {
+    if (isConfirmed == true) {
+      setLoading(true);
+      const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
+      const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
+
+      const data = {
+        coins,
+        allocations,
+        initial_portfolio_value: 100000,
+        time_frame: value,
+      };
+
+      axios
+        .post("http://localhost:5000/historical_performance", data)
+        .then((response) => {
+          setVarResult(response.data["historical_performance"]);
+          console.log(response.data.graph);
+          setGraph(`data:image/png;base64,${response.data.graph}`);;
+        })
+        .catch((error) => {
+          console.error(`Error fetching Historical Performance data`, error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    }
+  }, [isConfirmed, value])
+
+
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  return (
+    <div>
+      <div>
+        <h1 className={styles.title}>Historical Performance</h1>
+        <Box sx={{ width: '100%' }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            textColor="primary"
+            indicatorColor="primary"
+            aria-label="secondary tabs example"
+          >
+            <Tab value="1D" label="1D" />
+            <Tab value="1W" label="1W" />
+            <Tab value="1M" label="1M" />
+            <Tab value="3M" label="3M" />
+            <Tab value="6M" label="6M" />
+            <Tab value="1Y" label="1Y" />
+            <Tab value="ALL" label="ALL" />
+          </Tabs>
+        </Box>
+      </div>
+      <div>
+      {loading ? (
+        'Calculating...'
+      ) : (
+        <div>
+          {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
+        </div>
+      )}
+      </div>
+    </div >
+  )
+}
+
+export default HistoricalPerformance

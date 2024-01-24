@@ -1,0 +1,21 @@
+.title {
+    font-size: 2rem;
+    display: 'flex';
+    color: '';
+    margin-bottom: 1rem;
+    background: -webkit-linear-gradient(#0047AA, #0085B6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .container{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+  }
+  
+  .inner-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }

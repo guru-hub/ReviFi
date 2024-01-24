@@ -1,0 +1,14 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2.5em;
+    height: 5em;
+    padding: 1rem;
+    border: 1px solid #ddd;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  
