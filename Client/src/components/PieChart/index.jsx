@@ -19,7 +19,7 @@ const PieChart = () => {
   }, [isConfirmed]);
 
   const options = {
-    title: "Portfolio Allocation",
+    title: "Pie  Chart",
     'height': 500,
     'width': 600,
     "is3D": true

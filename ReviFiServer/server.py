@@ -14,6 +14,9 @@ import Analysis.AnnualizedReturns as AnnualizedReturns
 import Analysis.ExpectedShortfall as ExpectedShortfall
 import Analysis.Performance as Performance
 
+import matplotlib
+matplotlib.use('agg')
+
 app = Flask(__name__)
 CORS(app)
 cg = CoinGeckoAPI()
