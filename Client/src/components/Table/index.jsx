@@ -60,7 +60,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   return (
     <div>
       <div>
-        <h2> Portfolio Allocation </h2>
+        <h2 class="text-3xl font-bold"> Portfolio Allocation </h2>
       </div>
       <table>
         <thead>
