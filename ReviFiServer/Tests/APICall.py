@@ -14,7 +14,7 @@ def getMetric(apiName,data):
 
     if response.status_code == 200:
         response_data = response.json()
-        print(apiName, response_data[apiName])
+       
 
         # Decode the base64 graph image
         graph_image = base64.b64decode(response_data['graph'])

@@ -1,8 +1,8 @@
 import APICall
 
+apiName= 'future_performance'
 
-apiName='expected_shortfall'
-
+#apiName= 'future_performance_arima'
 
 
  # Data to be sent to API
@@ -14,7 +14,8 @@ data = {
         "start_date": "2023-01-01",
         "end_date": "2024-01-01",
         "confidence_level": 0.95,
-        "time_frame": "1W"
+        "time_frame": "6M",
+         "future_time_frame": "6M"
      }
  
 APICall.getMetric(apiName,data)

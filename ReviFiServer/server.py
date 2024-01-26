@@ -13,6 +13,7 @@ import Analysis.SharpeRatio as SharpeRatio
 import Analysis.AnnualizedReturns as AnnualizedReturns
 import Analysis.ExpectedShortfall as ExpectedShortfall
 import Analysis.Performance as Performance
+import Analysis.FuturePerformance as FuturePerformance
 
 import matplotlib
 matplotlib.use('agg')
@@ -142,6 +143,47 @@ def get_historical_performance():
 
 
     return jsonify({'historical_performance': historical_performance.tolist(), 'graph': graph})
+
+@app.route('/future_performance', methods=['POST'])
+def get_future_performance():
+    content = request.json
+    coins = content['coins']
+    allocations = content['allocations']
+    initial_portfolio_value = content['initial_portfolio_value']
+    historical_time_frame = content.get('historical_time_frame', '12M')
+    future_time_frame = content.get('future_time_frame', '1M')
+
+    end_date = datetime.now()
+    start_date = end_date - FuturePerformance.get_time_frame_delta(historical_time_frame)
+    days_in_future = FuturePerformance.get_time_frame_delta(future_time_frame).days
+
+    historical_data = get_historical_data(coins, start_date, end_date)
+    future_data = FuturePerformance.project_future_performance(historical_data, allocations, initial_portfolio_value, days_in_future)
+    graph = FuturePerformance.create_future_graph(future_data, f'Projected Future Portfolio Value - Next {days_in_future} Days')
+
+    return jsonify({'graph': graph})
+
+
+@app.route('/future_performance_arima', methods=['POST'])
+def get_future_performance_arima():
+    content = request.json
+    coins = content['coins']
+    allocations = dict(zip(coins, content['allocations']))
+    initial_portfolio_value = content['initial_portfolio_value']
+    historical_time_frame = content.get('historical_time_frame', '12M')
+    future_time_frame = content.get('future_time_frame', '1M')
+
+    end_date = datetime.now()
+    start_date = end_date -FuturePerformance. get_time_frame_delta(historical_time_frame)
+    days_in_future = FuturePerformance.get_time_frame_delta(future_time_frame).days
+
+    historical_data = get_historical_data(coins, start_date, end_date)
+    future_data = FuturePerformance.project_future_performance_arima(historical_data, allocations, days_in_future)
+    future_data_scaled = future_data * initial_portfolio_value / future_data['Total'].iloc[0]  # Scale based on initial value
+    graph =FuturePerformance.create_future_graph(future_data_scaled, 'Projected Future Portfolio Value')
+
+    return jsonify({'graph': graph})
+
 
 
 if __name__ == '__main__':
