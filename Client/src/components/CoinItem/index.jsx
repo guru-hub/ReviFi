@@ -4,7 +4,7 @@ import styles from "./styles.module.css"
 const CoinItem = (props) => {
     return (
         <div className={styles["container"]}>
-            <div className={styles["text-center"]} >
+            <div className="flex justify-center items-center gap-3" >
                 <img style={{ width: '40px', height: '40px' }} src={props.coins.image} alt='' />
                 <p>{props.coins.symbol.toUpperCase()}</p>
             </div>

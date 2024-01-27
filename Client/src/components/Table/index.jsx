@@ -41,7 +41,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     setNewAllocation(allocationValue);
     setEditAllocationValue(allocationValue);
 
-    // Focus on the input field when it becomes visible
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -60,25 +59,17 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   return (
     <div>
       <div>
-        <h2 class="text-3xl font-bold"> Portfolio Allocation </h2>
+        <h2 className="text-3xl font-bold"> Portfolio Allocation </h2>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Value</th>
-            <th>
-              <input
-                value={currentTotalValue}
-                onChange={(e) => setValue(e.target.value)}
-              />
-            </th>
-            <th>
-              <button className={styles["btn"]} onClick={setModalOpenFunc}>Add Asset</button>
-            </th>
-          </tr>
-        </thead>
-      </table>
-      <table>
+      <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`}>
+        <div className="text-center">
+          Total Balance:
+        </div>
+        <div className="text-center text-4xl" >
+          ${currentTotalValue}
+        </div>
+      </div>
+      <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl">
         <thead>
           <tr>
             <th>Asset</th>
@@ -129,10 +120,13 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
             </td>
             <td>{currentTotalAllocation}%</td>
             <td>
-              <button className={styles["btn"]} onClick={onConfirm}>
+              <button className="font-sans font-bold bg-gradient-to-r from-[#0047aa] to-[#0085b6] text-white p-1 w-20 rounded-md" onClick={setModalOpenFunc}>Add Asset</button>
+            </td>
+            <div className="w-1 p-3" >
+              <button className="font-sans font-bold bg-gradient-to-r from-[#0047aa] to-[#0085b6] text-white p-1 w-24 rounded-md" onClick={onConfirm}>
                 Confirm Balance
               </button>
-            </td>
+            </div>
           </tr>
         </tfoot>
       </table>
