@@ -1,6 +1,7 @@
 import APICall
 
-apiName='sharpe_ratio1'
+
+apiName='drawdown_chart'
 
 
 
@@ -13,7 +14,8 @@ data = {
         "start_date": "2023-01-01",
         "end_date": "2024-01-01",
         "confidence_level": 0.95,
-        "time_frame": "1W"
+        "time_frame": "1W",
+        "benchmark": "bitcoin"
      }
  
 APICall.getMetric(apiName,data)
