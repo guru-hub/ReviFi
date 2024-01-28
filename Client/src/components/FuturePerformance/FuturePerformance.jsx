@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-const HistoricalPerformance = () => {
+const FuturePerformance = () => {
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -42,9 +42,9 @@ const HistoricalPerformance = () => {
       };
 
       axios
-        .post("http://localhost:5000/historical_performance", data)
+        .post("http://localhost:5000/future_performance", data)
         .then((response) => {
-          setVarResult(response.data["historical_performance"]);
+          setVarResult(response.data["future_performance"]);
           console.log(response.data.graph);
           setGraph(`data:image/png;base64,${response.data.graph}`);;
         })
@@ -66,7 +66,7 @@ const HistoricalPerformance = () => {
   return (
     <div>
       <div>
-        <h1 className={`${styles.title} font-bold`}>Historical Performance</h1>
+        <h1 className={`${styles.title} font-bold`}>Future Performance</h1>
         <Box sx={{ width: '100%' }}>
           <Tabs
             value={value}
@@ -98,4 +98,4 @@ const HistoricalPerformance = () => {
   )
 }
 
-export default HistoricalPerformance
+export default FuturePerformance

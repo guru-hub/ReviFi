@@ -58,7 +58,7 @@ const CryptoPrices = () => {
   return (
     <div className={styles["container"]}>
       <div className={styles["inner-container"]}>
-        <h1 className={styles.title}>Token Holdings</h1>
+        <h1 className={`${styles.title} font-bold`}>Token Holdings</h1>
         <Routes>
           <Route path='/' element={<Coins coins={coins} />} />
         </Routes>

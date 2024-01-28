@@ -102,7 +102,6 @@ const Portfolio = () => {
           }}
           onSubmit={handleSubmit}
           defaultValue={rowToEdit !== null && cryptoData[rowToEdit]}
-
         />
       )}
       <div style={{ color: "red", borderRadius: "5px" }}>
