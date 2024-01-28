@@ -14,6 +14,7 @@ const FinMetrics = () => {
     { name: 'Value at Risk', description: 'Estimated maximum loss under normal conditions' },
     { name: 'Expected Shortfall', description: 'Average loss beyond the Value at Risk' },
     { name: 'Sharpe Ratio', description: 'Risk-adjusted measure of return' },
+    { name: 'Drawdown Chart', description: 'Drawdown chart' }
   ];
 
   const handleSelectChange = (e) => {

@@ -16,6 +16,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
     'Value at Risk': 'var',
     'Expected Shortfall': 'expected_shortfall',
     'Sharpe Ratio': 'sharpe_ratio',
+    'Drawdown Chart': 'drawdown_chart',
   };
 
   const SymbolToId = {
