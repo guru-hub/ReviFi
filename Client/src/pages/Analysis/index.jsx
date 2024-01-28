@@ -25,10 +25,10 @@ const Analysis = () => {
       </div>
       <div style={{ display: 'flex', width: '100%' }} >
         <div style={{ width: '50%' }}>
-          <FuturePerformance />
+          <HistoricalPerformance />
         </div>
         <div style={{ width: '50%', paddingLeft: '2em' }} >
-          <HistoricalPerformance />
+          <FuturePerformance />
         </div>
       </div>
     </div>
