@@ -4,6 +4,7 @@ from pycoingecko import CoinGeckoAPI
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import logging
 import io
 import base64
 from datetime import datetime, timedelta
@@ -14,6 +15,8 @@ import Analysis.AnnualizedReturns as AnnualizedReturns
 import Analysis.ExpectedShortfall as ExpectedShortfall
 import Analysis.Performance as Performance
 import Analysis.FuturePerformance as FuturePerformance
+import Analysis.Drawdown as Drawdown
+import Analysis.SharpeRatio1 as SharpeRatio1
 
 import matplotlib
 matplotlib.use('agg')
@@ -71,6 +74,35 @@ def get_var():
     return jsonify({'var': var, 'graph': graph})
 
 
+@app.route('/sharpe_ratio1', methods=['POST'])
+def get_sharpe_ratio1():
+    try:
+        content = request.json
+        coins = content['coins']
+        allocations = {coin: float(allocation) for coin, allocation in zip(coins, content['allocations'])}
+        initial_portfolio_value = content['initial_portfolio_value']
+        start_date = datetime.now() - timedelta(days=365)
+        end_date = datetime.now()
+
+        historical_data = get_historical_data(coins, start_date, end_date)
+        print(f"historical_data: {historical_data}")  # Debugging
+        portfolio_values = SharpeRatio1.calculate_values(historical_data, allocations, initial_portfolio_value)
+        
+        # Calculate daily returns and Sharpe Ratio
+        daily_returns = portfolio_values.pct_change().dropna()
+        print(f"daily_returns: {daily_returns}")  # Debugging
+        sharpe_ratio = SharpeRatio1.calculate_sharpe_ratio(daily_returns)
+
+        print(f"sharpe_ratio: {sharpe_ratio}")  # Debugging
+        # Create graph with Sharpe Ratio annotation
+        graph = SharpeRatio1.create_graph_with_sharpe_ratio(portfolio_values, 'Portfolio Performance with Sharpe Ratio', sharpe_ratio)
+        return jsonify({'graph': graph})
+
+    except Exception as e:
+        app.logger.error('Error in Sharpe Ratio calculation: %s', str(e))
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/sharpe_ratio', methods=['POST'])
 def get_sharpe_ratio():
     content = request.json
@@ -85,6 +117,7 @@ def get_sharpe_ratio():
     sharpe_ratio = SharpeRatio.calculate_sharpe_ratio(historical_data, allocations, risk_free_rate, initial_portfolio_value)
     graph = SharpeRatio.create_sharpe_ratio_graph(historical_data, allocations, initial_portfolio_value, 'Portfolio Sharpe Ratio')
 
+    print(f"sharpe_ratio: {sharpe_ratio}")  # Debugging
     return jsonify({'sharpe_ratio': sharpe_ratio, 'graph': graph})
 
 
@@ -184,6 +217,42 @@ def get_future_performance_arima():
 
     return jsonify({'graph': graph})
 
+
+
+@app.route('/drawdown_chart', methods=['POST'])
+def get_drawdown_chart():
+    try:
+        content = request.json
+        coins = content['coins']
+        allocations = {coin: float(allocation) for coin, allocation in zip(coins, content['allocations'])}
+        initial_portfolio_value = content['initial_portfolio_value']
+        benchmark_coin = content.get('benchmark', 'bitcoin')
+        start_date = datetime.now() - timedelta(days=365)
+        end_date = datetime.now()
+
+        # Fetch historical data
+        historical_data = get_historical_data(coins + [benchmark_coin], start_date, end_date)
+
+        # Separate benchmark data
+        benchmark_data = {benchmark_coin: historical_data.pop(benchmark_coin)}
+
+        # Calculate portfolio values
+        portfolio_values = Drawdown.calculate_values(historical_data, allocations, initial_portfolio_value)
+
+        # Calculate benchmark values
+        benchmark_values = Drawdown.calculate_values(benchmark_data, initial_value=initial_portfolio_value)
+
+        # Calculate drawdowns
+        portfolio_drawdown = Drawdown.calculate_drawdown(portfolio_values)
+        benchmark_drawdown = Drawdown.calculate_drawdown(benchmark_values)
+
+        # Create and return the drawdown chart
+        graph = Drawdown.create_drawdown_chart(portfolio_drawdown, benchmark_drawdown, 'Portfolio vs. Benchmark Drawdown')
+        return jsonify({'graph': graph})
+
+    except Exception as e:
+        app.logger.error('Error occurred during drawdown chart creation: %s', str(e))
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':
