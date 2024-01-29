@@ -19,17 +19,16 @@ const PieChart = () => {
   }, [isConfirmed]);
 
   const options = {
-    title: "Pie  Chart",
     'height': 500,
     'width': 600,
     "is3D": true
   };
 
   return (
-    <div className={styles["container"]} >
-      {/* <div className={styles["finmetrics"]} >
-        <FinMetrics />
-      </div> */}
+    <div className={styles["container"]}>
+      <div className={`${styles["title"]} font-bold pl-8`}>
+        Pie Chart
+      </div>
       <Chart
         chartType="PieChart"
         options={options}

@@ -15,6 +15,9 @@ import AdbIcon from '@mui/icons-material/Adb';
 import ReviFiLogo from "../../assets/images/logo.png"
 import { Link, useLocation } from 'react-router-dom';
 import styles from './styles.module.css';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 const pages = ['Staking', 'Governance'];
 const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi Wallets', 'Analysis'];
@@ -23,6 +26,7 @@ function ResponsiveAppBar() {
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [wallet, setWallet] = React.useState('');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,8 +43,13 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+
+  const handleChange = (event) => {
+    setWallet(event.target.value);
+  };
+
   return (
-    <AppBar position="static" style={{ backgroundColor: 'white', color: 'black' }}>
+    <AppBar position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
@@ -125,7 +134,7 @@ function ResponsiveAppBar() {
             <Button
               onClick={handleOpenUserMenu}
               sx={{ my: 2, display: 'block' }}
-              style={{ backgroundColor: '#F6F6F6', color: '#000000', border: location.pathname.includes("/products") ? '2px solid #0047AA' : 'none' }}
+              style={{ textTransform: 'none', ackgroundColor: '#F6F6F6', color: '#000000', border: location.pathname.includes("/products") ? '2px solid #0047AA' : 'none' }}
             >
               Products
             </Button>
@@ -158,7 +167,7 @@ function ResponsiveAppBar() {
               <Link key={idx} to={page.toLowerCase()} style={{ textDecoration: 'none' }}>
                 <Button
                   onMouseEnter={page === "Products" ? handleOpenUserMenu : null}
-                  style={{ backgroundColor: '#F6F6F6', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none' }}
+                  style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none' }}
                   key={page}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: 'block' }}
@@ -170,9 +179,21 @@ function ResponsiveAppBar() {
           </Box>
 
 
-          <div style={{ display: 'flex', gap: '2rem' }} >
-            {/* <Button sx={{ backgroundColor: '#F6F6F6', color: '#0047AA' }}>Lite Paper</Button> */}
-            <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>Wallet</Button>
+          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center'}} >
+            <FormControl sx={{ m: 1, width: 100 }}>
+              <InputLabel id="demo-simple-select-label">Wallet</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={wallet}
+                label="Wallet"
+                onChange={handleChange}
+              >
+                <MenuItem value={10}>BSC</MenuItem>
+                <MenuItem value={20}>Metamask</MenuItem>
+              </Select>
+            </FormControl>
+            <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF'}}>Wallet</Button>
           </div>
 
           {/* This below component you can use it for Mobile Dropdown*/}

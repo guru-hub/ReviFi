@@ -6,7 +6,10 @@
   z-index: 1;
 }
 
-.finmetrics{
-  display: flex;
-  justify-content: flex-end;
+.title {
+  font-size: 2rem;
+  display: "flex";
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

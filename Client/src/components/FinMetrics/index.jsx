@@ -26,7 +26,7 @@ const FinMetrics = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Financial Metrics</h2>
+      <h2 className={`${styles["title"]} font-bold pl-2`}>Financial Metrics</h2>
       <div>
         <select className={styles.select} onChange={handleSelectChange}>
           <option>Select Metric</option>

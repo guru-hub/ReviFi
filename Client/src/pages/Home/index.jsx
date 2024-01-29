@@ -16,7 +16,7 @@ const Home = () => {
             </span>
           </div>
         </div>
-        <div class="text-xl">
+        <div className="text-xl">
           <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque minima consequatur fugit et error exercitationem suscipit ipsam adipisci</p>
           <p>nostrum fugiat tempore atque autem vitae accusamus voluptatibus expedita, vel dolor iure.</p>
         </div>

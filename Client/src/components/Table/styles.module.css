@@ -4,7 +4,6 @@
   border-radius: 10px;
 } */
 
-
 th,
 td {
   padding: 10px;
@@ -23,11 +22,21 @@ input {
   margin-bottom: 10px;
 }
 
-.btn{
+.btn {
   background: linear-gradient(#0047aa, #0085b6);
   color: white;
   padding: 4px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.title {
+  font-size: 2rem;
+  display: "flex";
+  color: "";
+  margin-bottom: 1rem;
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

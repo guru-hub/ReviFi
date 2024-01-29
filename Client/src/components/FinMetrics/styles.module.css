@@ -1,15 +1,10 @@
 .container {
-  padding: 5px;
   border: 1px solid #ddd;
   border-radius: 8px;
   min-width: 280px;
   height: 500px;
 }
 
-.heading {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
 
 .select {
   width: 100%;
@@ -53,4 +48,12 @@
 
 .removeButton:hover {
   background-color: #0056b3;
+}
+
+.title {
+  font-size: 2rem;
+  display: "flex";
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
