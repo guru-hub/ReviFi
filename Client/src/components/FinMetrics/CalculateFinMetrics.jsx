@@ -41,7 +41,10 @@ const CalculateFinMetrics = ({ metricKey }) => {
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
 
       const metricURL = MetricToURL[metricKey];
-      const requestURL = `http://localhost:5000/${metricURL}`;
+     
+      const requestURL = `http://revfi.us-east-1.elasticbeanstalk.com/${metricURL}`;
+
+    //const requestURL = `http://localhost:5000/${metricURL}`;
 
       const data = {
         coins,

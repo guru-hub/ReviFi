@@ -42,7 +42,7 @@ const HistoricalPerformance = () => {
       };
 
       axios
-        .post("http://localhost:5000/historical_performance", data)
+        .post("http://revfi.us-east-1.elasticbeanstalk.com/historical_performance", data)
         .then((response) => {
           setVarResult(response.data["historical_performance"]);
           console.log(response.data.graph);

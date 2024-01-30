@@ -1,11 +1,10 @@
 
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from pycoingecko import CoinGeckoAPI
-import pandas as pd
 import matplotlib.pyplot as plt
 import io
 import base64
+import pandas as pd
+import numpy as np
+
 from datetime import datetime, timedelta
 
 

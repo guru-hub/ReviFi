@@ -1,9 +1,9 @@
-
 import matplotlib.pyplot as plt
 import io
 import base64
 import pandas as pd
 import numpy as np
+
 
 def calculate_annualized_returns(data, allocations, initial_portfolio_value):
     combined = pd.DataFrame()

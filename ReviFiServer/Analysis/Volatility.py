@@ -4,6 +4,7 @@ import base64
 import pandas as pd
 import numpy as np
 
+
 def calculate_volatility(data, allocations, initial_portfolio_value):
     combined = pd.DataFrame()
     for coin, allocation in zip(data.keys(), allocations):

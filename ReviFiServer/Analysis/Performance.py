@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import pandas as pd
-from datetime import datetime, timedelta
 import numpy as np
+from datetime import datetime, timedelta
 
 def calculate_historical_performance(data, allocations, initial_portfolio_value):
     combined = pd.DataFrame()

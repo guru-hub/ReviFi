@@ -42,7 +42,7 @@ const FuturePerformance = () => {
       };
 
       axios
-        .post("http://localhost:5000/future_performance", data)
+        .post("http://revfi.us-east-1.elasticbeanstalk.com/future_performance", data)
         .then((response) => {
           setVarResult(response.data["future_performance"]);
           console.log(response.data.graph);
