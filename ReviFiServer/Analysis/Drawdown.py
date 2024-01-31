@@ -1,12 +1,12 @@
 
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-from pycoingecko import CoinGeckoAPI
-import pandas as pd
 import matplotlib.pyplot as plt
 import io
 import base64
+import pandas as pd
+import numpy as np
 from datetime import datetime, timedelta
+from flask import request, jsonify
+import Analysis.RevFiUtils as RevFiUtils
 
 
 
@@ -46,3 +46,35 @@ def create_drawdown_chart(portfolio_drawdown, benchmark_drawdown, title):
     plt.close()
     img.seek(0)
     return base64.b64encode(img.getvalue()).decode()
+
+
+def get_drawdown_chart(request,cg):
+    content = request.json
+    coins = content['coins']
+    allocations = {coin: float(allocation) for coin, allocation in zip(coins, content['allocations'])}
+    initial_portfolio_value = content['initial_portfolio_value']
+    benchmark_coin = content.get('benchmark', 'bitcoin')
+    start_date = datetime.now() - timedelta(days=365)
+    end_date = datetime.now()
+
+    # Fetch historical data
+    historical_data = RevFiUtils.get_historical_data(coins + [benchmark_coin], start_date, end_date,cg)
+
+    # Separate benchmark data
+    benchmark_data = {benchmark_coin: historical_data.pop(benchmark_coin)}
+
+    # Calculate portfolio values
+    portfolio_values = calculate_values(historical_data, allocations, initial_portfolio_value)
+
+    # Calculate benchmark values
+    benchmark_values = calculate_values(benchmark_data, initial_value=initial_portfolio_value)
+
+    # Calculate drawdowns
+    portfolio_drawdown = calculate_drawdown(portfolio_values)
+    benchmark_drawdown = calculate_drawdown(benchmark_values)
+
+    # Create and return the drawdown chart
+    graph = create_drawdown_chart(portfolio_drawdown, benchmark_drawdown,
+                                            'Portfolio vs. Benchmark Drawdown')
+    return jsonify({'graph': graph})
+

@@ -2,8 +2,10 @@ import matplotlib.pyplot as plt
 import io
 import base64
 import pandas as pd
-from datetime import datetime, timedelta
 import numpy as np
+from datetime import datetime, timedelta
+from flask import request, jsonify
+import Analysis.RevFiUtils as RevFiUtils
 from sklearn.linear_model import LinearRegression
 import pmdarima as pm
 
@@ -64,3 +66,24 @@ def project_future_performance_arima(data, allocations, days_in_future=30):
 
     combined_future['Total'] = combined_future.sum(axis=1)
     return combined_future
+
+
+def get_future_performance(request,cg):
+    content = request.json
+    coins = content['coins']
+    allocations = content['allocations']
+    initial_portfolio_value = content['initial_portfolio_value']
+    historical_time_frame = content.get('historical_time_frame', '12M')
+    future_time_frame = content.get('future_time_frame', '1M')
+
+    end_date = datetime.now()
+    start_date = end_date - get_time_frame_delta(historical_time_frame)
+    days_in_future = get_time_frame_delta(future_time_frame).days
+
+    historical_data = RevFiUtils.get_historical_data(coins, start_date, end_date,cg)
+    future_data = project_future_performance(historical_data, allocations, initial_portfolio_value,
+                                                               days_in_future)
+    graph = create_future_graph(future_data,
+                                                  f'Projected Future Portfolio Value - Next {days_in_future} Days')
+
+    return jsonify({'graph': graph})

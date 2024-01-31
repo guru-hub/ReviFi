@@ -1,6 +1,6 @@
 import APICall
 
-apiName='sharpe_ratio1'
+apiName='sharpe_ratio'
 
 
 
