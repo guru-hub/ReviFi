@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom'
+import ProductTabs from '../../components/ProductTabs'
 
 const Products = () => {
   return (
     <div>
-      <Link to="/products/analysis">
-        <button>Analysis</button>
-      </Link>
+      <ProductTabs />
     </div>
   )
 }

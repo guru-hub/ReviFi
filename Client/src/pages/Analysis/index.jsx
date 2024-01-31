@@ -8,20 +8,22 @@ import FuturePerformance from '../../components/FuturePerformance/FuturePerforma
 
 const Analysis = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', paddingBottom: '2em', padding: '1em' }} className="gap-6" >
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-6" >
       <div style={{ display: 'flex', paddingTop: '2rem', justifyContent: 'space-evenly' }} >
-        <div style={{ width: '50%' }}>
+        <div>
           <Portfolio />
         </div>
-        <div style={{ width: '60%' }}>
+        <div>
           <PieChart />
-        </div>
-        <div style={{ width: '40%' }}>
-          <FinMetrics />
         </div>
       </div>
       <div>
         <CryptoPrices />
+      </div>
+      <div style={{display: 'flex'}} >
+        <div style={{ width: '70%' }}>
+          <FinMetrics />
+        </div>
       </div>
       <div style={{ display: 'flex', width: '100%' }} >
         <div style={{ width: '50%' }}>

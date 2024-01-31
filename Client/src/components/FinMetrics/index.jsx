@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
-import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
-import Tooltip from '@mui/material/Tooltip';
 import CalculateFinMetrics from './CalculateFinMetrics';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
-  const [tooltip, setTooltip] = useState('');
 
   const metrics = [
     { name: 'Annualized returns', description: 'Returns over the last 4 years' },
@@ -20,8 +17,6 @@ const FinMetrics = () => {
   const handleSelectChange = (e) => {
     const selectedMetric = e.target.value;
     setSelectedMetric(selectedMetric);
-    const metric = metrics.find((m) => m.name === selectedMetric);
-    setTooltip(metric?.description || '');
   };
 
   return (
@@ -41,9 +36,6 @@ const FinMetrics = () => {
         {selectedMetric && (
           <div>
             <ul className={styles.list}>
-              <Tooltip title={tooltip} placement="top-start">
-                <QuestionMarkIcon fontSize="small" />
-              </Tooltip>
               <li className={styles.listItem}>
                 <div style={{ maxWidth: '100%' }}>
                   <CalculateFinMetrics metricKey={selectedMetric} />

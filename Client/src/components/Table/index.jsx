@@ -59,7 +59,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   return (
     <div>
       <div>
-        <h2 className={`text-3xl font-bold ${styles["title"]}`}> Portfolio Allocation </h2>
+        <h2 className={`font-bold ${styles["title"]}`}> Portfolio Allocation </h2>
       </div>
       <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`}>
         <div className="text-center">

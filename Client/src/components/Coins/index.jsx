@@ -15,7 +15,7 @@ const Coins = (props) => {
                 <p>Value</p>
                 <p>Allocation</p>
             </div>
-            <div className={styles["coins"]} >
+            <div className={styles["coins"]}>
                 {props.coins.map((coins, idx) => {
                     return (
                         <CoinItem key={idx} coins={coins} />
