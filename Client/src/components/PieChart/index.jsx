@@ -21,7 +21,6 @@ const PieChart = () => {
   const options = {
     'height': 500,
     'width': 600,
-    "is3D": true
   };
 
   return (
