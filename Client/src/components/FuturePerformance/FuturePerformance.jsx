@@ -51,7 +51,7 @@ const FuturePerformance = () => {
         .post(prodServer, data)
         .then((response) => {
           setVarResult(response.data["future_performance"]);
-          console.log(response.data.graph);
+          // console.log(response.data.graph);
           setGraph(`data:image/png;base64,${response.data.graph}`);;
         })
         .catch((error) => {

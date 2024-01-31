@@ -1,6 +1,6 @@
 const Governance = () => {
   return (
-    <div>Governance</div>
+    <div>Coming Soon</div>
   )
 }
 

@@ -1,6 +1,6 @@
 const Staking = () => {
   return (
-    <div>Staking</div>
+    <div>Coming Soon</div>
   )
 }
 

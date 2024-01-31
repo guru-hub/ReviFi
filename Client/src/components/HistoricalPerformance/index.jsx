@@ -45,9 +45,9 @@ const prodServer ="http://revfi.us-east-1.elasticbeanstalk.com/historical_perfor
       axios
         .post(prodServer, data)
         .then((response) => {
-          setVarResult(response.data["historical_performance"]);
           console.log(response.data.graph);
-          setGraph(`data:image/png;base64,${response.data.graph}`);;
+          setVarResult(response.data["historical_performance"]);
+          setGraph(`data:image/png;base64,${response.data.graph}`);
         })
         .catch((error) => {
           console.error(`Error fetching Historical Performance data`, error);
@@ -57,7 +57,6 @@ const prodServer ="http://revfi.us-east-1.elasticbeanstalk.com/historical_perfor
         });
     }
   }, [isConfirmed, value])
-
 
 
   const handleChange = (event, newValue) => {

@@ -49,7 +49,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }}>
+    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
