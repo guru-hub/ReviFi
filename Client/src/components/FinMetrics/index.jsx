@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './styles.module.css';
 import CalculateFinMetrics from './CalculateFinMetrics';
+import Alert from '@mui/material/Alert';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
@@ -36,16 +37,27 @@ const FinMetrics = () => {
         {selectedMetric && (
           <div>
             <ul className={styles.list}>
-              <li className={styles.listItem}>
+              <li className={styles.listItem} style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
                 <div style={{ maxWidth: '100%' }}>
                   <CalculateFinMetrics metricKey={selectedMetric} />
+                </div>
+                <div>
+                  {metrics.map((metric) => (
+                    <div key={metric.name}>
+                      {metric.name === selectedMetric && (
+                        <Alert severity='info'>
+                          {metric.description}
+                        </Alert>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </li>
             </ul>
           </div>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

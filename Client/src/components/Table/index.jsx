@@ -3,6 +3,16 @@ import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { removeCrypto, editCrypto, updateInitialValue } from "../../store/slices/dataSlice";
 import styles from "./styles.module.css";
+import BTCLogo from "../../assets/images/bitcoin-btc-logo.png";
+import ETHLogo from "../../assets/images/ethereum-eth-logo.png";
+import BNBLogo from "../../assets/images/bnb-bnb-logo.png";
+import USDTLogo from "../../assets/images/tether-usdt-logo.png";
+import SOLLogo from "../../assets/images/solana-sol-logo.png";
+import LTCLogo from "../../assets/images/litecoin-ltc-logo.png";
+import XRPLogo from "../../assets/images/xrp-xrp-logo.png";
+import TRXLogo from "../../assets/images/tron-trx-logo.png";
+import ADALogo from "../../assets/images/cardano-ada-logo.png";
+import DOTLogo from "../../assets/images/polkadot-new-dot-logo.png";
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
   const dispatch = useDispatch();
@@ -11,6 +21,19 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const handleDeleteRow = (asset) => {
     dispatch(removeCrypto(asset));
   };
+
+  const SymbolLogo = {
+    "BTC": <img src={BTCLogo} height={30} width={30}></img>,
+    "ETH": <img src={ETHLogo} height={30} width={30}></img>,
+    "BNB": <img src={BNBLogo} height={30} width={30}></img>,
+    "USDT": <img src={USDTLogo} height={30} width={30}></img>,
+    "SOL": <img src={SOLLogo} height={30} width={30}></img>,
+    "LTC": <img src={LTCLogo} height={30} width={30}></img>,
+    "XRP": <img src={XRPLogo} height={30} width={30}></img>,
+    "TRX": <img src={TRXLogo} height={30} width={30}></img>,
+    "ADA": <img src={ADALogo} height={30} width={30}></img>,
+    "DOT": <img src={DOTLogo} height={30} width={30}></img>,
+  }
 
   const [value, setValue] = useState(0);
   const [editingRow, setEditingRow] = useState(null);
@@ -83,7 +106,10 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
           {rows.map((row) => (
             <React.Fragment key={row.asset}>
               <tr>
-                <td>
+                <td className="flex justify-evenly" >
+                  <div>
+                    {SymbolLogo[row.asset]}
+                  </div>
                   <span>{row.asset}</span>
                 </td>
                 <td>

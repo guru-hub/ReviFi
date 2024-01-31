@@ -18,6 +18,8 @@ import styles from './styles.module.css';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+import BSCLogo from '../../assets/images/binance-coin-bnb-seeklogo.svg';
+import metamaskLogo from '../../assets/images/Metamask-icon.png';
 
 const pages = ['Products', 'Staking', 'Governance'];
 const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi Wallets', 'Analysis'];
@@ -47,6 +49,11 @@ function ResponsiveAppBar() {
   const handleChange = (event) => {
     setWallet(event.target.value);
   };
+
+  const networks = {
+    "BSC": <img height={18} width={18} src={BSCLogo} ></img>,
+    "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
+  }
 
   return (
     <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }}>
@@ -167,7 +174,7 @@ function ResponsiveAppBar() {
               <Link key={idx} to={page.toLowerCase()} style={{ textDecoration: 'none' }}>
                 <Button
                   // onMouseEnter={page === "Products" ? handleOpenUserMenu : null}
-                  style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none'}}
+                  style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none' }}
                   key={page}
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, display: 'block' }}
@@ -179,8 +186,8 @@ function ResponsiveAppBar() {
           </Box>
 
 
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center'}} >
-            <FormControl sx={{ m: 1, width: 100 }} size='small' >
+          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center' }} >
+            <FormControl sx={{ m: 1, width: 120 }} size='small' >
               <InputLabel id="demo-simple-select-label">Network</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
@@ -189,11 +196,17 @@ function ResponsiveAppBar() {
                 label="Wallet"
                 onChange={handleChange}
               >
-                <MenuItem value={10}>BSC</MenuItem>
-                <MenuItem value={20}>Polygon</MenuItem>
+                {Object.keys(networks).map((network, idx) => (
+                  <MenuItem key={idx} value={network} sx={{display: 'flex', gap: '1rem'}}>
+                    {networks[network]}
+                    <div>
+                      {network}
+                    </div>
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
-            <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF'}}>Connect Wallet</Button>
+            <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>Connect Wallet</Button>
           </div>
 
           {/* This below component you can use it for Mobile Dropdown*/}
@@ -226,7 +239,6 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box> */}
-
         </Toolbar>
       </Container>
     </AppBar>
