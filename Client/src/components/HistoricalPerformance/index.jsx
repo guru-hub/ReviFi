@@ -40,8 +40,8 @@ const HistoricalPerformance = () => {
         initial_portfolio_value: 100000,
         time_frame: value,
       };
-const devServer ="http://localhost:5000/historical_performance"
-const prodServer ="http://revfi.us-east-1.elasticbeanstalk.com/historical_performance"
+      const devServer = "http://localhost:5000/historical_performance"
+      const prodServer = "http://revfi.us-east-1.elasticbeanstalk.com/historical_performance"
       axios
         .post(prodServer, data)
         .then((response) => {
@@ -86,13 +86,13 @@ const prodServer ="http://revfi.us-east-1.elasticbeanstalk.com/historical_perfor
         </Box>
       </div>
       <div>
-      {loading ? (
-        'Calculating...'
-      ) : (
-        <div>
-          {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
-        </div>
-      )}
+        {loading ? (
+          'Calculating...'
+        ) : (
+          <div>
+            {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
+          </div>
+        )}
       </div>
     </div >
   )

@@ -180,7 +180,7 @@ function ResponsiveAppBar() {
 
 
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center'}} >
-            <FormControl sx={{ m: 1, width: 100 }}>
+            <FormControl sx={{ m: 1, width: 100 }} size='small' >
               <InputLabel id="demo-simple-select-label">Network</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
