@@ -20,14 +20,13 @@ const ProductTabs = () => {
     };
     return (
         <div>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%'}}>
                 <TabContext value={value}>
-                    <Box sx={{
-                        borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1em',
+                    <Box sx={{borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1em',
                     }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6' }}>
+                        <TabList onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6'}}>
                             {Object.keys(panels).map((panel, index) => (
-                                <Tab key={index} label={panel} value={panel} sx={{ backgroundColor: 'white', margin: '7px', borderRadius: '0.7em', border: '2px solid #0047AA' }} />
+                                <Tab key={index} label={panel} value={panel} sx={{ backgroundColor: 'white', margin: '7px', borderRadius: '0.7em', border: '2px solid #0047AA'}}  />
                             ))}
                         </TabList>
                     </Box>
