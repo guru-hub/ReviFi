@@ -3,6 +3,9 @@ import io
 import base64
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
+from flask import request, jsonify
+import Analysis.RevFiUtils as RevFiUtils
 
 def calculate_var(data, allocations, initial_portfolio_value, confidence_level=0.95):
     combined = pd.DataFrame()
@@ -29,3 +32,18 @@ def create_var_graph(normalized_portfolio_values, title, confidence_level):
     plt.close()
     img.seek(0)
     return base64.b64encode(img.getvalue()).decode()
+
+def get_var(request,historical_data):
+    content = request.json
+    coins = content['coins']
+    allocations = [float(a) for a in content['allocations']]
+    initial_portfolio_value = float(content['initial_portfolio_value'])
+    confidence_level = float(content.get('confidence_level', 0.95))
+  
+    #historical_data = RevFiUtils.get_historical_data(coins, start_date, end_date, cg)
+    var, normalized_portfolio_values = calculate_var(historical_data, allocations, initial_portfolio_value,
+                                                         confidence_level)
+    graph = create_var_graph(normalized_portfolio_values, 'Portfolio VaR', confidence_level)
+
+    return jsonify({'var': var, 'graph': graph})
+

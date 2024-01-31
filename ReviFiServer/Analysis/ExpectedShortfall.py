@@ -3,6 +3,10 @@ import io
 import base64
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
+from flask import request, jsonify
+import Analysis.RevFiUtils as RevFiUtils
+
 
 def calculate_expected_shortfall(data, allocations, initial_portfolio_value, confidence_level=0.95):
     combined = pd.DataFrame()
@@ -28,3 +32,20 @@ def create_expected_shortfall_graph(normalized_portfolio_values, title):
     plt.close()
     img.seek(0)
     return base64.b64encode(img.getvalue()).decode()
+
+def get_expected_shortfall(request,historical_data):
+    content = request.json
+    coins = content['coins']
+    allocations = [float(a) for a in content['allocations']]
+    initial_portfolio_value = float(content['initial_portfolio_value'])
+    start_date = datetime.now() - pd.DateOffset(years=1)  # Last 1 year
+    end_date = datetime.now()
+
+    #historical_data = RevFiUtils.get_historical_data(coins, start_date, end_date,cg)
+    expected_shortfall, normalized_portfolio_values = calculate_expected_shortfall(historical_data,
+                                                                                                     allocations,
+                                                                                                     initial_portfolio_value)
+    graph = create_expected_shortfall_graph(normalized_portfolio_values,
+                                                              'Portfolio Expected Shortfall')
+
+    return jsonify({'expected_shortfall': expected_shortfall, 'graph': graph})

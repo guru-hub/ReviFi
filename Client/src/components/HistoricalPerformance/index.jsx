@@ -40,9 +40,10 @@ const HistoricalPerformance = () => {
         initial_portfolio_value: 100000,
         time_frame: value,
       };
-
+const devServer ="http://localhost:5000/historical_performance"
+const prodServer ="http://revfi.us-east-1.elasticbeanstalk.com/historical_performance"
       axios
-        .post("http://revfi.us-east-1.elasticbeanstalk.com/historical_performance", data)
+        .post(prodServer, data)
         .then((response) => {
           setVarResult(response.data["historical_performance"]);
           console.log(response.data.graph);
