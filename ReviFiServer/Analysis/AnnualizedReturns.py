@@ -4,49 +4,76 @@ import base64
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+import yfinance as yf
+from io import BytesIO
 from flask import request, jsonify
 import Analysis.RevFiUtils as RevFiUtils
 
 
-def calculate_annualized_returns(data, allocations, initial_portfolio_value):
-    combined = pd.DataFrame()
-    for coin, allocation in zip(data.keys(), allocations):
-        combined[coin] = data[coin][coin] * allocation
-    portfolio_values = combined.sum(axis=1)
+def portfolio_annualized_return(request):
+    data = request.json
+    coins = data['coins']
+    allocations = np.array(data['allocations'])
+    initial_portfolio_value = data['initial_portfolio_value']
+    start_date = data['start_date']
+    end_date = data['end_date']
 
-    # Adjust portfolio values based on the initial portfolio value
-    normalized_portfolio_values = (portfolio_values / portfolio_values.iloc[0]) * initial_portfolio_value
+    # Fetch historical data
+    ticker_string = ' '.join([f"{coin}-USD" for coin in coins])
+    data = yf.download(ticker_string, start=start_date, end=end_date, group_by='ticker')
 
-    # Calculate the annualized returns
-    total_period_in_years = ((normalized_portfolio_values.index[-1] - normalized_portfolio_values.index[0]).days) / 365.25
-    final_portfolio_value = normalized_portfolio_values.iloc[-1]
-    annualized_return = (final_portfolio_value / initial_portfolio_value) ** (1/total_period_in_years) - 1
-    return annualized_return, normalized_portfolio_values
+    # Calculate daily returns
+    prices = pd.DataFrame({coin: data[f"{coin}-USD"]['Close'] for coin in coins})
+    daily_returns = prices.pct_change().dropna()
+    portfolio_returns = daily_returns.dot(allocations)
 
-def create_annualized_returns_graph(normalized_portfolio_values, title):
-    plt.figure(figsize=(10, 6))
-    normalized_portfolio_values.plot(title=title)
-    plt.xlabel('Date')
-    plt.ylabel('Portfolio Value')
-    img = io.BytesIO()
-    plt.savefig(img, format='png', bbox_inches='tight')
-    plt.close()
-    img.seek(0)
-    return base64.b64encode(img.getvalue()).decode()
+    # Calculate portfolio value
+    portfolio_value = (1 + portfolio_returns).cumprod() * initial_portfolio_value
+    
+    # Calculate annual returns
+    portfolio_value_yearly = portfolio_value.resample('Y').last()  # Resample to get the last value each year
+    annual_returns = portfolio_value_yearly.pct_change().dropna() * 100  # Convert to percentage
+    
 
-def get_annualized_returns(request,cg):
-    content = request.json
-    coins = content['coins']
-    allocations = [float(a) for a in content['allocations']]
-    initial_portfolio_value = float(content['initial_portfolio_value'])
-    start_date = datetime.now() - pd.DateOffset(years=4)  # Last four years
-    end_date = datetime.now()
+    # Assuming start_date and end_date are strings in YYYY-MM-DD format
+    start_date_dt = datetime.strptime(start_date, '%Y-%m-%d')
+    end_date_dt = datetime.strptime(end_date, '%Y-%m-%d')
 
-    historical_data = RevFiUtils.get_historical_data(coins, start_date, end_date,cg)
-    annualized_returns, normalized_portfolio_values = calculate_annualized_returns(historical_data,
-                                                                                                     allocations,
-                                                                                                     initial_portfolio_value)
-    graph = create_annualized_returns_graph(normalized_portfolio_values,
-                                                              'Portfolio Annualized Returns')
+    # Calculate the total duration in years as a float
+    total_duration_days = (end_date_dt - start_date_dt).days
+    total_years = total_duration_days / 365.25  # Using 365.25 accounts for leap years
 
-    return jsonify({'annualized_returns': annualized_returns, 'graph': graph})
+    # Safeguard against division by zero
+    if total_years <= 0:
+        total_years = 1  # This sets a minimum duration of 1 year to prevent division by zero
+
+    # Now calculate the annualized return using total_years
+    annualized_return = ((portfolio_value_yearly[-1] / initial_portfolio_value) ** (1 / total_years) - 1) * 100
+
+
+    # Calculate the overall annualized return
+    #total_years = (portfolio_value_yearly.index[-1] - portfolio_value_yearly.index[0]).days / 365.25
+    #annualized_return = ((portfolio_value_yearly[-1] / initial_portfolio_value) ** (1 / total_years) - 1) * 100
+
+    # Plotting
+    fig, ax = plt.subplots(figsize=(10, 6))
+    portfolio_value.plot(ax=ax)
+    ax.set_title("Portfolio Value Over Time")
+    ax.set_ylabel("Portfolio Value")
+    ax.grid(True)
+
+    # Save plot to a BytesIO buffer
+    buf = BytesIO()
+    plt.savefig(buf, format='png')
+    plt.close(fig)
+    buf.seek(0)
+    plot_base64 = base64.b64encode(buf.getvalue()).decode('utf-8')
+
+    # Prepare the response
+    response = {
+        'annual_returns': annual_returns.to_dict(),
+        'annualized_return': annualized_return,
+        'graph': plot_base64
+    }
+    
+    return jsonify(response)
