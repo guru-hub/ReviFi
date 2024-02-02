@@ -4,8 +4,8 @@ from io import BytesIO
 import base64
 import requests
 
-#apiEndpoint = 'http://localhost:5000/'
-apiEndpoint = 'http://revfi.us-east-1.elasticbeanstalk.com/'
+apiEndpoint = 'http://localhost:5000/'
+#apiEndpoint = 'http://revfi.us-east-1.elasticbeanstalk.com/'
 
 def getMetric(apiName,data):
       
