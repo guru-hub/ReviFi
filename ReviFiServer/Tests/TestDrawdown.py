@@ -8,8 +8,6 @@ from io import BytesIO
 # Endpoint URL
 
 
-url = 'http://localhost:5000/drawdown_chart'
-
 apiName='drawdown_chart'
 
 
@@ -28,24 +26,4 @@ data = {
  
 
 
- # Send a POST request to the Flask API
-response = requests.post(url, json=data)
-
-print(response.text)
-
-# Check if the request was successful
-if response.status_code == 200:
-    # Decode the base64 image
-    content = response.json()
-    image_data = base64.b64decode(content['graph'])
-    image = Image.open(BytesIO(image_data))
-    
-    # Display the image
-    image.show()
-
-    # Optionally, save the image to a file
-   # image.save("drawdown_plot.png")
-else:
-    print("Failed to retrieve data:", response.text)
-
-#APICall.getMetric(apiName,data)
+APICall.getMetric(apiName,data)
