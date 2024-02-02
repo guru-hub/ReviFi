@@ -20,17 +20,19 @@ const Analysis = () => {
       <div>
         <CryptoPrices />
       </div>
-      <div style={{display: 'flex'}} >
-        <div style={{ width: '70%' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }} >
+        <div style={{ width: '90%' }}>
           <FinMetrics />
         </div>
       </div>
-      <div style={{ display: 'flex', width: '100%' }} >
-        <div style={{ width: '50%' }}>
-          <HistoricalPerformance />
-        </div>
-        <div style={{ width: '50%', paddingLeft: '2em' }} >
-          <FuturePerformance />
+      <div className='flex justify-center' >
+        <div style={{ display: 'flex', width: '90%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md'>
+          <div>
+            <HistoricalPerformance />
+          </div>
+          <div>
+            <FuturePerformance />
+          </div>
         </div>
       </div>
     </div>

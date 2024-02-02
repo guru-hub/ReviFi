@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 const Home = () => {
   return (
-    <div className={styles["container"]}>
+    <div style={{}} className={styles["container"]}>
       <div className={styles["inner-container"]}>
         <div className={styles["title"]}>
           <div style={{ fontSize: '62px', fontWeight: '400' }} >

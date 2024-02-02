@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 const Coins = (props) => {
     return (
         <div className={styles["container"]}>
-            <div className={styles["inner-container"]}>
-                <p >Asset</p>
+            <div className={`${styles["inner-container"]} rounded-md`}>
+                <p>Asset</p>
                 <p>Price</p>
                 <p>Change 7D</p>
                 <p>Change 30D</p>
@@ -15,7 +15,7 @@ const Coins = (props) => {
                 <p>Value</p>
                 <p>Allocation</p>
             </div>
-            <div className={styles["coins"]}>
+            <div className={`${styles["coins"]} rounded-md`}>
                 {props.coins.map((coins, idx) => {
                     return (
                         <CoinItem key={idx} coins={coins} />

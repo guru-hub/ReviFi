@@ -121,17 +121,17 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                       onBlur={(e) => handleAllocationBlur(e, row.asset)}
                     />
                   ) : (
-                    <span onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation}%</span>
+                    <span className="cursor-pointer" onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation}%</span>
                   )}
                 </td>
                 <td>${row.allocatedValue}</td>
                 <td>
                   <span>
-                    <BsFillPencilFill onClick={() => editRow(row.asset)} />
+                    <BsFillPencilFill className="cursor-pointer" onClick={() => editRow(row.asset)} />
                   </span>
                 </td>
                 <td>
-                  <span style={{ color: "red" }}>
+                  <span style={{ color: "red" }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
                   </span>
                 </td>

@@ -4,6 +4,8 @@
   justify-content: flex-start;
   padding-left: 12em;
   padding-top: 8em;
+  background-image: url('../../assets/images/background.png');
+  background-size: cover;
 }
 
 .inner-container {

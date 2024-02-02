@@ -9,8 +9,8 @@
   
   .container{
     display: flex;
-    justify-content: flex-start;
-    width: 90%;
+    justify-content: space-around;
+    width: 100%;
   }
   
   .inner-container{

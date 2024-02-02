@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
 
   const networks = {
     "BSC": <img height={18} width={18} src={BSCLogo} ></img>,
-    "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
+    // "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
   }
 
   return (
