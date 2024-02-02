@@ -14,16 +14,16 @@ const CryptoPrices = () => {
 
 
   const SymbolToId = {
-    "BTC": "BTC",
-    "ETH": "ETH",
-    "BNB": "BNB",
-    "USDT": "USDT",
-    "SOL": "SOL",
-    "LTC": "LTC",
-    "XRP": "XRP",
-    "TRX": "TRX",
-    "ADA": "ADA",
-    "DOT": "DOT",
+    "BTC": "bitcoin",
+    "ETH": "ethereum",
+    "BNB": "binancecoin",
+    "USDT": "tether",
+    "SOL": "solana",
+    "LTC": "litecoin",
+    "XRP": "ripple",
+    "TRX": "tron",
+    "ADA": "cardano",
+    "DOT": "polkadot",
     ",": "%2C%20"
   }
 
