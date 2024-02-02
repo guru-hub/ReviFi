@@ -41,10 +41,10 @@ const CalculateFinMetrics = ({ metricKey }) => {
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
 
       const metricURL = MetricToURL[metricKey];
-     
+
       const requestURL = `http://revifi.us-east-1.elasticbeanstalk.com/${metricURL}`;
 
-    // const requestURL = `http://localhost:5000/${metricURL}`;
+      // const requestURL = `http://localhost:5000/${metricURL}`;
 
       const data = {
         coins,
@@ -80,7 +80,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
       ) : (
         <div>
           {varResult && <p>{`${metricKey}: ${varResult}`}</p>}
-          {graph && <img height={300} width={500} src={graph} alt={`${metricKey} Graph`} />}
+          {graph && <img height={650} width={650} src={graph} alt={`${metricKey} Graph`} />}
         </div>
       )}
     </div>

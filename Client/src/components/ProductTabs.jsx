@@ -44,9 +44,9 @@ const ProductTabs = () => {
                     <Box sx={{
                         borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1em',
                     }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6' }}>
+                        <TabList TabIndicatorProps={{ hidden: true }} onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6', padding: '0.1rem' }} sx={{ "& button.Mui-selected": { border: '2px solid #0047AA', color: 'black' } }}>
                             {Object.keys(panels).map((panel, index) => (
-                                <Tab className='' key={index} label={panel} value={panel} sx={{ backgroundColor: 'white', margin: '7px', borderRadius: '0.7em', border: '2px solid #0047AA' }} />
+                                <Tab className='' key={index} label={panel} value={panel} sx={{ margin: '5px', backgroundColor: 'white', borderRadius: '0.5em' }} />
                             ))}
                         </TabList>
                     </Box>
@@ -57,6 +57,7 @@ const ProductTabs = () => {
                             </div>
                         </TabPanel>
                     ))}
+                    {/* backgroundColor: 'white', borderRadius: '0.7em',   */}
                 </TabContext>
             </div>
         </div>

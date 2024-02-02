@@ -38,7 +38,10 @@ const FinMetrics = () => {
           <div>
             <ul className={styles.list}>
               <li className={styles.listItem} style={{ display: 'flex', width: '100%', justifyContent: 'space-around' }}>
-                <div className='flex justify-evenly items-center w-screen'>
+                <div className='flex justify-evenly items-center w-screen p-2'>
+                  <div>
+                    <CalculateFinMetrics metricKey={selectedMetric} />
+                  </div>
                   <div>
                     {metrics.map((metric) => (
                       <div key={metric.name}>
@@ -49,9 +52,6 @@ const FinMetrics = () => {
                         )}
                       </div>
                     ))}
-                  </div>
-                  <div style={{}}>
-                    <CalculateFinMetrics metricKey={selectedMetric} />
                   </div>
                 </div>
               </li>

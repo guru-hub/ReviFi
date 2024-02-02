@@ -184,8 +184,6 @@ function ResponsiveAppBar() {
               </Link>
             ))}
           </Box>
-
-
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center' }} >
             <FormControl sx={{ m: 1, width: 120 }} size='small' >
               <InputLabel id="demo-simple-select-label">Network</InputLabel>

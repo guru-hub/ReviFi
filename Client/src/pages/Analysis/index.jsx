@@ -26,7 +26,7 @@ const Analysis = () => {
         </div>
       </div>
       <div className='flex justify-center' >
-        <div style={{ display: 'flex', width: '90%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md'>
+        <div style={{ display: 'flex', width: '90%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
           <div>
             <HistoricalPerformance />
           </div>
