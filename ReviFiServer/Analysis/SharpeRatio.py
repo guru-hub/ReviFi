@@ -29,7 +29,9 @@ def create_sharpe_ratio_graph(data, allocations, initial_portfolio_value, title)
     normalized_portfolio_values = (portfolio_values / portfolio_values.iloc[0]) * initial_portfolio_value
 
     plt.figure(figsize=(10, 6))
-    normalized_portfolio_values.plot(title=title)
+    normalized_portfolio_values.plot(title=title ,color='green')
+
+
     plt.xlabel('Date')
     plt.ylabel('Portfolio Value')
     img = io.BytesIO()

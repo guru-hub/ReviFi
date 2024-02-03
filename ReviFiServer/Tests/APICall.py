@@ -5,11 +5,13 @@ import base64
 import requests
 
 apiEndpoint = 'http://localhost:5000/'
-#apiEndpoint = 'http://revifi.us-east-1.elasticbeanstalk.com/'
+#apiEndpoint = 'http://api.revifi.xyz/'
 
 def getMetric(apiName,data):
       
     url = apiEndpoint + apiName
+
+    print("url:", url)
     # Sending post request to Flask API
     response = requests.post(url, json=data)
 

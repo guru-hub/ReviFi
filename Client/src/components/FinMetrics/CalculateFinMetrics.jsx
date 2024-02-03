@@ -42,7 +42,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
 
       const metricURL = MetricToURL[metricKey];
 
-      const requestURL = `http://revifi.us-east-1.elasticbeanstalk.com/${metricURL}`;
+      const requestURL = `http://api.revifi.xyz/${metricURL}`;
 
       // const requestURL = `http://localhost:5000/${metricURL}`;
 

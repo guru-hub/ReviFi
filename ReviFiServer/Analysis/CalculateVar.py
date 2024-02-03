@@ -37,7 +37,7 @@ def portfolio_var(request):
 
     # Plotting
     fig, ax = plt.subplots(figsize=(10, 6))
-    portfolio_returns_sorted.hist(bins=50, alpha=0.6, color='blue', ax=ax)
+    portfolio_returns_sorted.hist(bins=50, alpha=0.6, color='green', ax=ax)
     ax.axvline(var_value, color='red', linestyle='--', label=f'VaR at {confidence_level * 100}%: {var:.2f}')
     ax.set_title("Portfolio Returns Distribution with VaR")
     ax.set_xlabel("Daily Returns")

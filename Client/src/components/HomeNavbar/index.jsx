@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import ReviFiLogo from "../../assets/images/logo.png"
+import ReviFiLogo from "../../assets/images/logo.ico"
 import { Link, useLocation } from 'react-router-dom';
 import styles from './styles.module.css';
 import Select from '@mui/material/Select';
@@ -61,7 +61,7 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
             <div style={{ display: 'flex', paddingLeft: '6rem' }} >
-              <img src={ReviFiLogo} alt="ReviFi Logo" ></img>
+              <img height={35} width={35} src= {ReviFiLogo} alt="ReviFi Logo" ></img>
               <Typography
                 variant="h6"
                 noWrap

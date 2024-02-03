@@ -39,7 +39,7 @@ def portfolio_expected_shortfall(request):
 
     # Plotting Expected Shortfall
     fig, ax = plt.subplots(figsize=(10, 6))
-    portfolio_returns.hist(bins=50, alpha=0.6, color='blue', ax=ax)
+    portfolio_returns.hist(bins=50, alpha=0.6, color='green', ax=ax)
     ax.axvline(expected_shortfall, color='red', linestyle='--', label=f'Expected Shortfall: {expected_shortfall_value:.2f}')
     ax.set_title("Portfolio Returns Distribution with Expected Shortfall")
     ax.set_xlabel("Daily Returns")

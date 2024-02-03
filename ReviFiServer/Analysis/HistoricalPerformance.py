@@ -43,7 +43,11 @@ def get_start_date(time_frame):
 def plot_portfolio_performance(portfolio_growth):
     """Plot the portfolio performance and return the plot as a base64 encoded string."""
     plt.figure(figsize=(10, 6))
-    portfolio_growth.plot(title='Portfolio Performance Over Time')
+   # portfolio_growth.plot(title='Portfolio Performance Over Time')
+
+    portfolio_growth.plot(title='Portfolio Performance Over Time', color='green')  # Set color to green here
+   # plt.fill_between(portfolio_growth.index, 0, portfolio_growth, color='green', alpha=0.3)  # Shade area under the line in green
+
     plt.xlabel('Date')
     plt.ylabel('Cumulative Returns')
     plt.grid(True)

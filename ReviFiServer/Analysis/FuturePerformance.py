@@ -69,11 +69,16 @@ def predict_portfolio_performance(request):
 
     # Generate and encode the performance graph
     plt.figure(figsize=(10, 6))
-    plt.plot(future_portfolio_values)
+    plt.plot(future_portfolio_values, color='green')
+    #plt.fill_between(future_portfolio_values.index, 0, future_portfolio_values, color='green', alpha=0.3)  # Shade area under the line in green
+
     plt.title(f'Predicted Portfolio Performance Over {time_frame}')
     plt.xlabel('Days')
     plt.ylabel('Portfolio Value')
-    plt.grid(True)
+    plt.grid(False)
+   
+
+
 
     buf = BytesIO()
     plt.savefig(buf, format='png')
