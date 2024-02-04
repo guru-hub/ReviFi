@@ -58,6 +58,7 @@ def portfolio_annualized_return(request):
     # Plotting
     fig, ax = plt.subplots(figsize=(10, 6))
     portfolio_value.plot(ax=ax)
+    plt.fill_between(portfolio_value.index, 0, portfolio_value, color='green', alpha=0.3)  # Shade area under the line in green
     ax.set_title("Portfolio Value Over Time")
     ax.set_ylabel("Portfolio Value")
     ax.grid(True)

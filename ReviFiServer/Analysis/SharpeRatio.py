@@ -31,9 +31,9 @@ def create_sharpe_ratio_graph(data, allocations, initial_portfolio_value, title)
     plt.figure(figsize=(10, 6))
     normalized_portfolio_values.plot(title=title ,color='green')
 
-
     plt.xlabel('Date')
     plt.ylabel('Portfolio Value')
+    plt.grid(False)
     img = io.BytesIO()
     plt.savefig(img, format='png', bbox_inches='tight')
     plt.close()

@@ -37,10 +37,13 @@ def portfolio_volatility(request):
     rolling_volatility = portfolio_returns.rolling(window=30).std() * np.sqrt(252)  # 30-day rolling volatility
     fig, ax = plt.subplots(figsize=(10, 6))
     rolling_volatility.plot(ax=ax,color='green')
+    plt.fill_between(rolling_volatility.index, 0, rolling_volatility, color='green', alpha=0.3)  # Shade area under the line in green
     ax.set_title("30-Day Rolling Volatility (in Value)")
     ax.set_xlabel("Date")
     ax.set_ylabel("Annualized Volatility (in Value)")
 
+
+   
     # Convert plot to base64 string for the graph
     buf = BytesIO()
     plt.savefig(buf, format='png')

@@ -15,7 +15,7 @@ const FuturePerformance = () => {
   const [loading, setLoading] = useState(false);
 
   const devServer ="http://localhost:5000/future_performance"
-  const prodServer ="http://api.revifi.xyz/future_performance"
+  const prodServer ="https://api.revifi.xyz/future_performance"
 
   
 

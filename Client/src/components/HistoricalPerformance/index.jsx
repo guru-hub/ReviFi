@@ -41,7 +41,7 @@ const HistoricalPerformance = () => {
         time_frame: value,
       };
       const devServer = "http://localhost:5000/historical_performance"
-      const prodServer = "http://revifi.us-east-1.elasticbeanstalk.com/historical_performance"
+      const prodServer = "https://api.revifi.xyz/historical_performance"
       axios
         .post(prodServer, data)
         .then((response) => {
