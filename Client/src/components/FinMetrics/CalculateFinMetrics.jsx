@@ -65,7 +65,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
       };
 
       axios
-        .post(devUrl, data)
+        .post(requestURL, data)
         .then((response) => {
           setVarResult(response.data[metricURL]);
           console.log(response.data.graph);
