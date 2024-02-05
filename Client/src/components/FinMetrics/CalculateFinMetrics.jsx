@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
+
+
 
 const CalculateFinMetrics = ({ metricKey }) => {
+  
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState('2022-12-11');
-  const [endDate, setEndDate] = useState('2023-12-15');
+  const [startDate, setStartDate] = useState('2023-02-04');
+  const [endDate, setEndDate] = useState('2024-02-04');
   const cryptoData = useSelector((state) => state.data.crypto);
 
   const MetricToURL = {
@@ -41,10 +45,13 @@ const CalculateFinMetrics = ({ metricKey }) => {
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
 
       const metricURL = MetricToURL[metricKey];
+     const endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
+     const startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
+
 
       const requestURL = `https://api.revifi.xyz/${metricURL}`;
 
-      // const requestURL = `http://localhost:5000/${metricURL}`;
+      const devUrl = `http://localhost:5000/${metricURL}`;
 
       const data = {
         coins,

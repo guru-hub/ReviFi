@@ -17,8 +17,10 @@ const Home = () => {
           </div>
         </div>
         <div className="text-xl">
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Neque minima consequatur fugit et error exercitationem suscipit ipsam adipisci</p>
-          <p>nostrum fugiat tempore atque autem vitae accusamus voluptatibus expedita, vel dolor iure.</p>
+          <p>ReviFi is a decentralized asset manager platform for crypto-portfolio administration.
+
+</p>
+          <p>Experience the power of AI-enhanced DeFi asset management.</p>
         </div>
         <div className={styles["buttons"]}>
           <Button style={{ color: 'white', background: 'linear-gradient(#0047aa, #0085b6)',width: '50%' }}>
