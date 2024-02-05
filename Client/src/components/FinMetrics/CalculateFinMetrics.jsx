@@ -65,7 +65,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
       };
 
       axios
-        .post(requestURL, data)
+        .post(devUrl, data)
         .then((response) => {
           setVarResult(response.data[metricURL]);
           console.log(response.data.graph);
@@ -86,7 +86,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
         'Calculating...'
       ) : (
         <div>
-          {varResult && <p>{`${metricKey}: ${varResult}`}</p>}
+          {varResult && <p> {`${metricKey}: ${varResult}`}</p>}
           {graph && <img height={650} width={650} src={graph} alt={`${metricKey} Graph`} />}
         </div>
       )}
