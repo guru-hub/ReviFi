@@ -19,11 +19,11 @@ const Home = () => {
         <div className="text-xl">
           <p>ReviFi is a decentralized asset manager platform for crypto-portfolio administration.
 
-</p>
+          </p>
           <p>Experience the power of AI-enhanced DeFi asset management.</p>
         </div>
-        <div className={styles["buttons"]}>
-          <Button style={{ color: 'white', background: 'linear-gradient(#0047aa, #0085b6)',width: '50%' }}>
+        <div className={`${styles["buttons"]} pt-10`}>
+          <Button style={{ color: 'white', background: 'linear-gradient(#0047aa, #0085b6)', width: '50%' }}>
             Join Telegram
           </Button>
           <Button style={{ border: '2px solid #0047AA', width: '50%' }} >
