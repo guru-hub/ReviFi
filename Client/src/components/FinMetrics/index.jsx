@@ -33,36 +33,24 @@ const FinMetrics = () => {
           ))}
         </select>
       </div>
-
-      
-   
       <div>
-        
         {selectedMetric && (
           <div>
-             
             <ul className={styles.list}>
               <li >
-              <div style={{ display: 'flex', width: '75%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
-              
+                <div style={{ display: 'flex', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
                   <div>
-                  
                     <CalculateFinMetrics metricKey={selectedMetric} />
-                     
-                   </div>
-                   <div style={{ display: 'flex', width: '25%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
                     {metrics.map((metric) => (
                       <div key={metric.name}>
-                      
                         {metric.name === selectedMetric && (
                           <Alert severity='info'>
-                           <td>{metric.description}</td> 
+                            <td>{metric.description}</td>
                           </Alert>
                         )}
-                   
-                  
                       </div>
-
                     ))}
                   </div>
                 </div>
