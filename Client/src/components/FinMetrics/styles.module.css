@@ -2,9 +2,8 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   min-width: 280px;
-  height: 500px;
+  min-height: 560px;
 }
-
 
 .select {
   width: 100%;
