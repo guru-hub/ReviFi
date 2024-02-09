@@ -38,20 +38,22 @@ const FinMetrics = () => {
           <div>
             <ul className={styles.list}>
               <li >
-                <div style={{ display: 'flex', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
-                  <div>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }} className='rounded-md p-2'>
+                  <div style={{ width: '100%' }}>
                     <CalculateFinMetrics metricKey={selectedMetric} />
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
-                    {metrics.map((metric) => (
-                      <div key={metric.name}>
-                        {metric.name === selectedMetric && (
-                          <Alert severity='info'>
-                            <td>{metric.description}</td>
-                          </Alert>
-                        )}
-                      </div>
-                    ))}
+                  <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%', overflow: 'auto', alignItems: 'center' }} className='rounded-md p-2'>
+                    <div style={{ display: 'flex' }} >
+                      {metrics.map((metric) => (
+                        <div key={metric.name}>
+                          {metric.name === selectedMetric && (
+                            <Alert severity='info'>
+                              <td>{metric.description}</td>
+                            </Alert>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </li>

@@ -20,7 +20,7 @@ const Analysis = () => {
       <div>
         <CryptoPrices />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }} >
+      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
         <div style={{ width: '90%' }}>
           <FinMetrics />
         </div>

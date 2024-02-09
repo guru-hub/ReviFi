@@ -6,7 +6,7 @@ import moment from 'moment';
 
 
 const CalculateFinMetrics = ({ metricKey }) => {
-  
+
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,8 +45,8 @@ const CalculateFinMetrics = ({ metricKey }) => {
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
 
       const metricURL = MetricToURL[metricKey];
-     const endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
-     const startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
+      const endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
+      const startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
 
 
       const requestURL = `https://api.revifi.xyz/${metricURL}`;
