@@ -13,11 +13,14 @@ import XRPLogo from "../../assets/images/xrp-xrp-logo.png";
 import TRXLogo from "../../assets/images/tron-trx-logo.png";
 import ADALogo from "../../assets/images/cardano-ada-logo.png";
 import DOTLogo from "../../assets/images/polkadot-new-dot-logo.png";
+import AddIcon from '@mui/icons-material/Add';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
-
+  const cryptoData = useSelector((state) => state.data.crypto);
   const handleDeleteRow = (asset) => {
     dispatch(removeCrypto(asset));
   };
@@ -35,18 +38,15 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     "DOT": <img src={DOTLogo} height={30} width={30}></img>,
   }
 
-  const [value, setValue] = useState(0);
   const [editingRow, setEditingRow] = useState(null);
   const [editAllocationValue, setEditAllocationValue] = useState(0);
   const [newAllocation, setNewAllocation] = useState(editAllocationValue);
+  const [editingTotalBalance, setEditingTotalBalance] = useState(false);
+  const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
 
   const inputRef = useRef(null); // Ref to the input field
 
   const currentTotalValue = useSelector((state) => state.data.totalValue);
-
-  // const handleValueSubmit = () => {
-  //   dispatch(updateInitialValue(value));
-  // };
 
   const handleConfirm = () => {
     rows.forEach((crypto) => {
@@ -63,7 +63,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     setEditingRow(asset);
     setNewAllocation(allocationValue);
     setEditAllocationValue(allocationValue);
-
+    console.log("Hello Working?");
     if (inputRef.current) {
       inputRef.current.focus();
     }
@@ -75,31 +75,71 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   };
 
   const handleAllocationBlur = (e, asset) => {
-    setEditingRow(null);
-    dispatch(editCrypto({ asset, allocation: newAllocation }));
+    const newAllocation = parseFloat(e.target.value);
+    var oldAllocation = 0;
+    const totalAllocationExceptCurrent = cryptoData.reduce((acc, crypto) => {
+      if (crypto.asset !== asset) {
+        return acc + parseFloat(crypto.allocation);
+      }
+      else {
+        oldAllocation = parseFloat(crypto.allocation);
+      }
+      return acc;
+    }, 0);
+    const totalAllocation = totalAllocationExceptCurrent + newAllocation;
+
+    if (totalAllocation <= 100) {
+      setEditingRow(null);
+      dispatch(editCrypto({ asset, allocation: newAllocation }));
+    } else {
+      setNewAllocation(oldAllocation);
+      toast("Total allocation cannot exceed 100%");
+    }
+    setEditingTotalBalance(false);
+  };
+
+  const handleTotalBalanceClick = () => {
+    setEditingTotalBalance(true);
+  };
+
+  const handleTotalBalanceChange = (e) => {
+    setNewTotalBalance(e.target.value);
+  };
+
+  const handleTotalBalanceBlur = () => {
+    setEditingTotalBalance(false);
+    dispatch(updateInitialValue(newTotalBalance));
   };
 
   return (
-    <div>
+    <div style={{ minWidth: '470px' }} >
       <div>
         <h2 className={`font-bold ${styles["title"]}`}> Portfolio Allocation </h2>
       </div>
-      <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`}>
+      <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`} >
         <div className="text-center">
           Total Balance:
         </div>
-        <div className="text-center text-4xl" >
-          ${currentTotalValue}
+        <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick}>
+          {editingTotalBalance ? (
+            <input
+              type="text"
+              value={newTotalBalance}
+              onChange={handleTotalBalanceChange}
+              onBlur={handleTotalBalanceBlur}
+              style={{ color: "black" }}
+            />
+          ) : (
+            `$${currentTotalValue.toLocaleString()}`
+          )}
         </div>
       </div>
-      <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl">
+      <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl w-full">
         <thead>
           <tr>
             <th>Asset</th>
-            <th>Allocation %</th>
-            <th>Allocated Value $</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Allocation</th>
+            <th>Allocated Value</th>
           </tr>
         </thead>
         <tbody style={{ color: "black" }}>
@@ -121,17 +161,12 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                       onBlur={(e) => handleAllocationBlur(e, row.asset)}
                     />
                   ) : (
-                    <span className="cursor-pointer" onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation}%</span>
+                    <div style={{ textAlign: 'center' }} className="cursor-pointer" onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation}%</div>
                   )}
                 </td>
-                <td>${row.allocatedValue}</td>
+                <td style={{ textAlign: 'center' }}>${row.allocatedValue}</td>
                 <td>
-                  <span>
-                    <BsFillPencilFill className="cursor-pointer" onClick={() => editRow(row.asset)} />
-                  </span>
-                </td>
-                <td>
-                  <span style={{ color: "red" }} className="cursor-pointer">
+                  <span style={{ color: "red", display: 'flex', justifyContent: 'center' }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
                   </span>
                 </td>
@@ -141,21 +176,26 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="0">
-              <strong>Total Allocation %:</strong>
+            <td colSpan="0" style={{ textAlign: 'center' }} >
+              <strong>Total Allocation:</strong>
             </td>
-            <td>{currentTotalAllocation}%</td>
+            <td style={{ textAlign: 'center' }}>{currentTotalAllocation}%</td>
             <td>
-              <button className="font-sans font-bold bg-gradient-to-r from-[#0047aa] to-[#0085b6] text-white p-1 w-20 rounded-md" onClick={setModalOpenFunc}>Add Asset</button>
-            </td>
-            <div className="w-1 p-3" >
-              <button className="font-sans font-bold bg-gradient-to-r from-[#0047aa] to-[#0085b6] text-white p-1 w-24 rounded-md" onClick={onConfirm}>
-                Confirm Balance
+              <button className="font-sans font-bold text-black p-1 rounded-md w-full" style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={setModalOpenFunc}>
+                <div>
+                  <AddIcon fontSize="small" />
+                </div>
+                <div> Add Asset </div>
               </button>
-            </div>
+            </td>
           </tr>
         </tfoot>
       </table>
+      <div>
+        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-4" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
+          Confirm Allocation
+        </button>
+      </div>
     </div>
   );
 };

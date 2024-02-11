@@ -8,7 +8,7 @@ import FuturePerformance from '../../components/FuturePerformance/FuturePerforma
 
 const Analysis = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-6" >
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 p-4" >
       <div style={{ display: 'flex', paddingTop: '2rem', justifyContent: 'space-evenly' }} >
         <div>
           <Portfolio />

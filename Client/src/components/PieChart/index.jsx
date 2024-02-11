@@ -7,16 +7,15 @@ import styles from "./styles.module.css";
 const PieChart = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   const [chartData, setChartData] = useState([["Asset", "Allocation"]]);
-  const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
+  const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
-
 
   useEffect(() => {
     if (isConfirmed == true) {
       const newData = cryptoData.map(({ asset, allocatedValue }) => [asset, +allocatedValue]);
       setChartData([["Asset", "Allocation"], ...newData]);
     }
-  }, [isConfirmed]);
+  }, [isConfirmed, totalValue]);
 
   const options = {
     'height': 500,
@@ -25,9 +24,6 @@ const PieChart = () => {
 
   return (
     <div className={styles["container"]}>
-      <div className={`${styles["title"]} font-bold pl-8`}>
-        Pie Chart
-      </div>
       <Chart
         chartType="PieChart"
         options={options}

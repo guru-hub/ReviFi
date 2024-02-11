@@ -13,6 +13,8 @@ const HistoricalPerformance = () => {
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
+  const totalvalue = useSelector((state) => state.data.totalValue);
+
 
   const SymbolToId = {
     "BTC": "BTC",
@@ -33,7 +35,6 @@ const HistoricalPerformance = () => {
       setLoading(true);
       const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
-
       const data = {
         coins,
         allocations,
@@ -56,7 +57,7 @@ const HistoricalPerformance = () => {
           setLoading(false);
         });
     }
-  }, [isConfirmed, value])
+  }, [isConfirmed, value, totalvalue])
 
 
   const handleChange = (event, newValue) => {

@@ -5,14 +5,16 @@ import moment from 'moment';
 
 
 
-const CalculateFinMetrics = ({ metricKey }) => {
+const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
 
-  const [varResult, setVarResult] = useState('');
+  // const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState('2023-02-04');
   const [endDate, setEndDate] = useState('2024-02-04');
   const cryptoData = useSelector((state) => state.data.crypto);
+  const totalvalue = useSelector((state) => state.data.totalValue);
+
 
   const MetricToURL = {
     'Annualized returns': 'annualized_returns',
@@ -78,7 +80,7 @@ const CalculateFinMetrics = ({ metricKey }) => {
           setLoading(false);
         });
     }
-  }, [metricKey, startDate, endDate, cryptoData]); // Dependency array ensures the effect runs when these values change
+  }, [metricKey, startDate, endDate, cryptoData, totalvalue]); // Dependency array ensures the effect runs when these values change
 
   return (
     <div style={{ width: '' }}>
@@ -86,7 +88,6 @@ const CalculateFinMetrics = ({ metricKey }) => {
         'Calculating...'
       ) : (
         <div>
-          {varResult && <p> {`${metricKey}: ${varResult}`}</p>}
           {graph && <img height={650} width={650} src={graph} alt={`${metricKey} Graph`} />}
         </div>
       )}

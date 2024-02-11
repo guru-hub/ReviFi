@@ -52,7 +52,7 @@ function ResponsiveAppBar() {
 
   const networks = {
     "BSC": <img height={18} width={18} src={BSCLogo} ></img>,
-    // "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
+    "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
   }
 
   return (
@@ -61,7 +61,7 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
             <div style={{ display: 'flex', paddingLeft: '6rem' }} >
-              <img height={35} width={35} src= {ReviFiLogo} alt="ReviFi Logo" ></img>
+              <img height={35} width={35} src={ReviFiLogo} alt="ReviFi Logo" ></img>
               <Typography
                 variant="h6"
                 noWrap
@@ -173,7 +173,6 @@ function ResponsiveAppBar() {
             {pages.map((page, idx) => (
               <Link key={idx} to={page.toLowerCase()} style={{ textDecoration: 'none' }}>
                 <Button
-                  // onMouseEnter={page === "Products" ? handleOpenUserMenu : null}
                   style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none' }}
                   key={page}
                   onClick={handleCloseNavMenu}
@@ -185,20 +184,21 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center' }} >
-            <FormControl sx={{ m: 1, width: 120 }} size='small' >
+            <FormControl sx={{ m: 1, width: 150 }} size='small' >
               <InputLabel id="demo-simple-select-label">Network</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
+                sx={{ display: 'flex', gap: '1rem' }}
                 value={wallet}
                 label="Wallet"
                 onChange={handleChange}
               >
                 {Object.keys(networks).map((network, idx) => (
-                  <MenuItem key={idx} value={network} sx={{display: 'flex', gap: '1rem'}}>
-                    {networks[network]}
-                    <div>
-                      {network}
+                  <MenuItem key={idx} value={network} sx={{ display: 'flex', gap: '1rem' }}>
+                    <div style={{ display: "flex", gap: '0.5rem' }}>
+                      {networks[network]}
+                      <Typography sx={{ width: "fit-content" }} >{network}</Typography>
                     </div>
                   </MenuItem>
                 ))}

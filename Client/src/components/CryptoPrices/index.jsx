@@ -11,6 +11,8 @@ const CryptoPrices = () => {
   const crypto = useSelector(state => state.data.crypto)
   console.log(crypto);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
+  const totalvalue = useSelector((state) => state.data.totalValue);
+
 
 
   const SymbolToId = {
@@ -52,7 +54,7 @@ const CryptoPrices = () => {
           console.log(error);
         });
     }
-  }, [isConfirmed]);
+  }, [isConfirmed, totalvalue]);
 
 
   return (

@@ -70,7 +70,7 @@ const dataSlice = createSlice({
         },
         updateIsConfirm: (state, action) => {
             state.isConfirmed = action.payload;
-        }
+        },
     },
 });
 

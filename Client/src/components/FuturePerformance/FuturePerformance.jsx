@@ -14,10 +14,10 @@ const FuturePerformance = () => {
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const devServer ="http://localhost:5000/future_performance"
-  const prodServer ="https://api.revifi.xyz/future_performance"
+  const devServer = "http://localhost:5000/future_performance"
+  const prodServer = "https://api.revifi.xyz/future_performance"
+  const totalvalue = useSelector((state) => state.data.totalValue);
 
-  
 
   const SymbolToId = {
     "BTC": "BTC",
@@ -38,16 +38,12 @@ const FuturePerformance = () => {
       setLoading(true);
       const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
-
       const data = {
         coins,
         allocations,
         initial_portfolio_value: 100000,
         time_frame: value,
       };
-
-
-   
       axios
         .post(prodServer, data)
         .then((response) => {
@@ -62,8 +58,7 @@ const FuturePerformance = () => {
           setLoading(false);
         });
     }
-  }, [isConfirmed, value])
-
+  }, [isConfirmed, value, totalvalue])
 
 
   const handleChange = (event, newValue) => {
@@ -93,13 +88,13 @@ const FuturePerformance = () => {
         </Box>
       </div>
       <div>
-      {loading ? (
-        'Calculating...'
-      ) : (
-        <div>
-          {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
-        </div>
-      )}
+        {loading ? (
+          'Calculating...'
+        ) : (
+          <div>
+            {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
+          </div>
+        )}
       </div>
     </div >
   )

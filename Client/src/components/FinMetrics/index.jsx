@@ -5,6 +5,7 @@ import Alert from '@mui/material/Alert';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
+  const [varResult, setVarResult] = useState('');
 
   const metrics = [
     { name: 'Annualized returns', description: 'Returns over the last 4 years : Annualized returns measure the average yearly profit or loss of an investment, adjusted for the investment holding period. This metric helps portfolio managers compare the performance of different investments over varying time frames, enabling more informed decision-making for long-term strategy' },
@@ -16,6 +17,7 @@ const FinMetrics = () => {
   ];
 
   const handleSelectChange = (e) => {
+    setVarResult('')
     const selectedMetric = e.target.value;
     setSelectedMetric(selectedMetric);
   };
@@ -38,21 +40,24 @@ const FinMetrics = () => {
           <div>
             <ul className={styles.list}>
               <li >
-                <div style={{ display: 'flex', justifyContent: 'space-around' }} className='rounded-md p-2'>
-                  <div style={{ width: '100%' }}>
-                    <CalculateFinMetrics metricKey={selectedMetric} />
+                <div style={{ display: 'flex', flexDirection: 'column' }} className='rounded-md p-2'>
+                  <div>
+                    {varResult && <p> {`${selectedMetric}: ${varResult}`}</p>}
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%', overflow: 'auto', alignItems: 'center' }} className='rounded-md p-2'>
-                    <div style={{ display: 'flex' }} >
+                  <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em' }} className='rounded-md p-2'>
+                    <div style={{ display: 'flex', width: '70%' }} >
                       {metrics.map((metric) => (
                         <div key={metric.name}>
                           {metric.name === selectedMetric && (
-                            <Alert severity='info'>
+                            <Alert severity='info' icon={false}>
                               <td>{metric.description}</td>
                             </Alert>
                           )}
                         </div>
                       ))}
+                    </div>
+                    <div style={{ width: '100%' }}>
+                      <CalculateFinMetrics setVarResult={setVarResult} metricKey={selectedMetric} />
                     </div>
                   </div>
                 </div>
