@@ -56,11 +56,11 @@ function ResponsiveAppBar() {
   }
 
   return (
-    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }}>
+    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center', paddingLeft: '8rem', paddingRight: '6rem' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
-            <div style={{ display: 'flex', paddingLeft: '6rem' }} >
+            <div style={{ display: 'flex' }} >
               <img height={35} width={35} src={ReviFiLogo} alt="ReviFi Logo" ></img>
               <Typography
                 variant="h6"
