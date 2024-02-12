@@ -20,6 +20,7 @@ const PieChart = () => {
   const options = {
     'height': 500,
     'width': 600,
+    'backgroundColor': '#F6F6F6'
   };
 
   return (

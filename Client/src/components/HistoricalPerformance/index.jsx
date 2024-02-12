@@ -67,7 +67,6 @@ const HistoricalPerformance = () => {
   return (
     <div>
       <div>
-        <h1 className={`${styles.title} font-bold`}>Historical Performance</h1>
         <Box sx={{ width: '100%' }}>
           <Tabs
             value={value}
@@ -75,6 +74,8 @@ const HistoricalPerformance = () => {
             textColor="primary"
             indicatorColor="primary"
             aria-label="secondary tabs example"
+            sx={{ width: '39rem', border: '1px solid black' }}
+            className='rounded-md'
           >
             <Tab value="1D" label="1D" />
             <Tab value="1W" label="1W" />
@@ -86,12 +87,12 @@ const HistoricalPerformance = () => {
           </Tabs>
         </Box>
       </div>
-      <div>
+      <div className='pt-4' >
         {loading ? (
           'Calculating...'
         ) : (
-          <div>
-            {graph && <img height={400} width={700} src={graph} alt={`Historical Performance Graph`} />}
+          <div className='flex '>
+            {graph && <img className='rounded-lg w-4/6' src={graph} alt={`Historical Performance Graph`} />}
           </div>
         )}
       </div>

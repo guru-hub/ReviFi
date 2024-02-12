@@ -5,33 +5,50 @@ import CryptoPrices from '../../components/CryptoPrices'
 import FinMetrics from '../../components/FinMetrics'
 import HistoricalPerformance from '../../components/HistoricalPerformance'
 import FuturePerformance from '../../components/FuturePerformance/FuturePerformance'
+import styles from './styles.module.css'
 
 const Analysis = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 p-4" >
-      <div style={{ display: 'flex', paddingTop: '2rem', justifyContent: 'space-evenly' }} >
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-24">
+      <div>
         <div>
-          <Portfolio />
+          <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>
         </div>
-        <div>
-          <PieChart />
+        <div className='rounded-lg' style={{ display: 'flex', paddingTop: '2rem', justifyContent: 'space-evenly', backgroundColor: '#F6F6F6' }} >
+          <div>
+            <Portfolio />
+          </div>
+          <div>
+            <PieChart />
+          </div>
         </div>
       </div>
       <div>
         <CryptoPrices />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
-        <div style={{ width: '90%' }}>
+      <div style={{ display: 'flex-col', alignItems: 'center' }} >
+        <h2 className={`${styles["title"]} font-bold pl-2`}>Financial Metrics</h2>
+        <div style={{ width: '100%', backgroundColor: '#F6F6F6' }}>
           <FinMetrics />
         </div>
       </div>
-      <div className='flex justify-center' >
-        <div style={{ display: 'flex', width: '90%', justifyContent: 'space-around', border: '1px solid #ddd' }} className='rounded-md p-2'>
+      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }}>
+        <div style={{ width: '100%' }}>
           <div>
+            <h1 className={`${styles.title} font-bold`}>Historical Performance</h1>
+          </div>
+          <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
             <HistoricalPerformance />
           </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
+        <div style={{ width: '100%' }}>
           <div>
-            <FuturePerformance />
+            <h1 className={`${styles.title} font-bold`}>Future Performance</h1>
+          </div>
+          <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
+            <HistoricalPerformance />
           </div>
         </div>
       </div>

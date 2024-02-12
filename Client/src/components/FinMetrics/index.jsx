@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import styles from './styles.module.css';
 import CalculateFinMetrics from './CalculateFinMetrics';
 import Alert from '@mui/material/Alert';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
@@ -24,16 +28,25 @@ const FinMetrics = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={`${styles["title"]} font-bold pl-2`}>Financial Metrics</h2>
       <div>
-        <select className={styles.select} onChange={handleSelectChange}>
-          <option>Select Metric</option>
-          {metrics.map((metric) => (
-            <option key={metric.name} value={metric.name}>
-              {metric.name}
-            </option>
-          ))}
-        </select>
+        <FormControl sx={{ m: 1, minWidth: 80 }}>
+          <InputLabel id="demo-simple-select-autowidth-label">Select Metrics</InputLabel>
+          <Select
+            sx={{ minWidth: '15rem', backgroundColor: 'white' }}
+            labelId="demo-simple-select-autowidth-label"
+            id="demo-simple-select-autowidth"
+            value={selectedMetric}
+            onChange={handleSelectChange}
+            label="Selected Metrics"
+          >
+            <MenuItem value="">
+              <em>Select Metrics</em>
+            </MenuItem>
+            {metrics.map((metric) => (
+              <MenuItem key={metric.name} value={metric.name}>{metric.name}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       <div>
         {selectedMetric && (

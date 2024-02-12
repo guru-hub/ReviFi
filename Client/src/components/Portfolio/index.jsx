@@ -93,7 +93,7 @@ const Portfolio = () => {
 
   return (
     <div>
-      <Table rows={cryptoData} editRow={handleEditRow} totalValue={totalValue} setModalOpenFunc={setModalOpenFunc} onConfirm={onConfirm}/>
+      <Table rows={cryptoData} editRow={handleEditRow} totalValue={totalValue} setModalOpenFunc={setModalOpenFunc} onConfirm={onConfirm} />
       {modalOpen && (
         <Modal
           closeModal={() => {

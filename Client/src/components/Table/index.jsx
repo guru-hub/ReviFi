@@ -113,9 +113,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   return (
     <div style={{ minWidth: '470px' }} >
-      <div>
-        <h2 className={`font-bold ${styles["title"]}`}> Portfolio Allocation </h2>
-      </div>
       <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`} >
         <div className="text-center">
           Total Balance:
@@ -134,7 +131,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
           )}
         </div>
       </div>
-      <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl w-full">
+      <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl w-full bg-white">
         <thead>
           <tr>
             <th>Asset</th>
@@ -192,7 +189,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tfoot>
       </table>
       <div>
-        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-4" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
+        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-4 bg-white" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
           Confirm Allocation
         </button>
       </div>
