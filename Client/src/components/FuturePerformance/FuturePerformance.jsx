@@ -75,7 +75,7 @@ const FuturePerformance = () => {
             textColor="primary"
             indicatorColor="primary"
             aria-label="secondary tabs example"
-            sx={{ width: '39rem', border: '1px solid black' }}
+            sx={{ width: '39rem', border: '1px solid black', backgroundColor: 'white' }}
             className='rounded-md'
           >
             <Tab value="1D" label="1D" />
