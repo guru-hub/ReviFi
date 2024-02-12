@@ -189,7 +189,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tfoot>
       </table>
       <div>
-        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-4 bg-white" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
+        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-12 bg-white" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
           Confirm Allocation
         </button>
       </div>
