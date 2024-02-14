@@ -16,7 +16,7 @@ const FuturePerformance = () => {
 
   const devServer = "http://localhost:5000/future_performance"
   const prodServer = "https://api.revifi.xyz/future_performance"
-  const totalvalue = useSelector((state) => state.data.totalValue);
+  const totalValue = useSelector((state) => state.data.totalValue);
 
 
   const SymbolToId = {
@@ -41,7 +41,7 @@ const FuturePerformance = () => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: 100000,
+        initial_portfolio_value: totalValue,
         time_frame: value,
       };
       axios
@@ -58,7 +58,7 @@ const FuturePerformance = () => {
           setLoading(false);
         });
     }
-  }, [isConfirmed, value, totalvalue])
+  }, [isConfirmed, value, totalValue])
 
 
   const handleChange = (event, newValue) => {

@@ -13,7 +13,7 @@ const HistoricalPerformance = () => {
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
-  const totalvalue = useSelector((state) => state.data.totalValue);
+  const totalValue = useSelector((state) => state.data.totalValue);
 
 
   const SymbolToId = {
@@ -38,7 +38,7 @@ const HistoricalPerformance = () => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: 100000,
+        initial_portfolio_value: totalValue,
         time_frame: value,
       };
       const devServer = "http://localhost:5000/historical_performance"
@@ -57,7 +57,7 @@ const HistoricalPerformance = () => {
           setLoading(false);
         });
     }
-  }, [isConfirmed, value, totalvalue])
+  }, [isConfirmed, value, totalValue])
 
 
   const handleChange = (event, newValue) => {
