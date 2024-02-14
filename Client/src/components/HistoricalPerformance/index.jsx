@@ -46,7 +46,6 @@ const HistoricalPerformance = () => {
       axios
         .post(prodServer, data)
         .then((response) => {
-          console.log(response.data.graph);
           setVarResult(response.data["historical_performance"]);
           setGraph(`data:image/png;base64,${response.data.graph}`);
         })
