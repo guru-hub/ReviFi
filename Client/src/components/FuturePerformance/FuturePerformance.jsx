@@ -68,7 +68,7 @@ const FuturePerformance = () => {
   return (
     <div>
       <div>
-        <Box className="">
+        <Box>
           <Tabs
             value={value}
             onChange={handleChange}

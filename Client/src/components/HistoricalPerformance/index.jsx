@@ -67,7 +67,7 @@ const HistoricalPerformance = () => {
   return (
     <div>
       <div>
-        <Box sx={{ width: '100%' }}>
+        <Box>
           <Tabs
             value={value}
             onChange={handleChange}

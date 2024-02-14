@@ -10,10 +10,10 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   // const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState('2023-02-04');
-  const [endDate, setEndDate] = useState('2024-02-04');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const cryptoData = useSelector((state) => state.data.crypto);
-  const totalvalue = useSelector((state) => state.data.totalValue);
+  const totalValue = useSelector((state) => state.data.totalValue);
 
 
   const MetricToURL = {
@@ -47,9 +47,8 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
 
       const metricURL = MetricToURL[metricKey];
-      const endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
-      const startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
-
+      setEndDate(moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD'));
+      setStartDate(moment(endDate).subtract(1, 'year').format('YYYY-MM-DD'));
 
       const requestURL = `https://api.revifi.xyz/${metricURL}`;
 
@@ -58,7 +57,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: 100000,
+        initial_portfolio_value: totalValue,
         confidence_level: 0.95,
         start_date: startDate,
         end_date: endDate,
@@ -80,7 +79,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
           setLoading(false);
         });
     }
-  }, [metricKey, startDate, endDate, cryptoData, totalvalue]); // Dependency array ensures the effect runs when these values change
+  }, [metricKey, startDate, endDate, cryptoData, totalValue]); // Dependency array ensures the effect runs when these values change
 
   return (
     <div style={{ width: '' }}>
