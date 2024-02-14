@@ -18,7 +18,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
 
   const MetricToURL = {
     'Annualized returns': 'annualized_returns',
-    Volatility: 'volatility',
+    'Volatility': 'volatility',
     'Value at Risk': 'var',
     'Expected Shortfall': 'expected_shortfall',
     'Sharpe Ratio': 'sharpe_ratio',
@@ -69,7 +69,6 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         .post(requestURL, data)
         .then((response) => {
           setVarResult(response.data[metricURL]);
-          console.log(response.data.graph);
           setGraph(`data:image/png;base64,${response.data.graph}`);
         })
         .catch((error) => {
