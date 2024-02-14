@@ -58,7 +58,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: totalValue,
+        initial_portfolio_value: parseInt(totalValue),
         confidence_level: 0.95,
         start_date: startDate,
         end_date: endDate,
@@ -66,6 +66,8 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         time_frame: '1W',
         benchmark: "BTC-USD"
       };
+
+      console.log(data);
 
       axios
         .post(requestURL, data)

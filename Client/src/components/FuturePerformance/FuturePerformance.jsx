@@ -41,7 +41,7 @@ const FuturePerformance = () => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: totalValue,
+        initial_portfolio_value: parseInt(totalValue),
         time_frame: value,
       };
       axios

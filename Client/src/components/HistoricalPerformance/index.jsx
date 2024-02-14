@@ -38,7 +38,7 @@ const HistoricalPerformance = () => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: totalValue,
+        initial_portfolio_value: parseInt(totalValue),
         time_frame: value,
       };
       const devServer = "http://localhost:5000/historical_performance"
