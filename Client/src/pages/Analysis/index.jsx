@@ -48,7 +48,7 @@ const Analysis = () => {
             <h1 className={`${styles.title} font-bold`}>Future Performance</h1>
           </div>
           <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
-            <HistoricalPerformance />
+            <FuturePerformance />
           </div>
         </div>
       </div>

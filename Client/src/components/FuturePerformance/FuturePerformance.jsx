@@ -44,6 +44,8 @@ const FuturePerformance = () => {
         initial_portfolio_value: parseInt(totalValue),
         time_frame: value,
       };
+      console.log("Working??");
+      console.log(data);
       axios
         .post(prodServer, data)
         .then((response) => {
