@@ -43,6 +43,8 @@ const HistoricalPerformance = () => {
       };
       const devServer = "http://localhost:5000/historical_performance"
       const prodServer = "https://api.revifi.xyz/historical_performance"
+      // console.log(data)
+      // console.log(prodServer)
       axios
         .post(prodServer, data)
         .then((response) => {

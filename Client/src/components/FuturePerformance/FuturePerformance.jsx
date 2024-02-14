@@ -44,8 +44,8 @@ const FuturePerformance = () => {
         initial_portfolio_value: parseInt(totalValue),
         time_frame: value,
       };
-      console.log("Working??");
       console.log(data);
+      console.log(prodServer);
       axios
         .post(prodServer, data)
         .then((response) => {
@@ -53,7 +53,7 @@ const FuturePerformance = () => {
           setGraph(`data:image/png;base64,${response.data.graph}`);;
         })
         .catch((error) => {
-          console.error(`Error fetching Historical Performance data`, error);
+          console.error(`Error fetching Future Performance data`, error);
         })
         .finally(() => {
           setLoading(false);

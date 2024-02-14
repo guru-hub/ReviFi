@@ -39,9 +39,6 @@ const FinMetrics = () => {
             onChange={handleSelectChange}
             label="Selected Metrics"
           >
-            <MenuItem value="">
-              <em>Select Metrics</em>
-            </MenuItem>
             {metrics.map((metric) => (
               <MenuItem key={metric.name} value={metric.name}>{metric.name}</MenuItem>
             ))}
