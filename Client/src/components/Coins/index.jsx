@@ -47,8 +47,8 @@ const Coins = (props) => {
                                 <TableCell align="right">{row.price_change_percentage_7d_in_currency.toFixed(2)}%</TableCell>
                                 <TableCell align="right">{row.price_change_percentage_30d_in_currency.toFixed(2)}%</TableCell>
                                 <TableCell align="right">{((row.allocatedValue) / row.current_price).toFixed(2)}</TableCell>
-                                <TableCell align="right">${(row.allocatedValue).toFixed(2)}</TableCell>
-                                <TableCell align="right">{row.allocation}%</TableCell>
+                                <TableCell align="right">${(row.allocatedValue).toLocaleString()}</TableCell>
+                                <TableCell align="right">{(row.allocation)}%</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
