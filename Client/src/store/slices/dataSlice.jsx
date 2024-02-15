@@ -1,3 +1,4 @@
+// dataSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const dataSlice = createSlice({

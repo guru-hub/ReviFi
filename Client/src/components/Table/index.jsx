@@ -107,8 +107,22 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   };
 
   const handleTotalBalanceBlur = () => {
-    setEditingTotalBalance(false);
-    dispatch(updateInitialValue(newTotalBalance));
+    // Remove currency formatting (e.g., $) and commas from the new total balance
+    const formattedTotalBalanceWithoutCurrency = newTotalBalance.replace(/[$,]/g, '');
+
+    // Convert the formatted balance to a number
+    const newTotalBalanceAsNumber = parseFloat(formattedTotalBalanceWithoutCurrency);
+
+    // Check if the conversion was successful (not NaN)
+    if (!isNaN(newTotalBalanceAsNumber)) {
+      setEditingTotalBalance(false);
+      dispatch(updateInitialValue(newTotalBalanceAsNumber));
+    } else {
+      // Handle the case where the input couldn't be converted to a number (NaN)
+      console.error("Invalid total balance input");
+      // Optionally, you could provide feedback to the user here
+    }
+
   };
 
   return (
