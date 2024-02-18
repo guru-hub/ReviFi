@@ -54,19 +54,17 @@ const FinMetrics = () => {
                   <div>
                     {varResult && <p> {`${selectedMetric}: ${varResult}`}</p>}
                   </div>
-                  <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em' }} className='rounded-md p-2'>
-                    <div style={{ display: 'flex', width: '70%' }} >
+                  <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em', paddingLeft: '5rem' }} className='rounded - md p- 2'>
+                    <div style={{ display: 'flex', width: '30%' }} >
                       {metrics.map((metric) => (
                         <div key={metric.name}>
                           {metric.name === selectedMetric && (
-                            <Alert severity='info' icon={false}>
-                              <td>{metric.description}</td>
-                            </Alert>
+                            <td>{metric.description}</td>
                           )}
                         </div>
                       ))}
                     </div>
-                    <div style={{ width: '100%' }}>
+                    <div style={{ width: '100%', paddingBottom: '2rem' }}>
                       <CalculateFinMetrics setVarResult={setVarResult} metricKey={selectedMetric} />
                     </div>
                   </div>

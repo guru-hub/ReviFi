@@ -90,7 +90,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         'Calculating...'
       ) : (
         <div>
-          {graph && <img height={650} width={650} src={graph} alt={`${metricKey} Graph`} />}
+          {graph && <img height={700} width={750} src={graph} alt={`${metricKey} Graph`} className='rounded-lg' />}
         </div>
       )}
     </div>

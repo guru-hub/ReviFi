@@ -28,7 +28,7 @@ function ResponsiveAppBar() {
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [wallet, setWallet] = React.useState('');
+  const [wallet, setWallet] = React.useState('BSC');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -56,11 +56,11 @@ function ResponsiveAppBar() {
   }
 
   return (
-    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center', paddingLeft: '8rem', paddingRight: '6rem' }}>
+    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center', paddingLeft: '10rem', paddingRight: '8rem' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
-            <div style={{ display: 'flex' }} >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }} >
               <img height={35} width={35} src={ReviFiLogo} alt="ReviFi Logo" ></img>
               <Typography
                 variant="h6"
@@ -137,7 +137,7 @@ function ResponsiveAppBar() {
             REVIFI
           </Typography> */}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '4rem', justifyContent: 'flex-end', paddingRight: '8rem' }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '3rem', justifyContent: 'flex-end', paddingRight: '8rem', alignItems: 'center' }}>
             {/* <Button
               // onClick={handleOpenUserMenu}
               sx={{ my: 2, display: 'block' }}
@@ -173,25 +173,20 @@ function ResponsiveAppBar() {
             {pages.map((page, idx) => (
               <Link key={idx} to={page.toLowerCase()} style={{ textDecoration: 'none' }}>
                 <Button
-                  style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none' }}
+                  style={{ textTransform: 'none', color: '#000000', border: location.pathname === `/${page.toLowerCase()}` ? '2px solid #0047AA' : 'none', backgroundColor: '#F6F6F6' }}
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, display: 'block' }}
+                  sx={{ my: 2, display: 'block', borderRadius: '7px' }}
                 >
                   {page}
                 </Button>
               </Link>
             ))}
-          </Box>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', alignItems: 'center' }} >
-            <FormControl sx={{ m: 1, width: 150 }} size='small' >
-              <InputLabel id="demo-simple-select-label">Network</InputLabel>
+            <FormControl sx={{ m: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} size='small' >
               <Select
-                labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                sx={{ display: 'flex', gap: '1rem' }}
+                sx={{ display: 'flex', gap: '1rem', backgroundColor: '#F6F6F6', borderRadius: '7px', height: '2.3rem', width: 'fit-content' }}
                 value={wallet}
-                label="Wallet"
                 onChange={handleChange}
               >
                 {Object.keys(networks).map((network, idx) => (
@@ -204,8 +199,10 @@ function ResponsiveAppBar() {
                 ))}
               </Select>
             </FormControl>
-            <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>Connect Wallet</Button>
-          </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
+              <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>Connect Wallet</Button>
+            </div>
+          </Box>
 
           {/* This below component you can use it for Mobile Dropdown*/}
           {/* <Box sx={{ flexGrow: 0 }}>

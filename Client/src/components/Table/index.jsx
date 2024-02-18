@@ -43,7 +43,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const [newAllocation, setNewAllocation] = useState(editAllocationValue);
   const [editingTotalBalance, setEditingTotalBalance] = useState(false);
   const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
-
   const inputRef = useRef(null); // Ref to the input field
 
   const currentTotalValue = useSelector((state) => state.data.totalValue);
@@ -108,8 +107,9 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   const handleTotalBalanceBlur = () => {
     // Remove currency formatting (e.g., $) and commas from the new total balance
-    const formattedTotalBalanceWithoutCurrency = newTotalBalance.replace(/[$,]/g, '');
 
+    let temp = newTotalBalance.toString();
+    const formattedTotalBalanceWithoutCurrency = temp.replace(/[$,]/g, '');
     // Convert the formatted balance to a number
     const newTotalBalanceAsNumber = parseFloat(formattedTotalBalanceWithoutCurrency);
 
@@ -131,10 +131,11 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         <div className="text-center">
           Total Balance:
         </div>
-        <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick}>
+        <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick} >
           {editingTotalBalance ? (
             <input
               type="text"
+              autoFocus={editingTotalBalance}
               value={newTotalBalance}
               onChange={handleTotalBalanceChange}
               onBlur={handleTotalBalanceBlur}
@@ -154,7 +155,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
           </tr>
         </thead>
         <tbody style={{ color: "black" }}>
-          {rows.map((row) => (
+          {rows?.map((row) => (
             <React.Fragment key={row.asset}>
               <tr>
                 <td className="flex justify-evenly" >
@@ -168,6 +169,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                     <input
                       ref={inputRef}
                       value={newAllocation}
+                      autoFocus={editingRow === row.asset}
                       onChange={(e) => handleAllocationChange(e, row.asset)}
                       onBlur={(e) => handleAllocationBlur(e, row.asset)}
                     />

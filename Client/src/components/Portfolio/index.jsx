@@ -111,7 +111,7 @@ const Portfolio = () => {
           </div>
         }
         {remainingAllocation !== 0 && (
-          <div>
+          <div className="pb-10" >
             <Alert severity="error">Remaining Allocation: {remainingAllocation}%</Alert>
           </div>
         )}

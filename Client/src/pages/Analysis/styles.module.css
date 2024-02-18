@@ -1,9 +1,9 @@
 .title {
-    font-size: 1.5rem;
-    display: "flex";
-    color: "";
-    margin-bottom: 1rem;
-    background: -webkit-linear-gradient(#0047aa, #0085b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  font-size: 1.8rem;
+  display: "flex";
+  color: "";
+  margin-bottom: 1rem;
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
