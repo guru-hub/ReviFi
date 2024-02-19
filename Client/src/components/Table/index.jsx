@@ -120,6 +120,8 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   };
 
+  console.log(typeof (rows[0].allocatedValue));
+
   return (
     <div style={{ minWidth: '470px' }} >
       <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`} >
@@ -179,10 +181,10 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                     })}%</div>
                   )}
                 </td>
-                <td style={{ textAlign: 'center' }}>${row.allocatedValue.toLocaleString('en-US', {
+                <td style={{ textAlign: 'center' }}>${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
-                })}</td>
+                }))}</td>
                 <td>
                   <span style={{ color: "red", display: 'flex', justifyContent: 'center' }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
