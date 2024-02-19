@@ -2,10 +2,10 @@ import './App.css'
 import Navbar from './components/Navbar/Navbar'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home/Home'
-import Staking from './pages/Home/Staking/Staking'
-import Governance from './pages/Governance/Governance'
+import Staking from './pages/Staking'
+import Governance from './pages/Governance'
 import Analysis from './pages/Analysis'
-import Products from './pages/Home/Products/Products'
+import Products from './pages/Products'
 
 function App() {
   return (

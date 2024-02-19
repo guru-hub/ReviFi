@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import ProductTabs from '../../../components/ProductTabs'
+import ProductTabs from '../components/ProductTabs'
 
 const Products = () => {
   return (

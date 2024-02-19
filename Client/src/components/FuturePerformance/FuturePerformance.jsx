@@ -107,7 +107,7 @@ const FuturePerformance = () => {
           </Tabs>
         </Box>
       </div>
-      <div className='pt-4'>
+      <div className='pt-16'>
         {loading ? (
           'Calculating...'
         ) : (
