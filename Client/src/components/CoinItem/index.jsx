@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "./styles.module.css"
 
 const CoinItem = (props) => {
+    console.log("hwllo");
     return (
         <div className={`${styles["container"]} rounded-md`}>
             <div className="flex justify-center items-center gap-3" >
@@ -11,7 +12,7 @@ const CoinItem = (props) => {
             <p className={styles["text-center"]}>${props.coins.current_price.toLocaleString()}</p>
             <p className={styles["text-center"]}>{props.coins.price_change_percentage_7d_in_currency.toFixed(2)}%</p>
             <p className={styles["text-center"]}>{props.coins.price_change_percentage_30d_in_currency.toFixed(2)}%</p>
-            <p className={styles["text-center"]}>{((props.coins.allocatedValue)/props.coins.current_price).toFixed(2)}</p>
+            <p className={styles["text-center"]}>{((props.coins.allocatedValue) / props.coins.current_price).toFixed(2)}</p>
             <p className={styles["text-center"]}>${(props.coins.allocatedValue).toFixed(2)}</p>
             <p className={styles["text-center"]}>{(props.coins.allocation)}%</p>
         </div>

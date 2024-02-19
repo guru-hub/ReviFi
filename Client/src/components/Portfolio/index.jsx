@@ -12,7 +12,7 @@ const Portfolio = () => {
   const dispatch = useDispatch();
   const cryptoData = useSelector((state) => state.data.crypto);
   let isConfirmed = useSelector((state) => state.data.isConfirmed);
-  const totalValue = 100000;
+  const totalValue = useSelector((state) => state.data.totalValue);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [rowToEdit, setRowToEdit] = useState(null);
@@ -112,7 +112,10 @@ const Portfolio = () => {
         }
         {remainingAllocation !== 0 && (
           <div className="pb-10" >
-            <Alert severity="error">Remaining Allocation: {remainingAllocation}%</Alert>
+            <Alert severity="error">Remaining Allocation: {remainingAllocation.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })}%</Alert>
           </div>
         )}
       </div>

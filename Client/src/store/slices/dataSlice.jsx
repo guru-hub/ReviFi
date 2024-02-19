@@ -23,18 +23,20 @@ const dataSlice = createSlice({
             });
         },
         addCrypto: (state, action) => {
-            const { asset, allocation } = action.payload;
+            let { asset, allocation } = action.payload;
+            allocation = parseFloat(allocation).toFixed(2);
             const totalValue = state.totalValue || 100000;
             const currentTotalAllocation = state.currentTotalAllocation + parseFloat(allocation);
             const allocatedValue = (parseFloat(allocation) / currentTotalAllocation) * totalValue;
             state.currentTotalAllocation = currentTotalAllocation;
             state.crypto.push({ asset, allocation, allocatedValue });
             state.crypto.forEach((crypto) => {
-                const allocatedValue = (parseFloat(crypto.allocation) / 100) * totalValue;
-                crypto.allocatedValue = allocatedValue;
+                const allocatedValue = ((parseFloat(crypto.allocation) / 100) * totalValue);
+                crypto.allocatedValue = allocatedValue.toFixed(2);
+                console.log(crypto.allocatedValue);
             });
-            if(state.currentTotalAllocation!==100){
-                state.isConfirmed=false;
+            if (state.currentTotalAllocation !== 100) {
+                state.isConfirmed = false;
             }
         },
         removeCrypto: (state, action) => {
@@ -46,12 +48,13 @@ const dataSlice = createSlice({
                 const allocatedValue = (parseFloat(crypto.allocation) / 100) * state.totalValue;
                 crypto.allocatedValue = allocatedValue;
             });
-            if(state.currentTotalAllocation!==100){
-                state.isConfirmed=false;
+            if (state.currentTotalAllocation !== 100) {
+                state.isConfirmed = false;
             }
         },
         editCrypto: (state, action) => {
-            const { asset, allocation } = action.payload;
+            let { asset, allocation } = action.payload;
+            allocation = parseFloat(allocation).toFixed(2);
             const index = state.crypto.findIndex((crypto) => crypto.asset === asset);
 
             if (index !== -1) {
@@ -61,11 +64,11 @@ const dataSlice = createSlice({
                 state.currentTotalAllocation = currentTotalAllocation;
                 state.crypto[index] = { asset, allocation, allocatedValue };
                 state.crypto.forEach((crypto) => {
-                    const allocatedValue = (parseFloat(crypto.allocation) / 100) * totalValue;
+                    const allocatedValue = ((parseFloat(crypto.allocation) / 100) * totalValue).toFixed(2);
                     crypto.allocatedValue = allocatedValue;
                 });
-                if(state.currentTotalAllocation!==100){
-                    state.isConfirmed=false;
+                if (state.currentTotalAllocation !== 100) {
+                    state.isConfirmed = false;
                 }
             }
         },
@@ -75,5 +78,5 @@ const dataSlice = createSlice({
     },
 });
 
-export const { addCrypto, removeCrypto, editCrypto, updateInitialValue, updateIsConfirm} = dataSlice.actions;
+export const { addCrypto, removeCrypto, editCrypto, updateInitialValue, updateIsConfirm } = dataSlice.actions;
 export default dataSlice.reducer;

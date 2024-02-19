@@ -35,7 +35,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   };
 
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    setFormState({ ...formState, [e.target.name]: (e.target.value) });
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +49,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
   };
 
   return (
-    <div className={styles["modal-container"]} onClick={(e) => {if (e.target.className === styles["modal-container"]) closeModal();}}>
+    <div className={styles["modal-container"]} onClick={(e) => { if (e.target.className === styles["modal-container"]) closeModal(); }}>
       <div className={styles["modal-content"]}>
         <form className={styles["modal-form"]}>
           <div className={styles["modal-asset"]} >
@@ -76,6 +76,10 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <input
               name="allocation"
               onChange={handleChange}
+              type="number"
+              step={0.01}
+              min={0}
+              max={100}
               value={formState.allocation}
             />
           </div>

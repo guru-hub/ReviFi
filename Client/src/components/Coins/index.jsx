@@ -43,12 +43,30 @@ const Coins = (props) => {
                                         {row.name}
                                     </div>
                                 </TableCell>
-                                <TableCell align="right">${row.current_price.toLocaleString()}</TableCell>
-                                <TableCell align="right">{row.price_change_percentage_7d_in_currency.toFixed(2)}%</TableCell>
-                                <TableCell align="right">{row.price_change_percentage_30d_in_currency.toFixed(2)}%</TableCell>
-                                <TableCell align="right">{((row.allocatedValue) / row.current_price).toFixed(2)}</TableCell>
-                                <TableCell align="right">${(row.allocatedValue).toLocaleString()}</TableCell>
-                                <TableCell align="right">{(row.allocation)}%</TableCell>
+                                <TableCell align="right">${row.current_price.toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}</TableCell>
+                                <TableCell align="right">{row.price_change_percentage_7d_in_currency.toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}%</TableCell>
+                                <TableCell align="right">{row.price_change_percentage_30d_in_currency.toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}%</TableCell>
+                                <TableCell align="right">{((row.allocatedValue) / row.current_price).toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}</TableCell>
+                                <TableCell align="right">${(row.allocatedValue).toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}</TableCell>
+                                <TableCell align="right">{(row.allocation).toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}%</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

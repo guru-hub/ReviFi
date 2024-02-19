@@ -24,7 +24,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const handleDeleteRow = (asset) => {
     dispatch(removeCrypto(asset));
   };
-
   const SymbolLogo = {
     "BTC": <img src={BTCLogo} height={30} width={30}></img>,
     "ETH": <img src={ETHLogo} height={30} width={30}></img>,
@@ -44,8 +43,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const [editingTotalBalance, setEditingTotalBalance] = useState(false);
   const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
   const inputRef = useRef(null); // Ref to the input field
-
-  const currentTotalValue = useSelector((state) => state.data.totalValue);
 
   const handleConfirm = () => {
     rows.forEach((crypto) => {
@@ -70,7 +67,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   const handleAllocationChange = (e, asset) => {
     const newAllocation = e.target.value;
-    setNewAllocation(newAllocation);
+    setNewAllocation(parseFloat(newAllocation));
   };
 
   const handleAllocationBlur = (e, asset) => {
@@ -102,21 +99,19 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   };
 
   const handleTotalBalanceChange = (e) => {
-    setNewTotalBalance(e.target.value);
+    const number = e.target.value;
+    setNewTotalBalance(parseFloat(number));
   };
 
   const handleTotalBalanceBlur = () => {
-    // Remove currency formatting (e.g., $) and commas from the new total balance
-
     let temp = newTotalBalance.toString();
     const formattedTotalBalanceWithoutCurrency = temp.replace(/[$,]/g, '');
-    // Convert the formatted balance to a number
-    const newTotalBalanceAsNumber = parseFloat(formattedTotalBalanceWithoutCurrency);
 
+    const newTotalBalanceAsNumber = parseFloat(formattedTotalBalanceWithoutCurrency);
     // Check if the conversion was successful (not NaN)
     if (!isNaN(newTotalBalanceAsNumber)) {
       setEditingTotalBalance(false);
-      dispatch(updateInitialValue(newTotalBalanceAsNumber));
+      dispatch(updateInitialValue(newTotalBalanceAsNumber.toFixed(2)));
     } else {
       // Handle the case where the input couldn't be converted to a number (NaN)
       console.error("Invalid total balance input");
@@ -134,7 +129,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick} >
           {editingTotalBalance ? (
             <input
-              type="text"
+              type="number" min="0" step="0.01"
               autoFocus={editingTotalBalance}
               value={newTotalBalance}
               onChange={handleTotalBalanceChange}
@@ -142,7 +137,10 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
               style={{ color: "black" }}
             />
           ) : (
-            `$${currentTotalValue.toLocaleString()}`
+            `$${newTotalBalance.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })}`
           )}
         </div>
       </div>
@@ -169,15 +167,22 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                     <input
                       ref={inputRef}
                       value={newAllocation}
+                      type="number"
                       autoFocus={editingRow === row.asset}
                       onChange={(e) => handleAllocationChange(e, row.asset)}
                       onBlur={(e) => handleAllocationBlur(e, row.asset)}
                     />
                   ) : (
-                    <div style={{ textAlign: 'center' }} className="cursor-pointer" onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation}%</div>
+                    <div style={{ textAlign: 'center' }} className="cursor-pointer" onClick={() => handleEditClick(row.asset, row.allocation)}>{row.allocation.toLocaleString('en-US', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}%</div>
                   )}
                 </td>
-                <td style={{ textAlign: 'center' }}>${row.allocatedValue}</td>
+                <td style={{ textAlign: 'center' }}>${row.allocatedValue.toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}</td>
                 <td>
                   <span style={{ color: "red", display: 'flex', justifyContent: 'center' }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
@@ -192,7 +197,10 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
             <td colSpan="0" style={{ textAlign: 'center' }} >
               <strong>Total Allocation:</strong>
             </td>
-            <td style={{ textAlign: 'center' }}>{currentTotalAllocation}%</td>
+            <td style={{ textAlign: 'center' }}>{currentTotalAllocation.toLocaleString('en-US', {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2
+            })}%</td>
             <td>
               <button className="font-sans font-bold text-black p-1 rounded-md w-full" style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={setModalOpenFunc}>
                 <div>
