@@ -1,5 +1,4 @@
 import React from 'react'
-import CoinItem from '../CoinItem/index'
 import styles from "./styles.module.css"
 import { Link } from 'react-router-dom'
 import Table from '@mui/material/Table';
@@ -59,10 +58,10 @@ const Coins = (props) => {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2
                                 })}</TableCell>
-                                <TableCell align="right">${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
+                                <TableCell align="right">${(row.allocatedValue).toLocaleString('en-US', {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2
-                                }))}</TableCell>
+                                })}</TableCell>
                                 <TableCell align="right">{(row.allocation).toLocaleString('en-US', {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2

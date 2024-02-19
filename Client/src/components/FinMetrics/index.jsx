@@ -51,9 +51,6 @@ const FinMetrics = () => {
             <ul className={styles.list}>
               <li >
                 <div style={{ display: 'flex', flexDirection: 'column' }} className='rounded-md p-2'>
-                  <div>
-                    {varResult && <p> {`${selectedMetric}: ${varResult}`}</p>}
-                  </div>
                   <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em', paddingLeft: '5rem' }} className='rounded - md p- 2'>
                     <div style={{ display: 'flex', width: '30%' }} >
                       {metrics.map((metric) => (

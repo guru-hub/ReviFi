@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addCrypto, editCrypto, updateIsConfirm } from "../../store/slices/dataSlice";
-import { Table } from "../Table/index";
-import { Modal } from "../Modal";
+import { Table } from "../Table/Table";
+import { Modal } from "../Modal/Modal";
 import Alert from '@mui/material/Alert';
 import styles from "./styles.module.css";
 import { ToastContainer, toast } from 'react-toastify';

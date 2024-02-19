@@ -78,7 +78,6 @@ const HistoricalPerformance = () => {
             sx={{ width: '39rem', border: '1px solid black', backgroundColor: 'white' }}
             className='rounded-md'
           >
-            <Tab value="1D" label="1D" />
             <Tab value="1W" label="1W" />
             <Tab value="1M" label="1M" />
             <Tab value="3M" label="3M" />

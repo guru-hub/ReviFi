@@ -82,7 +82,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
           setLoading(false);
         });
     }
-  }, [metricKey, startDate, endDate, cryptoData, totalValue]); // Dependency array ensures the effect runs when these values change
+  }, [metricKey, startDate, endDate, cryptoData, totalValue]);
 
   return (
     <div style={{ width: '' }}>

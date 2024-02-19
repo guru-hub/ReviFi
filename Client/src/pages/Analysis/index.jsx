@@ -1,6 +1,6 @@
 import React from 'react'
 import Portfolio from '../../components/Portfolio'
-import PieChart from '../../components/PieChart'
+import PieChart from '../../components/PieChart/PieChart'
 import CryptoPrices from '../../components/CryptoPrices'
 import FinMetrics from '../../components/FinMetrics'
 import HistoricalPerformance from '../../components/HistoricalPerformance'
