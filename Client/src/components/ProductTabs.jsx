@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Analysis from "../pages/Analysis";
 import Governance from '../pages/Governance';
 import TabContext from '@mui/lab/TabContext';
@@ -39,14 +39,14 @@ const ProductTabs = () => {
     };
     return (
         <div>
-            <div style={{ width: '100%' }}>
+            <div style={{ width: '100%', paddingTop: '0.5rem' }}>
                 <TabContext value={value}>
                     <Box sx={{
-                        borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '1em',
+                        borderColor: 'divider', display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0.5em',
                     }}>
-                        <TabList TabIndicatorProps={{ hidden: true }} onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6', padding: '0.1rem' }} sx={{ "& button.Mui-selected": { border: '2px solid #0047AA', color: 'black' } }}>
+                        <TabList TabIndicatorProps={{ hidden: true }} onChange={handleChange} aria-label="lab API tabs example" style={{ borderRadius: '0.5em', backgroundColor: '#E6E6E6', padding: '0.2rem', fontSize: '0.8rem', minHeight: '30px' }} sx={{ "& button.Mui-selected": { border: '2px solid #0047AA', color: 'black' } }}>
                             {Object.keys(panels).map((panel, index) => (
-                                <Tab className='' key={index} label={panel} value={panel} sx={{ margin: '5px', backgroundColor: 'white', borderRadius: '0.5em' }} />
+                                <Tab className='' key={index} label={panel} value={panel} sx={{ margin: '3px', backgroundColor: 'white', borderRadius: '0.5em', minHeight: 'auto' }} />
                             ))}
                         </TabList>
                     </Box>
