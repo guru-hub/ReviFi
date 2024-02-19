@@ -4,29 +4,12 @@
   justify-content: flex-start;
   padding-left: 12em;
   padding-top: 8em;
-  background-image: url('../../assets/images/background.png');
+  background-image: url("../../assets/images/background.png");
   background-size: cover;
-}
-
-.inner-container {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  height: 400px;
-}
-
-.title {
-  color: #000;
 }
 
 .gradient {
   background: -webkit-linear-gradient(#0047aa, #0085b6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.buttons {
-    display: flex;
-    gap: 2em;
-    width: 100%;
 }
