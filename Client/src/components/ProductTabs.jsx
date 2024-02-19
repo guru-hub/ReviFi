@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Analysis from "../pages/Analysis";
-import Governance from '../pages/Governance';
+import Governance from '../pages/Governance/Governance';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';

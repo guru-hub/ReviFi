@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useSelector } from 'react-redux';
-import FinMetrics from '../FinMetrics'
+import FinMetrics from '../FinMetrics/FinMetrics'
 import styles from "./styles.module.css";
 import axios from 'axios';
 
@@ -44,18 +44,13 @@ const PieChart = () => {
     }
   }, [isConfirmed, totalValue]);
 
-  const options = {
-    'height': 500,
-    'width': 600,
-    'backgroundColor': '#F6F6F6'
-  };
 
   let apiName = 'https://api.revifi.xyz/generate_pie_chart'
 
   return (
     <div className={styles["container"]}>
       <div>
-        {graph && <img height={700} width={700} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />}
+        {graph && <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />}
       </div>
     </div>
   );

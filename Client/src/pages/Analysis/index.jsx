@@ -1,9 +1,9 @@
 import React from 'react'
-import Portfolio from '../../components/Portfolio'
+import Portfolio from '../../components/Portfolio/Portfolio'
 import PieChart from '../../components/PieChart/PieChart'
-import CryptoPrices from '../../components/CryptoPrices'
-import FinMetrics from '../../components/FinMetrics'
-import HistoricalPerformance from '../../components/HistoricalPerformance'
+import CryptoPrices from '../../components/CryptoPrices/CryptoPrices'
+import FinMetrics from '../../components/FinMetrics/FinMetrics'
+import HistoricalPerformance from '../../components/HistoricalPerformance/HistoricalPerformance'
 import FuturePerformance from '../../components/FuturePerformance/FuturePerformance'
 import styles from './styles.module.css'
 

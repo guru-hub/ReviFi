@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Routes, Route } from 'react-router-dom'
-import Coins from '../Coins/index'
+import Coins from '../Coins/Coins'
 import styles from "./styles.module.css"
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -12,8 +12,6 @@ const CryptoPrices = () => {
   console.log(crypto);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalvalue = useSelector((state) => state.data.totalValue);
-
-
 
   const SymbolToId = {
     "BTC": "bitcoin",

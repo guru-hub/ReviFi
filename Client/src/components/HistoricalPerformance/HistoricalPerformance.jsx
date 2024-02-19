@@ -67,16 +67,34 @@ const HistoricalPerformance = () => {
 
   return (
     <div>
-      <div>
+      <div className='flex justify-between'>
+        <div className='flex-col'>
+          <div>
+            Total Value
+          </div>
+          <div className='flex items-end gap-4'>
+            <div className='text-5xl font-bold' >
+              ${totalValue.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
+            </div>
+            <div className='text-lg' style={{ color: '#00DF51' }} >
+              +23.47%
+            </div>
+            <div className='text-lg' style={{ color: '#727272' }}>
+              Past {value}
+            </div>
+          </div>
+        </div>
         <Box>
           <Tabs
             value={value}
             onChange={handleChange}
-            textColor="primary"
-            indicatorColor="primary"
             aria-label="secondary tabs example"
-            sx={{ width: '39rem', border: '1px solid black', backgroundColor: 'white' }}
+            sx={{ width: '34rem', border: '1px solid black', backgroundColor: 'white', "& button.Mui-selected": { background: "linear-gradient(#0047AA, #0085B6)", color: 'white' } }}
             className='rounded-md'
+            TabIndicatorProps={{ style: { background: 'linear-gradient(#0047AA, #0085B6)' } }}
           >
             <Tab value="1W" label="1W" />
             <Tab value="1M" label="1M" />
@@ -87,7 +105,7 @@ const HistoricalPerformance = () => {
           </Tabs>
         </Box>
       </div>
-      <div className='pt-4' >
+      <div className='pt-16' >
         {loading ? (
           'Calculating...'
         ) : (
