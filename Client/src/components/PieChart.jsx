@@ -43,12 +43,12 @@ const PieChart = () => {
   let apiName = 'https://api.revifi.xyz/generate_pie_chart'
 
   return (
-    <div>
+    <div className="pt-[1.2rem]" >
       {loading ?
         <div className="flex justify-center items-center pt-52" >
           <CircularProgress />
         </div>
-        : <div>
+        : <div className="" >
           {graph && <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />}
         </div>}
     </div>
