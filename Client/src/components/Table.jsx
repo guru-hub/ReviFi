@@ -118,14 +118,14 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   return (
     <div style={{ minWidth: '470px' }} >
-      <div className='flex-col items-center my-5 font-sans text-white bg-gradient-to-b from-[#0047aa] to-[#0085b6] py-[4px] px-[20px] border-none rounded-[5px] cursor-pointer'>
+      <div className='flex-col items-center my-5 font-sans text-white bg-gradient-to-b from-[#0047aa] to-[#0085b6] py-[10px] px-[20px] border-none rounded-[5px] cursor-pointer'>
         <div className="text-center">
           Total Balance:
         </div>
         <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick} >
           {editingTotalBalance ? (
             <input
-              className="w-full p-[12px] box-border border-[1px] border-[#ddd] rounded-[5px] mb-[10px]"
+              className="w-full p-[8px] box-border border-[1px] border-[#ddd] rounded-[5px]"
               type="number" min="0" step="0.01"
               autoFocus={editingTotalBalance}
               value={newTotalBalance}
@@ -159,7 +159,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                   </div>
                   <span>{row.asset}</span>
                 </td>
-                <td  className="p-[10px]">
+                <td className="p-[10px]">
                   {editingRow === row.asset ? (
                     <input
                       ref={inputRef}
@@ -176,11 +176,11 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                     })}%</div>
                   )}
                 </td>
-                <td  className="p-[10px]" style={{ textAlign: 'center' }}>${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
+                <td className="p-[10px]" style={{ textAlign: 'center' }}>${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 }))}</td>
-                <td  className="p-[10px]">
+                <td className="p-[10px]">
                   <span style={{ color: "red", display: 'flex', justifyContent: 'center' }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
                   </span>
@@ -191,14 +191,14 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tbody>
         <tfoot>
           <tr>
-            <td  className="p-[10px]" colSpan="0" style={{ textAlign: 'center' }} >
+            <td className="p-[10px]" colSpan="0" style={{ textAlign: 'center' }} >
               <strong>Total Allocation:</strong>
             </td>
-            <td  className="p-[10px]" style={{ textAlign: 'center' }}>{currentTotalAllocation.toLocaleString('en-US', {
+            <td className="p-[10px]" style={{ textAlign: 'center' }}>{currentTotalAllocation.toLocaleString('en-US', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
             })}%</td>
-            <td  className="p-[10px]">
+            <td className="p-[10px]">
               <button className="font-sans font-bold text-black p-1 rounded-md w-full" style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={setModalOpenFunc}>
                 <div>
                   <AddIcon fontSize="small" />

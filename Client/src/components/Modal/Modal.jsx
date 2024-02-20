@@ -1,5 +1,3 @@
-// Your Modal Component
-
 import React, { useState } from "react";
 import styles from "./styles.module.css";
 

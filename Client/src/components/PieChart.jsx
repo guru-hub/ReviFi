@@ -8,9 +8,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 const PieChart = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   console.log(cryptoData);
-  const [chartData, setChartData] = useState([["Asset", "Allocation"]]);
-  const [coins, setCoins] = useState([]);
-  const [allocations, setAllocations] = useState([]);
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [graph, setGraph] = useState('');
@@ -20,9 +17,7 @@ const PieChart = () => {
     if (isConfirmed == true) {
       setLoading(true);
       const coins = cryptoData.map((crypto) => crypto.asset);
-      setCoins(coins);
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
-      setAllocations(allocations);
       console.log(coins);
       console.log(allocations);
       let payload = {
