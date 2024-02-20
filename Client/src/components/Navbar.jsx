@@ -13,15 +13,19 @@ import styles from './components.module.css';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import BSCLogo from '../assets/images/binance-coin-bnb-seeklogo.svg';
+import { useMetaMask } from "../Hooks/useMetamask";
 
 const pages = ['Products', 'Staking', 'Governance'];
-const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi Wallets', 'Analysis'];
+const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi networks', 'Analysis'];
 
 function ResponsiveAppBar() {
+  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
+  console.log(wallet);
+
   const location = useLocation();
   const [, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const [wallet, setWallet] = React.useState('BSC');
+  const [network, setNetwork] = React.useState('BSC');
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -40,7 +44,7 @@ function ResponsiveAppBar() {
 
 
   const handleChange = (event) => {
-    setWallet(event.target.value);
+    setNetwork(event.target.value);
   };
 
   const networks = {
@@ -178,8 +182,8 @@ function ResponsiveAppBar() {
             <FormControl sx={{ m: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }} size='small' >
               <Select
                 id="demo-simple-select"
-                sx={{ display: 'flex', gap: '1rem', backgroundColor: '#F6F6F6', borderRadius: '7px', height: '2.3rem', width: 'fit-content' }}
-                value={wallet}
+                sx={{ display: 'flex', gap: '1rem', backgroundColor: '#F6F6F6', height: '2.3rem', width: 'fit-content', '.MuiOutlinedInput-notchedOutline': { border: 0 } }}
+                value={network}
                 onChange={handleChange}
               >
                 {Object.keys(networks).map((network, idx) => (
@@ -193,7 +197,9 @@ function ResponsiveAppBar() {
               </Select>
             </FormControl>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-              <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>Connect Wallet</Button>
+              <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>
+                {!hasProvider ? "Install Metamask" : (isConnecting ? "Connecting..." : (wallet.accounts.length ? wallet.accounts.slice(0, 6) + "..." + wallet.accounts.slice(-4) : "Connect Metamask"))}
+              </Button>
             </div>
           </Box>
 

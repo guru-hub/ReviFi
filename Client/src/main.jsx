@@ -5,11 +5,14 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom';
 import store from './store/index.jsx';
 import { Provider } from 'react-redux';
+import { MetamaskContextProvider } from './Hooks/useMetamask.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
+  <MetamaskContextProvider>
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>
+  </MetamaskContextProvider>
 )

@@ -1,6 +1,6 @@
-import React from 'react'
-import styles from "./styles.module.css"
-import { Link } from 'react-router-dom'
+import React from 'react';
+import styles from "./styles.module.css";
+import { Link } from 'react-router-dom';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,9 +12,9 @@ import { tableCellClasses } from "@mui/material/TableCell";
 
 const Coins = (props) => {
     return (
-        <div className={styles["container"]}>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650, backgroundColor: '#F6F6F6' }} aria-label="simple table">
+        <div className={styles["container"]} style={{ boxShadow: 'none', border: 'none' }}>
+            <TableContainer component={Paper} style={{ boxShadow: 'none', border: 'none' }}>
+                <Table sx={{ minWidth: 650, backgroundColor: '#F6F6F6', boxShadow: 'none', border: 'none' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Asset</TableCell>
@@ -75,4 +75,4 @@ const Coins = (props) => {
     )
 }
 
-export default Coins
+export default Coins;

@@ -12,7 +12,7 @@ const FinMetrics = () => {
   const [varResult, setVarResult] = useState('');
 
   const metrics = [
-    { name: 'Annualized returns', description: 'Returns over the last 4 years : Annualized returns measure the average yearly profit or loss of an investment, adjusted for the investment holding period. This metric helps portfolio managers compare the performance of different investments over varying time frames, enabling more informed decision-making for long-term strategy' },
+    { name: 'Annualized returns', description: ' Annualized returns measure the average yearly profit or loss of an investment, adjusted for the investment holding period. This metric helps portfolio managers compare the performance of different investments over varying time frames, enabling more informed decision-making for long-term strategy' },
     { name: 'Volatility', description: 'Measure of the dispersion of returns : Volatility represents the degree of variation in the price of an investment over time, indicating its risk level. It is crucial for portfolio managers to assess volatility to understand the potential for price swings, aiding in risk management and asset allocation decisions. ' },
     { name: 'Value at Risk', description: 'Estimated maximum loss under normal conditions : The 95% Value-at-Risk (VaR) quantifies the maximum expected loss on an investment over a specified period with 95% confidence. It helps portfolio managers gauge the risk of significant losses, serving as a critical tool for financial risk assessment and portfolio risk management' },
     { name: 'Expected Shortfall', description: 'Average loss beyond the Value at Risk : The 95% Expected Shortfall (ES) estimates the average loss that exceeds the 95% Value-at-Risk, focusing on the tail end of the loss distribution. It provides portfolio managers with insight into the extreme risk an investment might face, which is crucial for understanding and managing the potential for severe loss' },
@@ -54,10 +54,28 @@ const FinMetrics = () => {
                   <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em', paddingLeft: '5rem' }} className='rounded - md p- 2'>
                     <div style={{ display: 'flex', width: '30%' }} >
                       {metrics.map((metric) => (
-                        <div key={metric.name}>
-                          {metric.name === selectedMetric && (
-                            <td>{metric.description}</td>
-                          )}
+                        <div className="flex-col" key={metric.name}>
+                          <div>
+                            {metric.name === selectedMetric && (
+                              <div className='' >
+                                <td>{metric.name}</td>
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            {metric.name === selectedMetric && (
+                              <div>
+                                <td>{varResult}</td>
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            {metric.name === selectedMetric && (
+                              <div>
+                                <td>{metric.description}</td>
+                              </div>
+                            )}
+                          </div>
                         </div>
                       ))}
                     </div>

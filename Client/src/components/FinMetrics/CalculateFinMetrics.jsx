@@ -13,8 +13,6 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   const [endDate, setEndDate] = useState('');
   const cryptoData = useSelector((state) => state.data.crypto);
   const totalValue = useSelector((state) => state.data.totalValue);
-  console.log(totalValue);
-
 
   const MetricToURL = {
     'Annualized returns': 'annualized_returns',
