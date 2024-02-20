@@ -73,6 +73,7 @@ export const Modal = ({ closeModal, onSubmit, defaultValue }) => {
             <label htmlFor="allocation">Allocation %</label>
             <input
               name="allocation"
+              className="w-full p-[8px] box-border border-[1px] border-[#ddd] rounded-[5px]"
               onChange={handleChange}
               type="number"
               step={0.01}
