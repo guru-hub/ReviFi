@@ -58,10 +58,10 @@ const Coins = (props) => {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2
                                 })}</TableCell>
-                                <TableCell align="right">${(row.allocatedValue).toLocaleString('en-US', {
+                                <TableCell align="right">${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2
-                                })}</TableCell>
+                                }))}</TableCell>
                                 <TableCell align="right">{(row.allocation).toLocaleString('en-US', {
                                     minimumFractionDigits: 2,
                                     maximumFractionDigits: 2
