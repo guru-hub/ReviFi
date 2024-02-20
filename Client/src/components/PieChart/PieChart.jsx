@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import FinMetrics from '../FinMetrics/FinMetrics'
 import styles from "./styles.module.css";
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const PieChart = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -48,10 +49,14 @@ const PieChart = () => {
   let apiName = 'https://api.revifi.xyz/generate_pie_chart'
 
   return (
-    <div className={styles["container"]}>
-      <div>
-        {graph && <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />}
-      </div>
+    <div>
+      {loading ?
+        <div className="flex justify-center items-center pt-52" >
+          <CircularProgress />
+        </div>
+        : <div>
+          {graph && <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />}
+        </div>}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const FuturePerformance = () => {
   const [value, setValue] = useState('1W');
@@ -12,7 +13,7 @@ const FuturePerformance = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const devServer = "http://localhost:5000/future_performance"
   const prodServer = "https://api.revifi.xyz/future_performance"
@@ -68,7 +69,7 @@ const FuturePerformance = () => {
 
   return (
     <div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-end'>
         <div className='flex-col'>
           <div>
             Total Value
@@ -107,12 +108,14 @@ const FuturePerformance = () => {
           </Tabs>
         </Box>
       </div>
-      <div className='pt-16'>
+      <div className='pt-16 flex justify-center'>
         {loading ? (
-          'Calculating...'
+          <div className='flex justify-center' >
+            <CircularProgress />
+          </div>
         ) : (
           <div>
-            {graph && <img className='rounded-lg w-4/6' src={graph} alt={`Historical Performance Graph`} />}
+            {graph && <img className='rounded-lg' src={graph} alt={`Future Performance Graph`} />}
           </div>
         )}
       </div>

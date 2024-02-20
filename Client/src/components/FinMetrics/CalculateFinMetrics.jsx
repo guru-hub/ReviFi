@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-
-
+import CircularProgress from '@mui/material/CircularProgress';
 
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
 
@@ -87,7 +86,9 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   return (
     <div style={{ width: '' }}>
       {loading ? (
-        'Calculating...'
+        <div className='flex justify-center'>
+          <CircularProgress />
+        </div>
       ) : (
         <div>
           {graph && <img height={700} width={750} src={graph} alt={`${metricKey} Graph`} className='rounded-lg' />}

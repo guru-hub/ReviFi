@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const HistoricalPerformance = () => {
   const [value, setValue] = useState('1W');
@@ -67,7 +68,7 @@ const HistoricalPerformance = () => {
 
   return (
     <div>
-      <div className='flex justify-between'>
+      <div className='flex justify-between items-end'>
         <div className='flex-col'>
           <div>
             Total Value
@@ -105,12 +106,14 @@ const HistoricalPerformance = () => {
           </Tabs>
         </Box>
       </div>
-      <div className='pt-16' >
+      <div className='pt-16 flex justify-center' >
         {loading ? (
-          'Calculating...'
+          <div className='flex justify-center'>
+            <CircularProgress />
+          </div>
         ) : (
           <div className='flex '>
-            {graph && <img className='rounded-lg w-4/6' src={graph} alt={`Historical Performance Graph`} />}
+            {graph && <img className='rounded-lg' src={graph} alt={`Historical Performance Graph`} />}
           </div>
         )}
       </div>
