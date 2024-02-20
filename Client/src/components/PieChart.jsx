@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import { useSelector } from 'react-redux';
-import FinMetrics from '../FinMetrics/FinMetrics'
-import styles from "./styles.module.css";
+import FinMetrics from './FinMetrics/FinMetrics'
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 

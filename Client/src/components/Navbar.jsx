@@ -2,31 +2,24 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import ReviFiLogo from "../../assets/images/logo.ico"
+import ReviFiLogo from "../assets/images/logo.ico"
 import { Link, useLocation } from 'react-router-dom';
-import styles from './styles.module.css';
+import styles from './components.module.css';
 import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import BSCLogo from '../../assets/images/binance-coin-bnb-seeklogo.svg';
-import metamaskLogo from '../../assets/images/Metamask-icon.png';
+import BSCLogo from '../assets/images/binance-coin-bnb-seeklogo.svg';
 
 const pages = ['Products', 'Staking', 'Governance'];
 const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi Wallets', 'Analysis'];
 
 function ResponsiveAppBar() {
   const location = useLocation();
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [wallet, setWallet] = React.useState('BSC');
 

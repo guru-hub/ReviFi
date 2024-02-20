@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { removeCrypto, editCrypto, updateInitialValue } from "../../store/slices/dataSlice";
-import styles from "./styles.module.css";
-import BTCLogo from "../../assets/images/bitcoin-btc-logo.png";
-import ETHLogo from "../../assets/images/ethereum-eth-logo.png";
-import BNBLogo from "../../assets/images/bnb-bnb-logo.png";
-import USDTLogo from "../../assets/images/tether-usdt-logo.png";
-import SOLLogo from "../../assets/images/solana-sol-logo.png";
-import LTCLogo from "../../assets/images/litecoin-ltc-logo.png";
-import XRPLogo from "../../assets/images/xrp-xrp-logo.png";
-import TRXLogo from "../../assets/images/tron-trx-logo.png";
-import ADALogo from "../../assets/images/cardano-ada-logo.png";
-import DOTLogo from "../../assets/images/polkadot-new-dot-logo.png";
+import { removeCrypto, editCrypto, updateInitialValue } from "../store/slices/dataSlice";
+import BTCLogo from "../assets/images/bitcoin-btc-logo.png";
+import ETHLogo from "../assets/images/ethereum-eth-logo.png";
+import BNBLogo from "../assets/images/bnb-bnb-logo.png";
+import USDTLogo from "../assets/images/tether-usdt-logo.png";
+import SOLLogo from "../assets/images/solana-sol-logo.png";
+import LTCLogo from "../assets/images/litecoin-ltc-logo.png";
+import XRPLogo from "../assets/images/xrp-xrp-logo.png";
+import TRXLogo from "../assets/images/tron-trx-logo.png";
+import ADALogo from "../assets/images/cardano-ada-logo.png";
+import DOTLogo from "../assets/images/polkadot-new-dot-logo.png";
 import AddIcon from '@mui/icons-material/Add';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -119,13 +118,14 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
 
   return (
     <div style={{ minWidth: '470px' }} >
-      <div className={`${styles["btn"]} flex-col items-center my-5 font-sans`} >
+      <div className='flex-col items-center my-5 font-sans text-white bg-gradient-to-b from-[#0047aa] to-[#0085b6] py-[4px] px-[20px] border-none rounded-[5px] cursor-pointer'>
         <div className="text-center">
           Total Balance:
         </div>
         <div className="text-center text-4xl color-black" onClick={handleTotalBalanceClick} >
           {editingTotalBalance ? (
             <input
+              className="w-full p-[12px] box-border border-[1px] border-[#ddd] rounded-[5px] mb-[10px]"
               type="number" min="0" step="0.01"
               autoFocus={editingTotalBalance}
               value={newTotalBalance}
@@ -144,22 +144,22 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
       <table className="shadow-[inset_0_0_4px_rgba(0,0,0,0.15)] rounded-xl w-full bg-white">
         <thead>
           <tr>
-            <th>Asset</th>
-            <th>Allocation</th>
-            <th>Allocated Value</th>
+            <th className="p-[10px]">Asset</th>
+            <th className="p-[10px]">Allocation</th>
+            <th className="p-[10px]">Allocated Value</th>
           </tr>
         </thead>
         <tbody style={{ color: "black" }}>
           {rows?.map((row) => (
             <React.Fragment key={row.asset}>
               <tr>
-                <td className="flex justify-evenly" >
+                <td className="flex justify-evenly p-[10px]" >
                   <div>
                     {SymbolLogo[row.asset]}
                   </div>
                   <span>{row.asset}</span>
                 </td>
-                <td>
+                <td  className="p-[10px]">
                   {editingRow === row.asset ? (
                     <input
                       ref={inputRef}
@@ -176,11 +176,11 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
                     })}%</div>
                   )}
                 </td>
-                <td style={{ textAlign: 'center' }}>${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
+                <td  className="p-[10px]" style={{ textAlign: 'center' }}>${(parseFloat(row.allocatedValue).toLocaleString('en-US', {
                   minimumFractionDigits: 2,
                   maximumFractionDigits: 2
                 }))}</td>
-                <td>
+                <td  className="p-[10px]">
                   <span style={{ color: "red", display: 'flex', justifyContent: 'center' }} className="cursor-pointer">
                     <BsFillTrashFill onClick={() => handleDeleteRow(row.asset)} />
                   </span>
@@ -191,14 +191,14 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tbody>
         <tfoot>
           <tr>
-            <td colSpan="0" style={{ textAlign: 'center' }} >
+            <td  className="p-[10px]" colSpan="0" style={{ textAlign: 'center' }} >
               <strong>Total Allocation:</strong>
             </td>
-            <td style={{ textAlign: 'center' }}>{currentTotalAllocation.toLocaleString('en-US', {
+            <td  className="p-[10px]" style={{ textAlign: 'center' }}>{currentTotalAllocation.toLocaleString('en-US', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2
             })}%</td>
-            <td>
+            <td  className="p-[10px]">
               <button className="font-sans font-bold text-black p-1 rounded-md w-full" style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={setModalOpenFunc}>
                 <div>
                   <AddIcon fontSize="small" />

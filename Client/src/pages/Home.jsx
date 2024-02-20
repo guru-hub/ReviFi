@@ -1,9 +1,9 @@
-import styles from './styles.module.css';
+import styles from './pages.module.css';
 import Button from '@mui/material/Button';
 
 const Home = () => {
   return (
-    <div style={{}} className={styles["container"]}>
+    <div style={{}} className={styles["home-container"]}>
       <div className="flex-col w-1/2 h-[400px]">
         <div className="text-black">
           <div style={{ fontSize: '62px', fontWeight: '400' }} >

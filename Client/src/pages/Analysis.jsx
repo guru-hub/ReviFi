@@ -1,11 +1,11 @@
 import React from 'react'
-import Portfolio from '../../components/Portfolio/Portfolio'
-import PieChart from '../../components/PieChart/PieChart'
-import CryptoPrices from '../../components/CryptoPrices/CryptoPrices'
-import FinMetrics from '../../components/FinMetrics/FinMetrics'
-import HistoricalPerformance from '../../components/HistoricalPerformance/HistoricalPerformance'
-import FuturePerformance from '../../components/FuturePerformance/FuturePerformance'
-import styles from './styles.module.css'
+import Portfolio from '../components/Portfolio'
+import PieChart from '../components/PieChart'
+import CryptoPrices from '../components/CryptoPrices/CryptoPrices'
+import FinMetrics from '../components/FinMetrics/FinMetrics'
+import HistoricalPerformance from '../components/HistoricalPerformance'
+import FuturePerformance from '../components/FuturePerformance'
+import styles from './pages.module.css'
 
 const Analysis = () => {
   return (
@@ -27,7 +27,7 @@ const Analysis = () => {
         <CryptoPrices />
       </div>
       <div style={{ display: 'flex-col', alignItems: 'center' }} >
-        <h2 className={`${styles["title"]} font-bold pl-2`}>Financial Metrics</h2>
+        <h2 className={`${styles["title"]} font-bold`}>Financial Metrics</h2>
         <div style={{ width: '100%', backgroundColor: '#F6F6F6' }}>
           <FinMetrics />
         </div>
