@@ -64,7 +64,7 @@ const FinMetrics = () => {
                           </div>
                           <div>
                             {metric.name === selectedMetric && (
-                              <div>
+                              <div className='font-bold' >
                                 <td>{varResult}</td>
                               </div>
                             )}

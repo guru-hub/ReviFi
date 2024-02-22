@@ -12,7 +12,7 @@ const FuturePerformance = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   const [varResult, setVarResult] = useState('');
   const [graph, setGraph] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const devServer = "http://localhost:5000/future_performance"
   const prodServer = "https://api.revifi.xyz/future_performance"
