@@ -79,12 +79,6 @@ const HistoricalPerformance = () => {
                 maximumFractionDigits: 2
               })}
             </div>
-            <div className='text-lg' style={{ color: '#00DF51' }} >
-              +23.47%
-            </div>
-            <div className='text-lg' style={{ color: '#727272' }}>
-              Past {value}
-            </div>
           </div>
         </div>
         <Box>

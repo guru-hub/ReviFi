@@ -43,16 +43,16 @@ const PieChart = () => {
   return (
     <div className="pt-[1.2rem]" >
       {loading ?
-        <div className="flex justify-center items-center pt-48 pr-80" >
+        <div className="flex justify-center items-center pl-60" >
           <CircularProgress />
         </div>
         : <div className="" >
           {graph ?
             <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />
             :
-            <div className="pt-40">
+            <div className="">
               <Alert severity="info">
-                <p className="font-bold text-[20px] font-serif">Please click on confirm allocation to access Analysis</p>
+                <p className="font-bold text-[15px] font-serif">Please click on confirm allocation to access Analysis</p>
               </Alert>
             </div>
           }

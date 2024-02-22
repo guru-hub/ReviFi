@@ -11,12 +11,12 @@ import { useState } from 'react'
 const Analysis = () => {
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-36">
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-32">
       <div>
         <div>
           <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>
         </div>
-        <div className='rounded-lg px-16' style={{ display: 'flex', paddingTop: '2rem', justifyContent: 'space-between', backgroundColor: '#F6F6F6' }}>
+        <div className='rounded-lg px-16' style={{ display: 'flex', paddingTop: '2rem', backgroundColor: '#F6F6F6', gap: '3rem', alignItems: 'center' }}>
           <div>
             <Portfolio />
           </div>
