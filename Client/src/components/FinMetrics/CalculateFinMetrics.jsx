@@ -61,7 +61,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         end_date: endDate,
         risk_free_rate: 0.1,
         time_frame: '1W',
-        benchmark: "BTC-USD"
+        benchmark: "BTC"
       };
 
       console.log(data);
