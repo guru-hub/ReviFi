@@ -11,7 +11,7 @@ const Test = () => {
         time_frame: "1Y",
         benchmark: "BTC"
     };
-    const apiUrl ='http://127.0.0.1:5000/historical_performance_i'
+    const apiUrl ='https://api.revifi.xyz/historical_performance_i'
     //const apiUrl = 'http://127.0.0.1:5000/historical_performance_i';
 
     useEffect(() => {
