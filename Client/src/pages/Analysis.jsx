@@ -7,6 +7,7 @@ import HistoricalPerformance from '../components/HistoricalPerformance'
 import FuturePerformance from '../components/FuturePerformance'
 import styles from './pages.module.css'
 import { useState } from 'react'
+import Test from '../components/test'
 
 const Analysis = () => {
 
@@ -51,6 +52,16 @@ const Analysis = () => {
           </div>
           <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
             <FuturePerformance />
+          </div>
+        </div>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
+        <div style={{ width: '100%' }}>
+          <div>
+            <h1 className={`${styles.title} font-bold`}>Test Performance</h1>
+          </div>
+          <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
+            <Test />
           </div>
         </div>
       </div>
