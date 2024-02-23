@@ -1,40 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import Plot from 'react-plotly.js';
 
-const PlotlyPlot = () => {
-    const [plotHtml, setPlotHtml] = useState('');
+const Test = () => {
+    const [plot, setPlot] = useState(null); // Initialize to null
+
+    const payload = {
+        coins: ["BTC", "ETH", "SOL", "BNB"],
+        allocations: [0.20, 0.30, 0.25, 0.25],
+        initial_portfolio_value: 100000,
+        time_frame: "1Y",
+        benchmark: "BTC"
+    };
+    const apiUrl ='http://127.0.0.1:5000/historical_performance_i'
+    //const apiUrl = 'http://127.0.0.1:5000/historical_performance_i';
 
     useEffect(() => {
-        // Replace the URL with your Flask API endpoint
-       const apiUrl = 'http://192.168.56.1:5000/historical_performance_i';
-        //const apiUrl = 'http://127.0.0.1:5000/annualized_returns_i';
-        // const apiUrl = 'http://192.168.56.1:5000/future_performance_i';
-        
-        const payload = {
-            coins:["BTC", "ETH", "SOL", "BNB"],
-            allocations: [0.20, 0.30, 0.25, 0.25],
-            initial_portfolio_value: 100000,
-            time_frame: "1Y",
-            benchmark: "BTC"
-        };
-
-        axios.post(apiUrl, payload, {
+        // Correctly send the payload with fetch
+        fetch(apiUrl, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            body: JSON.stringify(payload) // Correctly stringify the payload
         })
-        .then(response => {
-            if(response.data.plot_html) {
-                setPlotHtml(response.data.plot_html);
-            }
+        .then(res => res.json())
+        .then(data => {
+            setPlot(data); // Set the plot data
         })
         .catch(error => console.error('Error fetching the plot:', error));
-    }, []);
+    }, []); // Dependency array left empty to run only once on mount
 
-   
+    // Conditional rendering to avoid rendering the Plot component when plot data is not available
     return (
-        <div dangerouslySetInnerHTML={{ __html: plotHtml }} />
+        <div className='content'>
+            {plot ? (
+                <Plot
+                    data={plot.data || []}
+                    layout={plot.layout || {}}
+                />
+            ) : (
+                <p>Loading plot...</p>
+            )}
+        </div>
     );
 };
 
-export default PlotlyPlot;
+export default Test;
