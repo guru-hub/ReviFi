@@ -6,10 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
+import { useSelector } from 'react-redux';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
   const [varResult, setVarResult] = useState('');
+  const isConfirmed = useSelector((state) => state.data.isConfirmed);
 
   const metrics = [
     { name: 'Annualized returns', description: 'Annualized returns measure the average yearly profit or loss of an investment, adjusted for the investment holding period. This metric helps portfolio managers compare the performance of different investments over varying time frames, enabling more informed decision-making for long-term strategy' },
@@ -27,14 +29,14 @@ const FinMetrics = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} relative`}>
       <div>
         <FormControl sx={{ m: 1, minWidth: 80 }}>
-          <InputLabel id="demo-simple-select-autowidth-label">Select Metrics</InputLabel>
+          <InputLabel id="metrics">Select Metrics</InputLabel>
           <Select
             sx={{ minWidth: '15rem', backgroundColor: 'white' }}
-            labelId="demo-simple-select-autowidth-label"
-            id="demo-simple-select-autowidth"
+            labelId="metrics"
+            id="metrics"
             value={selectedMetric}
             onChange={handleSelectChange}
             label="Selected Metrics"
@@ -45,7 +47,7 @@ const FinMetrics = () => {
           </Select>
         </FormControl>
       </div>
-      <div>
+      <div className={`${isConfirmed ? 'blur-none' : 'blur-md'}`}>
         {selectedMetric && (
           <div>
             <ul className={styles.list}>
@@ -89,6 +91,14 @@ const FinMetrics = () => {
           </div>
         )}
       </div>
+      {
+        !isConfirmed &&
+        <Alert severity="info" style={{ margin: '0 auto', backdropFilter: 'none', top: '50%', left: '50%', position: 'absolute', transform: "translate(-50%, -50%)" }}>
+          <p className="font-bold text-[15px] font-serif">
+            Please click on confirm allocation to access Analysis
+          </p>
+        </Alert>
+      }
     </div >
   );
 };

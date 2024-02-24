@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { Chart } from "react-google-charts";
 import { useSelector } from 'react-redux';
-import FinMetrics from './FinMetrics/FinMetrics'
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
@@ -14,46 +12,44 @@ const PieChart = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (isConfirmed == true) {
-      setLoading(true);
-      const coins = cryptoData.map((crypto) => crypto.asset);
-      const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
-      let payload = {
-        "coins": coins,
-        "allocations": allocations,
-        "initial_portfolio_value": totalValue
-      }
-      axios
-        .post(apiName, payload)
-        .then((response) => {
-          setGraph(`data:image/png;base64,${response.data.graph}`)
-        })
-        .catch((error) => {
-          console.error(`Error fetching data`, error);
-        })
-        .finally(() => {
-          setLoading(false);
-        });
+    setLoading(true);
+    const coins = cryptoData.map((crypto) => crypto.asset);
+    const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
+    let payload = {
+      "coins": coins,
+      "allocations": allocations,
+      "initial_portfolio_value": totalValue
     }
-  }, [isConfirmed, totalValue, cryptoData]);
-
+    axios
+      .post(apiName, payload)
+      .then((response) => {
+        setGraph(`data:image/png;base64,${response.data.graph}`)
+      })
+      .catch((error) => {
+        console.error(`Error fetching data`, error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [totalValue, cryptoData]);
 
   let apiName = 'https://api.revifi.xyz/generate_pie_chart'
 
   return (
-    <div className="pt-[1.2rem]" >
+    <div className="pt-[1.2rem]" style={{ position: 'relative' }}>
       {loading ?
-        <div className="flex justify-center items-center pl-60" >
+        <div className="flex justify-center items-center">
           <CircularProgress />
         </div>
-        : <div className="" >
-          {graph ?
-            <img height={650} width={650} src={graph} alt={`PeiChart Graph`} className='rounded-lg' />
-            :
-            <div className="">
-              <Alert severity="info">
-                <p className="font-bold text-[15px] font-serif">Please click on confirm allocation to access Analysis</p>
-              </Alert>
+        : <div className="">
+          {graph &&
+            <div className="relative blur-none">
+              <img height={600} width={600} src={graph} alt={`PieChart Graph`} className={`rounded-lg ${isConfirmed ? 'blur-none' : 'blur-md'}`} />
+              <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                {!isConfirmed && <Alert severity="info">
+                  <p className="font-bold text-[15px] font-serif">Please click on confirm allocation to access Analysis</p>
+                </Alert>}
+              </div>
             </div>
           }
         </div>}

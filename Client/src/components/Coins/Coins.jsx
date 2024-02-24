@@ -9,12 +9,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { tableCellClasses } from "@mui/material/TableCell";
+import { useSelector } from 'react-redux';
+import Alert from '@mui/material/Alert';
 
 const Coins = (props) => {
+    const isConfirmed = useSelector((state) => state.data.isConfirmed);
     return (
-        <div className={styles["container"]} style={{ boxShadow: 'none', border: 'none' }}>
-            <TableContainer component={Paper} style={{ boxShadow: 'none', border: 'none' }}>
-                <Table sx={{ minWidth: 650, backgroundColor: '#F6F6F6', boxShadow: 'none', border: 'none' }} aria-label="simple table">
+        <div className={styles["container"]} style={{ boxShadow: 'none', border: 'none', position: "relative" }}>
+            <TableContainer component={Paper} style={{ boxShadow: 'none', border: 'none' }} className={`${!isConfirmed ? 'blur-sm' : 'blur-none'}`}>
+                <Table sx={{ minWidth: 650, backgroundColor: '#F6F6F6', boxShadow: 'none', border: 'none', minHeight: '36vh' }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Asset</TableCell>
@@ -71,6 +74,13 @@ const Coins = (props) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            {!isConfirmed && !props.loading && (
+                <Alert severity="info" style={{ top: "50%", left: "50%", position: 'absolute', transform: "translate(-50%, -50%)" }}>
+                    <p className="font-bold text-[15px] font-serif">
+                        Please click on confirm allocation to access Analysis
+                    </p>
+                </Alert>
+            )}
         </div>
     )
 }

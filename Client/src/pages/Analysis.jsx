@@ -17,7 +17,7 @@ const Analysis = () => {
         <div>
           <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>
         </div>
-        <div className='rounded-lg px-16' style={{ display: 'flex', paddingTop: '2rem', backgroundColor: '#F6F6F6', gap: '3rem', alignItems: 'center' }}>
+        <div className='rounded-lg px-16' style={{ display: 'flex', paddingTop: '2rem', backgroundColor: '#F6F6F6', alignItems: 'center', justifyContent: 'space-between' }}>
           <div>
             <Portfolio />
           </div>
@@ -55,7 +55,7 @@ const Analysis = () => {
           </div>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
+      {/* <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
         <div style={{ width: '100%' }}>
           <div>
             <h1 className={`${styles.title} font-bold`}>Test Performance</h1>
@@ -64,7 +64,7 @@ const Analysis = () => {
             <Test />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
