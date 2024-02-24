@@ -111,8 +111,8 @@ const HistoricalPerformance = () => {
           </div>
         )}
       </div>
-      {!isConfirmed && !loading && (
-        <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute',transform: 'translate(-50%, -50%)' }}>
+      {!isConfirmed && !loading && graph && (
+        <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis
           </p>

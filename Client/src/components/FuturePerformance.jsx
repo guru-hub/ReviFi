@@ -51,6 +51,7 @@ const FuturePerformance = () => {
       .post(prodServer, data)
       .then((response) => {
         setVarResult(response.data["future_performance"]);
+        console.log(response.data.graph);
         setGraph(`data:image/png;base64,${response.data.graph}`);
       })
       .catch((error) => {
@@ -113,7 +114,7 @@ const FuturePerformance = () => {
           </div>
         )}
       </div>
-      {!isConfirmed && !loading && (
+      {!isConfirmed && !loading && graph && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis
