@@ -55,7 +55,7 @@ const Analysis = () => {
           </div>
         </div>
       </div>
-      {/* <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
+      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
         <div style={{ width: '100%' }}>
           <div>
             <h1 className={`${styles.title} font-bold`}>Test Performance</h1>
@@ -64,7 +64,7 @@ const Analysis = () => {
             <Test />
           </div>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
