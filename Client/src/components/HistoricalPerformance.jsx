@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import Plot from 'react-plotly.js';
 
 const HistoricalPerformance = () => {
+  const [plot, setPlot] = useState(null); // Initialize to null
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -43,21 +45,33 @@ const HistoricalPerformance = () => {
       time_frame: value,
     };
     const devServer = "http://localhost:5000/historical_performance"
-    const prodServer = "https://api.revifi.xyz/historical_performance"
+    const prodServer = "https://api.revifi.xyz/historical_performance_i"
     // console.log(data)
     // console.log(prodServer)
-    axios
-      .post(prodServer, data)
-      .then((response) => {
-        setVarResult(response.data["historical_performance"]);
-        setGraph(`data:image/png;base64,${response.data.graph}`);
+    fetch(prodServer, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data) // Correctly stringify the payload
+    })
+      .then(res => res.json())
+      .then(data => {
+        setPlot(data); // Set the plot data
       })
-      .catch((error) => {
-        console.error(`Error fetching Historical Performance data`, error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(error => console.error('Error fetching the plot:', error));
+    // axios
+    //   .post(prodServer, data)
+    //   .then((response) => {
+    //     setVarResult(response.data["historical_performance"]);
+    //     setGraph(`data:image/png;base64,${response.data.graph}`);
+    //   })
+    //   .catch((error) => {
+    //     console.error(`Error fetching Historical Performance data`, error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
     // }
   }, [value, totalValue, cryptoData])
 
@@ -101,7 +115,7 @@ const HistoricalPerformance = () => {
         </Box>
       </div>
       <div className='pt-16 flex justify-center' >
-        {loading ? (
+        {/* {loading ? (
           <div className='flex justify-center'>
             <CircularProgress />
           </div>
@@ -109,6 +123,14 @@ const HistoricalPerformance = () => {
           <div className={`${!isConfirmed ? 'blur-lg' : 'blur-none'}`}>
             {graph && <img className='rounded-lg' src={graph} alt={`Historical Performance Graph`} />}
           </div>
+        )} */}
+        {plot ? (
+          <Plot
+            data={plot.data || []}
+            layout={plot.layout || {}}
+          />
+        ) : (
+          <p>Loading plot...</p>
         )}
       </div>
       {!isConfirmed && !loading && graph && (

@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import Plot from 'react-plotly.js';
 
 const FuturePerformance = () => {
+  const [plot, setPlot] = useState(null); // Initialize to null
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -16,7 +18,7 @@ const FuturePerformance = () => {
   const [loading, setLoading] = useState(false);
 
   const devServer = "http://localhost:5000/future_performance"
-  const prodServer = "https://api.revifi.xyz/future_performance"
+  const prodServer = "https://api.revifi.xyz/future_performance_i"
   const totalValue = useSelector((state) => state.data.totalValue);
 
 
@@ -45,21 +47,30 @@ const FuturePerformance = () => {
       initial_portfolio_value: parseInt(totalValue),
       time_frame: value,
     };
-    console.log(data);
-    console.log(prodServer);
-    axios
-      .post(prodServer, data)
-      .then((response) => {
-        setVarResult(response.data["future_performance"]);
-        console.log(response.data.graph);
-        setGraph(`data:image/png;base64,${response.data.graph}`);
+    fetch(prodServer, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data) // Correctly stringify the payload
+    })
+      .then(res => res.json())
+      .then(data => {
+        setPlot(data); // Set the plot data
       })
-      .catch((error) => {
-        console.error(`Error fetching Future Performance data`, error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      .catch(error => console.error('Error fetching the plot:', error));
+    // axios
+    //   .post(prodServer, data)
+    //   .then((response) => {
+    //     setVarResult(response.data["future_performance"]);
+    //     setGraph(`data:image/png;base64,${response.data.graph}`);
+    //   })
+    //   .catch((error) => {
+    //     console.error(`Error fetching Future Performance data`, error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
     // }
   }, [value, totalValue, cryptoData])
 
@@ -104,7 +115,7 @@ const FuturePerformance = () => {
         </Box>
       </div>
       <div className='pt-16 flex justify-center'>
-        {loading ? (
+        {/* {loading ? (
           <div className='flex justify-center'>
             <CircularProgress />
           </div>
@@ -112,6 +123,14 @@ const FuturePerformance = () => {
           <div className={`${!isConfirmed ? 'blur-lg' : 'blur-none'}`} >
             {graph && <img className='rounded-lg' src={graph} alt={`Future Performance Graph`} />}
           </div>
+        )} */}
+        {plot ? (
+          <Plot
+            data={plot.data || []}
+            layout={plot.layout || {}}
+          />
+        ) : (
+          <p>Loading plot...</p>
         )}
       </div>
       {!isConfirmed && !loading && graph && (
