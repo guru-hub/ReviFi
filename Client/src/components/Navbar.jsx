@@ -20,8 +20,6 @@ const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi networks', 'A
 
 function ResponsiveAppBar() {
   const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
-  console.log(wallet);
-
   const location = useLocation();
   const [, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

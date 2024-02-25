@@ -11,7 +11,6 @@ import Test from '../components/test'
 import PieChart_Test from '../components/PieChart_Test'
 
 const Analysis = () => {
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-32">
       <div>
@@ -56,7 +55,7 @@ const Analysis = () => {
           </div>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
+      {/* <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
         <div style={{ width: '100%' }}>
           <div>
             <h1 className={`${styles.title} font-bold`}>Test Performance</h1>
@@ -72,10 +71,10 @@ const Analysis = () => {
             <h1 className={`${styles.title} font-bold`}>PieChart Test</h1>
           </div>
           <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
-            <PieChart_Test/>
+            <PieChart_Test />
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

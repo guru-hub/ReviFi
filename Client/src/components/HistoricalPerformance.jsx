@@ -13,11 +13,9 @@ const HistoricalPerformance = () => {
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
-  const [varResult, setVarResult] = useState('');
-  const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
   const totalValue = useSelector((state) => state.data.totalValue);
-
+  const [initialValue, setInitialValue] = useState(0);
 
   const SymbolToId = {
     "BTC": "BTC",
@@ -33,6 +31,7 @@ const HistoricalPerformance = () => {
     ",": "%2C%20"
   }
 
+
   useEffect(() => {
     // if (isConfirmed == true) {
     setLoading(true);
@@ -41,43 +40,29 @@ const HistoricalPerformance = () => {
     const data = {
       coins,
       allocations,
-      initial_portfolio_value: parseInt(totalValue),
+      initial_portfolio_value: totalValue,
       time_frame: value,
     };
+    console.log(data);
     const devServer = "http://localhost:5000/historical_performance"
-    const prodServer = "https://api.revifi.xyz/historical_performance_i"
-    // console.log(data)
-    // console.log(prodServer)
-    fetch(prodServer, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data) // Correctly stringify the payload
-    })
-      .then(res => res.json())
-      .then(data => {
-        setPlot(data); // Set the plot data
+    const prodServer = "https://api.revifi.xyz/historical_performance"
+    axios.post(prodServer, data)
+      .then(response => {
+        const plotData = JSON.parse(response.data.graph);
+        setPlot({
+          data: plotData.data,
+          layout: plotData.layout
+        });
+        setInitialValue(response.data._value);
       })
-      .catch(error => console.error('Error fetching the plot:', error));
-    // axios
-    //   .post(prodServer, data)
-    //   .then((response) => {
-    //     setVarResult(response.data["historical_performance"]);
-    //     setGraph(`data:image/png;base64,${response.data.graph}`);
-    //   })
-    //   .catch((error) => {
-    //     console.error(`Error fetching Historical Performance data`, error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
-    // }
+    setLoading(false);
   }, [value, totalValue, cryptoData])
 
 
   const handleChange = (event, newValue) => {
+    setLoading(true);
     setValue(newValue);
+    setLoading(false);
   };
 
   return (
@@ -115,25 +100,21 @@ const HistoricalPerformance = () => {
         </Box>
       </div>
       <div className='pt-16 flex justify-center' >
-        {/* {loading ? (
-          <div className='flex justify-center'>
-            <CircularProgress />
-          </div>
-        ) : (
-          <div className={`${!isConfirmed ? 'blur-lg' : 'blur-none'}`}>
-            {graph && <img className='rounded-lg' src={graph} alt={`Historical Performance Graph`} />}
-          </div>
-        )} */}
-        {plot ? (
-          <Plot
-            data={plot.data || []}
-            layout={plot.layout || {}}
-          />
-        ) : (
-          <p>Loading plot...</p>
-        )}
+        {loading ?
+          (
+            <div className='flex justify-center'>
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={`${!isConfirmed ? 'blur-md' : 'blur-none'}`}>
+              <Plot
+                data={plot?.data}
+                layout={plot?.layout}
+              />
+            </div>
+          )}
       </div>
-      {!isConfirmed && !loading && graph && (
+      {!isConfirmed && !loading && plot && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis

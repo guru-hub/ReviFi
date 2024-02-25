@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 const FinMetrics = () => {
   const [selectedMetric, setSelectedMetric] = useState(null);
-  const [varResult, setVarResult] = useState('');
+  const [varResult, setVarResult] = useState(0);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
 
   const metrics = [
@@ -23,7 +23,7 @@ const FinMetrics = () => {
   ];
 
   const handleSelectChange = (e) => {
-    setVarResult('')
+    setVarResult(0)
     const selectedMetric = e.target.value;
     setSelectedMetric(selectedMetric);
   };
@@ -54,7 +54,7 @@ const FinMetrics = () => {
               <li >
                 <div style={{ display: 'flex', flexDirection: 'column' }} className='rounded-md p-2'>
                   <div style={{ display: 'flex', width: '100%', overflow: 'auto', alignItems: 'center', gap: '10em', paddingLeft: '5rem' }} className='rounded - md p- 2'>
-                    <div style={{ display: 'flex', width: '35%' }} >
+                    <div style={{ display: 'flex', width: '30%' }} >
                       {metrics.map((metric) => (
                         <div className="flex-col" key={metric.name}>
                           <div>

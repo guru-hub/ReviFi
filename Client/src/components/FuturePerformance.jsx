@@ -9,16 +9,14 @@ import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
 const FuturePerformance = () => {
-  const [plot, setPlot] = useState(null); // Initialize to null
+  const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
-  const [varResult, setVarResult] = useState('');
-  const [graph, setGraph] = useState('');
   const [loading, setLoading] = useState(false);
-
+  const [initialValue, setInitialValue] = useState(0);
   const devServer = "http://localhost:5000/future_performance"
-  const prodServer = "https://api.revifi.xyz/future_performance_i"
+  const prodServer = "https://api.revifi.xyz/future_performance"
   const totalValue = useSelector((state) => state.data.totalValue);
 
 
@@ -44,57 +42,50 @@ const FuturePerformance = () => {
     const data = {
       coins,
       allocations,
-      initial_portfolio_value: parseInt(totalValue),
+      initial_portfolio_value: totalValue,
       time_frame: value,
     };
-    fetch(prodServer, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data) // Correctly stringify the payload
-    })
-      .then(res => res.json())
-      .then(data => {
-        setPlot(data); // Set the plot data
+    axios.post(prodServer, data)
+      .then(response => {
+        const plotData = JSON.parse(response.data.graph);
+        setPlot({
+          data: plotData.data,
+          layout: plotData.layout
+        });
+        setInitialValue(response.data._value);
       })
-      .catch(error => console.error('Error fetching the plot:', error));
-    // axios
-    //   .post(prodServer, data)
-    //   .then((response) => {
-    //     setVarResult(response.data["future_performance"]);
-    //     setGraph(`data:image/png;base64,${response.data.graph}`);
-    //   })
-    //   .catch((error) => {
-    //     console.error(`Error fetching Future Performance data`, error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
+    setLoading(false);
     // }
   }, [value, totalValue, cryptoData])
 
 
   const handleChange = (event, newValue) => {
+    setLoading(true);
     setValue(newValue);
+    setLoading(false);
   };
 
   return (
     <div className='relative'>
       <div className='flex justify-between items-end'>
-        <div className='flex-col'>
-          <div>
-            Total Value
-          </div>
-          <div className='flex items-end gap-4'>
-            <div className='text-5xl font-bold' >
-              ${totalValue.toLocaleString('en-US', {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-              })}
+        {/* <div className='flex items-end gap-4'> */}
+          <div className='flex-col'>
+            <div>
+              Total Value
+            </div>
+            <div className='flex items-end gap-4'>
+              <div className='text-5xl font-bold' >
+                ${totalValue.toLocaleString('en-US', {
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2
+                })}
+              </div>
             </div>
           </div>
-        </div>
+          {/* <div className='font-bold'>
+            {initialValue}
+          </div>
+        </div> */}
         <Box>
           <Tabs
             value={value}
@@ -115,25 +106,21 @@ const FuturePerformance = () => {
         </Box>
       </div>
       <div className='pt-16 flex justify-center'>
-        {/* {loading ? (
-          <div className='flex justify-center'>
-            <CircularProgress />
-          </div>
-        ) : (
-          <div className={`${!isConfirmed ? 'blur-lg' : 'blur-none'}`} >
-            {graph && <img className='rounded-lg' src={graph} alt={`Future Performance Graph`} />}
-          </div>
-        )} */}
-        {plot ? (
-          <Plot
-            data={plot.data || []}
-            layout={plot.layout || {}}
-          />
-        ) : (
-          <p>Loading plot...</p>
-        )}
+        {loading ?
+          (
+            <div className='flex justify-center'>
+              <CircularProgress />
+            </div>
+          ) : (
+            <div className={`${!isConfirmed ? 'blur-md' : 'blur-none'}`}>
+              <Plot
+                data={plot?.data}
+                layout={plot?.layout}
+              />
+            </div>
+          )}
       </div>
-      {!isConfirmed && !loading && graph && (
+      {!isConfirmed && !loading && plot && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis

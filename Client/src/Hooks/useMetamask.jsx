@@ -26,9 +26,7 @@ export const MetamaskContextProvider = ({ children }) => {
     const [wallet, setWallet] = useState(disConnectedState);
 
     const _updateWallet = useCallback(async (providedAccounts) => {
-        console.log(window.ethereum);
         const accounts = providedAccounts || await window.ethereum.request({ method: "eth_requestAccounts" });
-        console.log(accounts);
         if (accounts.length === 0) {
             setWallet(disConnectedState);
             return;
@@ -42,9 +40,7 @@ export const MetamaskContextProvider = ({ children }) => {
 
     const updateWalletAndAccounts = useCallback(
         () => {
-            console.log("Updating Wallet");
             _updateWallet();
-            console.log("Updated Wallet");
         },
         [_updateWallet]
     );
@@ -57,17 +53,14 @@ export const MetamaskContextProvider = ({ children }) => {
     useEffect(() => {
         console.log("Detecting Metamask Provider");
         const getProvider = async () => {
-            console.log("Hello2");
             const provider = await detectEthereumProvider({ silent: true });
             setHasProvider(Boolean(provider));
-            console.log(provider);
             if (provider) {
                 updateWalletAndAccounts();
                 window.ethereum.on("accountsChanged", updateWallet);
                 window.ethereum.on("chainChanged", updateWalletAndAccounts);
             }
         }
-        console.log("Hello1");
         getProvider();
         return () => {
             window.ethereum?.removeListener("accountsChanged", updateWallet);
@@ -76,7 +69,6 @@ export const MetamaskContextProvider = ({ children }) => {
     }, [updateWallet, updateWalletAndAccounts]);
 
     const connectMetamask = async () => {
-        console.log("Connecting to Metamask");
         setIsConnecting(true);
 
         try {
