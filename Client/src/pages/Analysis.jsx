@@ -7,8 +7,6 @@ import HistoricalPerformance from '../components/HistoricalPerformance'
 import FuturePerformance from '../components/FuturePerformance'
 import styles from './pages.module.css'
 import { useState } from 'react'
-import Test from '../components/test'
-import PieChart_Test from '../components/PieChart_Test'
 
 const Analysis = () => {
   return (

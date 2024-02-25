@@ -47,7 +47,9 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const metricURL = MetricToURL[metricKey];
       setEndDate(moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD'));
       setStartDate(moment(endDate).subtract(1, 'year').format('YYYY-MM-DD'));
-      console.log(startDate, endDate);
+      // console.log(moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD'));
+      // console.log(startDate, endDate);
+      // console.log(typeof (moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD')));
 
       const requestURL = `https://api.revifi.xyz/${metricURL}`;
 
