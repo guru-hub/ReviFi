@@ -26,8 +26,9 @@ const PieChart = () => {
     }
     axios.post(apiName, payload)
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         const plotData = JSON.parse(response.data.graph);
+        console.log(plotData);
         setPlotData({
           data: plotData.data,
           layout: plotData.layout

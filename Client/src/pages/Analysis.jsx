@@ -15,7 +15,7 @@ const Analysis = () => {
         <div>
           <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>
         </div>
-        <div className='rounded-lg px-16' style={{ display: 'flex', paddingTop: '2rem', backgroundColor: '#F6F6F6', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div className='rounded-lg' style={{ display: 'flex', paddingTop: '2rem', backgroundColor: '#F6F6F6', alignItems: 'center', justifyContent: 'space-evenly' }}>
           <div>
             <Portfolio />
           </div>

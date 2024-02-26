@@ -110,6 +110,7 @@ const HistoricalPerformance = () => {
               <Plot
                 data={plot?.data}
                 layout={plot?.layout}
+                style={{ width: '100%' }}
               />
             </div>
           )}
