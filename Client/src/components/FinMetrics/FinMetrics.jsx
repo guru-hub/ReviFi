@@ -77,21 +77,23 @@ const FinMetrics = () => {
             <ul className={styles.list}>
               <li >
                 <div className='rounded-md p-2 flex'>
-                  <div className='rounded-md p-12 flex items-center justify-evenly overflow-auto'>
+                  <div className='rounded-md flex items-center justify-evenly overflow-auto'>
                     <div className='flex w-[30%]'>
                       {metrics.map((metric) => (
                         <div className="flex-col" key={metric.name}>
                           <div>
                             {metric.name === selectedMetric && (
-                              <div className='font-bold' >
-                                <td>{metric.descriptionStart}</td>
-                              </div>
-                            )}
-                          </div>
-                          <div>
-                            {metric.name === selectedMetric && (
-                              <div className='font-bold text-[#007bff]'>
-                                <td>{varResult}</td>
+                              <div className='font-bold flex' >
+                                <td>
+                                  {metric.descriptionStart}
+                                  <span className='text-[#007bff]'>
+                                    {varResult.toLocaleString('en-US', {
+                                      minimumFractionDigits: 2,
+                                      maximumFractionDigits: 2
+                                    })}
+                                  </span>
+                                  {metric.name === 'Value at Risk' ? '%' : ''}
+                                </td>
                               </div>
                             )}
                           </div>
