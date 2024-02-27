@@ -17,7 +17,7 @@ const FinMetrics = () => {
     {
       name: 'Annualized returns',
       description: 'Annualized returns measure the average yearly profit or loss of an investment, adjusted for the investment holding period. This metric helps portfolio managers compare the performance of different investments over varying time frames, enabling more informed decision-making for long-term strategy',
-      descriptionStart: 'Average annual return over the investment period :'
+      descriptionStart: 'Average annual return over the investment period : '
     },
     {
       name: 'Volatility',
