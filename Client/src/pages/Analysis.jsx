@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 const Analysis = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-32">
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 lg:px-32">
       <div>
         <div>
           <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>
@@ -53,26 +53,6 @@ const Analysis = () => {
           </div>
         </div>
       </div>
-      {/* <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
-        <div style={{ width: '100%' }}>
-          <div>
-            <h1 className={`${styles.title} font-bold`}>Test Performance</h1>
-          </div>
-          <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
-            <Test />
-          </div>
-        </div>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'space-around', paddingBottom: '1rem' }} >
-        <div style={{ width: '100%' }}>
-          <div>
-            <h1 className={`${styles.title} font-bold`}>PieChart Test</h1>
-          </div>
-          <div style={{ width: '100%', backgroundColor: '#F6F6F6' }} className='p-8 rounded-lg'>
-            <PieChart_Test />
-          </div>
-        </div>
-      </div> */}
     </div>
   )
 }

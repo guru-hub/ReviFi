@@ -43,6 +43,7 @@ const CryptoPrices = () => {
           allocatedValue: crypto[index].allocatedValue,
         }));
         setCoins(updatedCoins);
+        console.log(updatedCoins);
       })
       .catch((error) => {
         console.log(error);

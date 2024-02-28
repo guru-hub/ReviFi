@@ -153,7 +153,7 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
           {rows?.map((row) => (
             <React.Fragment key={row.asset}>
               <tr>
-                <td className="flex justify-evenly p-[10px]" >
+                <td className="flex justify-start py-[10px] gap-[15px] pl-[30%]" >
                   <div>
                     {SymbolLogo[row.asset]}
                   </div>
