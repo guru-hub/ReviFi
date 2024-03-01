@@ -19,7 +19,23 @@ const layout = {
     pad: 4  // Padding
   },
   backgroundColor: '#F6F6F6',
-  color: 'black'
+  xaxis: {
+    showgrid: false,
+    zeroline: false
+  },
+  yaxis: {
+    showgrid: false,
+    zeroline: false
+  },
+  color: 'black',
+  showlegend: true,
+  legend: {
+    x: 1,
+    xanchor: 'right',
+    y: 1
+  },
+  plot_bgcolor: "#F6F6F6",
+  paper_bgcolor: "#F6F6F6"
 }
 
 const HistoricalPerformance = () => {
@@ -125,6 +141,7 @@ const HistoricalPerformance = () => {
                 config={{ displayModeBar: false, responsive: true }}
                 data={plot?.data}
                 layout={layout}
+                style={{ backgroundColor: '#F6F6F6' }}
               />
             </div>
           )}

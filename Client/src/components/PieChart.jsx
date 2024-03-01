@@ -15,7 +15,9 @@ const layout = {
     b: 50,  // Bottom margin
     pad: 4  // Padding
   },
-  backgroundColor: '#F6F6F6'
+  backgroundColor: '#F6F6F6',
+  plot_bgcolor: "#F6F6F6",
+  paper_bgcolor: "#F6F6F6"
 }
 
 const PieChart = () => {
