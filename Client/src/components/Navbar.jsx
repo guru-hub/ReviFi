@@ -7,7 +7,7 @@ import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import ReviFiLogo from "../assets/images/logo.ico"
+import ReviFiLogo from "../assets/images/ReviFiLogo.png"
 import { Link, useLocation } from 'react-router-dom';
 import styles from './components.module.css';
 import Select from '@mui/material/Select';
@@ -58,25 +58,7 @@ function ResponsiveAppBar() {
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }} >
-              <img height={35} width={35} src={ReviFiLogo} alt="ReviFi Logo" ></img>
-              <Typography
-                variant="h6"
-                noWrap
-                component="a"
-                sx={{
-                  mr: 2,
-                  display: { xs: 'none', md: 'flex' },
-                  fontFamily: 'monospace',
-                  fontWeight: 700,
-                  color: 'inherit',
-                  textDecoration: 'none',
-                }}
-              >
-                REVI
-                <span className={styles["gradient"]} >
-                  FI
-                </span>
-              </Typography>
+              <img height={100} width={100} src={ReviFiLogo} alt="ReviFi Logo" ></img>
             </div>
           </Link>
 
