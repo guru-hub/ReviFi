@@ -13,6 +13,7 @@ import styles from './components.module.css';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import BSCLogo from '../assets/images/binance-coin-bnb-seeklogo.svg';
+import EthLogo from '../assets/images/ethereum-eth-logo.png';
 import { useMetaMask } from "../Hooks/useMetamask";
 
 const pages = ['Products', 'Staking', 'Governance'];
@@ -47,6 +48,7 @@ function ResponsiveAppBar() {
 
   const networks = {
     "BSC": <img height={18} width={18} src={BSCLogo} ></img>,
+    "Sepolia": <img height={18} width={18} src={EthLogo} ></img>,
     // "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
   }
 

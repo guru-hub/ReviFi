@@ -8,6 +8,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
+const layout = {
+  width: 1100,
+  height: 400,
+  margin: {
+    l: 50,  // Left margin
+    r: 50,  // Right margin
+    t: 50,  // Top margin
+    b: 50,  // Bottom margin
+    pad: 4  // Padding
+  },
+  backgroundColor: '#F6F6F6',
+  color: 'black'
+}
+
 const HistoricalPerformance = () => {
   const [plot, setPlot] = useState(null); // Initialize to null
   const [value, setValue] = useState('1W');
@@ -108,8 +122,9 @@ const HistoricalPerformance = () => {
           ) : (
             <div className={`${!isConfirmed ? 'blur-md' : 'blur-none'}`}>
               <Plot
+                config={{ displayModeBar: false, responsive: true }}
                 data={plot?.data}
-                layout={plot?.layout}
+                layout={layout}
               />
             </div>
           )}

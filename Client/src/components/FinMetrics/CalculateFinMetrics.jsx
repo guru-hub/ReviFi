@@ -6,6 +6,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Plot from 'react-plotly.js';
 import Alert from '@mui/material/Alert';
 
+const layout = {
+  width: 700,
+  height: 400,
+  margin: {
+    l: 50,  // Left margin
+    r: 50,  // Right margin
+    t: 50,  // Top margin
+    b: 50,  // Bottom margin
+    pad: 4  // Padding
+  },
+  backgroundColor: '#F6F6F6'
+}
+
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   const [loading, setLoading] = useState(false);
   const [startDate, setStartDate] = useState('');
@@ -14,7 +27,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [plot, setPlot] = useState(null);
-  
+
 
   const MetricToURL = {
     'Annualized returns': 'annualized_returns',
@@ -94,8 +107,9 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
           </div>
         ) : (
           <Plot
-            data={plot?.data || []}
-            layout={plot?.layout || {}}
+            config={{ displayModeBar: false, responsive: true }}
+            data={plot?.data}
+            layout={layout}
           />
         )
       )}

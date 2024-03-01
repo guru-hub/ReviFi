@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 const Analysis = () => {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 lg:px-32">
+    <div style={{ display: 'flex', flexDirection: 'column' }} className="gap-20 px-32">
       <div>
         <div>
           <h2 className={`${styles.title} font-bold`}> Portfolio Allocation </h2>

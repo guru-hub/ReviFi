@@ -5,13 +5,25 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
+const layout = {
+  width: 500,
+  height: 400,
+  margin: {
+    l: 50,  // Left margin
+    r: 50,  // Right margin
+    t: 50,  // Top margin
+    b: 50,  // Bottom margin
+    pad: 4  // Padding
+  },
+  backgroundColor: '#F6F6F6'
+}
+
 const PieChart = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [loading, setLoading] = useState(false);
   const [plotData, setPlotData] = useState({});
-
 
   let apiName = 'https://api.revifi.xyz/generate_pie'
 
@@ -50,8 +62,9 @@ const PieChart = () => {
             <div>
               <div className={`${isConfirmed ? 'blur-none' : 'blur-md'} relative`}>
                 <Plot
+                  config={{ displayModeBar: false, responsive: true }}
                   data={plotData.data}
-                  layout={plotData.layout}
+                  layout={layout}
                 />
               </div>
               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>

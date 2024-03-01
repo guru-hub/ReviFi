@@ -8,6 +8,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
+const layout = {
+  width: 1100,
+  height: 400,
+  margin: {
+    l: 50,  // Left margin
+    r: 50,  // Right margin
+    t: 50,  // Top margin
+    b: 50,  // Bottom margin
+    pad: 4  // Padding
+  },
+  backgroundColor: '#F6F6F6'
+}
+
 const FuturePerformance = () => {
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
@@ -69,20 +82,20 @@ const FuturePerformance = () => {
     <div className='relative'>
       <div className='flex justify-between items-end'>
         {/* <div className='flex items-end gap-4'> */}
-          <div className='flex-col'>
-            <div>
-              Total Value
-            </div>
-            <div className='flex items-end gap-4'>
-              <div className='text-5xl font-bold' >
-                ${totalValue.toLocaleString('en-US', {
-                  minimumFractionDigits: 2,
-                  maximumFractionDigits: 2
-                })}
-              </div>
+        <div className='flex-col'>
+          <div>
+            Total Value
+          </div>
+          <div className='flex items-end gap-4'>
+            <div className='text-5xl font-bold' >
+              ${totalValue.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+              })}
             </div>
           </div>
-          {/* <div className='font-bold'>
+        </div>
+        {/* <div className='font-bold'>
             {initialValue}
           </div>
         </div> */}
@@ -114,8 +127,9 @@ const FuturePerformance = () => {
           ) : (
             <div className={`${!isConfirmed ? 'blur-md' : 'blur-none'}`}>
               <Plot
+                config={{ displayModeBar: false, responsive: true }}
                 data={plot?.data}
-                layout={plot?.layout}
+                layout={layout}
               />
             </div>
           )}
