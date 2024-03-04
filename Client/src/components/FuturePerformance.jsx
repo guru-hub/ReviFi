@@ -8,34 +8,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
-const layout = {
-  width: 1100,
-  height: 400,
-  margin: {
-    l: 50,  // Left margin
-    r: 50,  // Right margin
-    t: 50,  // Top margin
-    b: 50,  // Bottom margin
-    pad: 4  // Padding
-  },
-  xaxis: {
-    showgrid: false,
-    zeroline: false
-  },
-  yaxis: {
-    showgrid: false,
-    zeroline: false
-  },
-  showlegend: true,
-  legend: {
-    x: 1,
-    xanchor: 'right',
-    y: 1
-  },
-  plot_bgcolor: "#F6F6F6",
-  paper_bgcolor: "#F6F6F6"
-}
-
 const FuturePerformance = () => {
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
@@ -46,6 +18,34 @@ const FuturePerformance = () => {
   const devServer = "http://localhost:5000/future_performance"
   const prodServer = "https://api.revifi.xyz/future_performance"
   const totalValue = useSelector((state) => state.data.totalValue);
+
+  const layout = {
+    width: 1100,
+    height: 400,
+    margin: {
+      l: 50,  // Left margin
+      r: 50,  // Right margin
+      t: 50,  // Top margin
+      b: 50,  // Bottom margin
+      pad: 4  // Padding
+    },
+    xaxis: {
+      showgrid: false,
+      zeroline: false
+    },
+    yaxis: {
+      showgrid: false,
+      zeroline: false
+    },
+    showlegend: true,
+    legend: {
+      x: 1,
+      xanchor: 'right',
+      yanchor: 'auto'
+    },
+    plot_bgcolor: "#F6F6F6",
+    paper_bgcolor: "#F6F6F6"
+  }
 
 
   const SymbolToId = {

@@ -6,42 +6,42 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Plot from 'react-plotly.js';
 import Alert from '@mui/material/Alert';
 
-const layout = {
-  width: 700,
-  height: 400,
-  margin: {
-    l: 50,  // Left margin
-    r: 50,  // Right margin
-    t: 50,  // Top margin
-    b: 50,  // Bottom margin
-    pad: 4  // Padding
-  },
-  xaxis: {
-    showgrid: false,
-    zeroline: false
-  },
-  showlegend: true,
-  legend: {
-    x: 1,
-    xanchor: 'right',
-    y: 1
-  },
-  yaxis: {
-    showgrid: false,
-    zeroline: false
-  },
-  plot_bgcolor: "#F6F6F6",
-  paper_bgcolor: "#F6F6F6"
-}
+
 
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   const [loading, setLoading] = useState(false);
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
   const cryptoData = useSelector((state) => state.data.crypto);
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [plot, setPlot] = useState(null);
+
+  const layout = {
+    width: 700,
+    height: 400,
+    margin: {
+      l: 50,
+      r: 50,
+      t: 50,
+      b: 50,
+      pad: 4
+    },
+    xaxis: {
+      showgrid: false,
+      zeroline: false
+    },
+    showlegend: true,
+    legend: {
+      x: 1,
+      xanchor: 'right',
+      y: 1
+    },
+    yaxis: {
+      showgrid: false,
+      zeroline: false
+    },
+    plot_bgcolor: "#F6F6F6",
+    paper_bgcolor: "#F6F6F6"
+  }
 
 
   const MetricToURL = {
@@ -73,8 +73,8 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
       const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
       const metricURL = MetricToURL[metricKey];
-      setEndDate(moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD'));
-      setStartDate(moment(endDate).subtract(1, 'year').format('YYYY-MM-DD'));
+      let endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
+      let startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
       // console.log(moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD'));
       // console.log(startDate, endDate);
       // console.log(typeof (moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD')));
@@ -88,17 +88,15 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         allocations,
         initial_portfolio_value: totalValue,
         confidence_level: 0.95,
-        start_date: "2023-01-01",
-        end_date: "2024-01-01",
+        start_date: startDate,
+        end_date: endDate,
         risk_free_rate: 0.1,
-        time_frame: '1W',
         benchmark: "BTC"
       };
 
-      console.log(data);
       axios.post(requestURL, data)
         .then(response => {
-          const plotData = JSON.parse(response.data.graph);
+          const plotData = JSON.parse(response?.data.graph);
           setPlot({
             data: plotData.data,
             layout: plotData.layout
@@ -107,7 +105,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         })
     }
     setLoading(false);
-  }, [metricKey, startDate, endDate, cryptoData, totalValue]);
+  }, [metricKey, cryptoData, totalValue, setVarResult, MetricToURL, SymbolToId]);
 
   return (
     <div>
@@ -116,17 +114,11 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
           <CircularProgress />
         </div>
       ) : (
-        !plot ? (
-          <div className='flex justify-center'>
-            <CircularProgress />
-          </div>
-        ) : (
-          <Plot
-            config={{ displayModeBar: false, responsive: true }}
-            data={plot?.data}
-            layout={layout}
-          />
-        )
+        <Plot
+          config={{ displayModeBar: false, responsive: true }}
+          data={plot?.data || []}
+          layout={layout}
+        />
       )}
       {!isConfirmed && !loading && plot && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>

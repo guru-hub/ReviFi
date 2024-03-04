@@ -125,7 +125,7 @@ const FinMetrics = () => {
           </p>
         </Alert>
       }
-    </div >
+    </div>
   );
 };
 

@@ -77,7 +77,6 @@ const TestFin = () => {
             <Plot
                 data={plotData.data}
                 layout={plotData.layout}
-
             />
         </div>
     );
