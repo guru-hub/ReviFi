@@ -35,6 +35,14 @@ export const MetamaskContextProvider = ({ children }) => {
             method: 'eth_getBalance', params: [accounts[0], "latest"]
         }));
         const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+        // Make sure that User is on Sepolia Network
+        console.log(chainId);
+        if (chainId != "0xaa36a7") {
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: '0xaa36a7' }]
+            });
+        }
         setWallet({ accounts: accounts[0], balance, chainId });
     }, [])
 

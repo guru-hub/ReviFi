@@ -9,7 +9,7 @@ import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
 
 const HistoricalPerformance = () => {
-  const [plot, setPlot] = useState(null); // Initialize to null
+  const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);

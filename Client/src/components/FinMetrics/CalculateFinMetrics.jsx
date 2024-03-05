@@ -6,8 +6,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Plot from 'react-plotly.js';
 import Alert from '@mui/material/Alert';
 
-
-
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   const [loading, setLoading] = useState(false);
   const cryptoData = useSelector((state) => state.data.crypto);
