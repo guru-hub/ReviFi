@@ -1,61 +1,98 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+
+/**
+ * @title Portfolio Contract
+ * @author ReviFi
+ */
 contract Portfolio {
+
+    error Portfolio__OnlyOwnerAllowed();
+    error Portfolio__SymbolLengthAndAllocationLengthMismatch();
+
+    event AssetAdded(string[] symbol, uint[] allocation);
+    event PortfolioNameUpdated(string newName);
+
     struct Asset {
         string symbol;
-        uint allocation; // Allocation in percentage
+        uint allocation;
     }
 
     Asset[] public assets;
-    uint public initialPortfolioValue;
+    uint public portfolioValue;
     address public owner;
-    string public portfolioName; // Add portfolio name variable
+    string public portfolioName;
 
+    /**
+     * @dev Constructor to create a new portfolio
+     * @param _portfolioName 
+     * @param _portfolioValue 
+     * @param _symbols 
+     * @param _allocations 
+     */
     constructor(
         string memory _portfolioName,
-        uint _initialPortfolioValue,
-        string[] memory symbols,
-        uint[] memory allocations
+        uint _portfolioValue,
+        string[] memory _symbols,
+        uint[] memory _allocations,
+        address _owner
     ) {
-        owner = msg.sender;
-        portfolioName = _portfolioName; // Initialize portfolio name
-        initialPortfolioValue = _initialPortfolioValue; // Example value
-
-        for (uint i = 0; i < symbols.length; i++) {
-            assets.push(Asset(symbols[i], allocations[i]));
+        owner = _owner;
+        portfolioName = _portfolioName;
+        portfolioValue = _portfolioValue;
+        for (uint i = 0; i < _symbols.length; i++) {
+            assets.push(Asset(_symbols[i], _allocations[i]));
         }
     }
 
+    /**
+     * @dev Modifier to check if the caller is the owner of the contract
+     */
+    modifier onlyOwner {
+        if(msg.sender != owner) {
+            revert Portfolio__OnlyOwnerAllowed();
+        }
+        _;
+    }
+
+    /**
+     * @dev Function to add multiple assets to the portfolio
+     * @param _symbols 
+     * @param _allocations 
+     */
     function addMultipleAssets(
-        string[] memory symbols,
-        uint[] memory allocations
-    ) public {
-        require(msg.sender == owner, "Only the owner can add assets.");
-        require(
-            symbols.length == allocations.length,
-            "Symbols and allocations length must match."
-        );
-
-        for (uint i = 0; i < symbols.length; i++) {
-            assets.push(Asset(symbols[i], allocations[i]));
+        string[] memory _symbols,
+        uint[] memory _allocations
+    ) public onlyOwner {
+        if(_symbols.length != _allocations.length) {
+            revert Portfolio__SymbolLengthAndAllocationLengthMismatch();
         }
+
+        for (uint i = 0; i < _symbols.length; i++) {
+            assets.push(Asset(_symbols[i], _allocations[i]));
+        }
+        emit AssetAdded(_symbols, _allocations);
     }
 
-    // Function to update portfolio name
-    function updatePortfolioName(string memory _newName) public {
-        require(
-            msg.sender == owner,
-            "Only the owner can change the portfolio name."
-        );
+    /**
+     * @dev Function to update the name of the portfolio
+     * @param _newName
+     */
+    function updatePortfolioName(string memory _newName) public onlyOwner {
         portfolioName = _newName;
+        emit PortfolioNameUpdated(_newName);
     }
 
+    /**
+     * @dev Function to get the details of the portfolio
+     * @return (Portfolio Name, Initial Portfolio Value, Assets)
+     */
     function getPortfolioDetails()
         public
         view
         returns (string memory, uint, Asset[] memory)
     {
-        return (portfolioName, initialPortfolioValue, assets);
+        return (portfolioName, portfolioValue, assets);
     }
 }
