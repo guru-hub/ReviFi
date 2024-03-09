@@ -2,10 +2,10 @@
 pragma solidity ^0.8.24;
 
 
-// /**
-//  * @title Portfolio Contract
-//  * @author ReviFi
-//  */
+/**
+ * @title Portfolio Contract
+ * @author ReviFi
+ */
 contract Portfolio {
 
     error Portfolio__OnlyOwnerAllowed();
@@ -21,13 +21,13 @@ contract Portfolio {
     address public owner;
     string public portfolioName;
 
-    // /**
-    //  * @dev Constructor to create a new portfolio
-    //  * @param _portfolioName 
-    //  * @param _portfolioValue 
-    //  * @param _symbols 
-    //  * @param _allocations 
-    //  */
+    /**
+     * @dev Constructor to create a new portfolio
+     * @param _portfolioName Name of the portfolio
+     * @param _portfolioValue Value of the portfolio
+     * @param _symbols Symbols of the CryptoCurrencies i.e BTC, ETH, etc
+     * @param _allocations Allocation of the CryptoCurrencies in the portfolio
+     */
     constructor(
         string memory _portfolioName,
         uint _portfolioValue,
@@ -43,9 +43,9 @@ contract Portfolio {
         }
     }
 
-    // /**
-    //  * @dev Modifier to check if the caller is the owner of the contract
-    //  */
+    /**
+     * @dev Modifier to check if the caller is the owner of the contract
+     */
     modifier onlyOwner(address _owner) {
         if(_owner != owner) {
             revert Portfolio__OnlyOwnerAllowed();
@@ -53,16 +53,16 @@ contract Portfolio {
         _;
     }
 
-    // /**
-    //  * @dev Function to add multiple assets to the portfolio
-    //  * @param _symbols 
-    //  * @param _allocations 
-    //  */
+    /**
+     * @dev Function to add multiple assets to the portfolio
+     * @param _symbols Symbols of the CryptoCurrencies i.e BTC, ETH, etc
+     * @param _allocations Allocations of the CryptoCurrencies in the portfolio
+     */
     function updateAssets(
         string[] memory _symbols,
         uint[] memory _allocations,
         address _owner
-    ) public onlyOwner(_owner) {
+    ) external onlyOwner(_owner) {
         if(_symbols.length != _allocations.length) {
             revert Portfolio__SymbolLengthAndAllocationLengthMismatch();
         }
@@ -72,20 +72,29 @@ contract Portfolio {
         }
     }
 
-    // /**
-    //  * @dev Function to update the name of the portfolio
-    //  * @param _newName
-    //  */
-    function updatePortfolioName(string memory _newName, address _owner) public onlyOwner(_owner) {
+    /**
+     * @dev Function to update the value of the portfolio
+     * @param _portfolioValue New value of the portfolio
+     * @param _owner The owner of the portfolio
+     */
+    function updatePortfolioValue(uint _portfolioValue, address _owner) external onlyOwner(_owner) {
+        portfolioValue = _portfolioValue;
+    }
+
+    /**
+     * @dev Function to update the name of the portfolio
+     * @param _newName New name of the portfolio
+     */
+    function updatePortfolioName(string memory _newName, address _owner) external onlyOwner(_owner) {
         portfolioName = _newName;
     }
 
-    // /**
-    //  * @dev Function to get the details of the portfolio
-    //  * @return (Portfolio Name, Initial Portfolio Value, Assets)
-    //  */
+    /**
+     * @dev Function to get the details of the portfolio
+     * @return (Portfolio Name, Initial Portfolio Value, Assets)
+     */
     function getPortfolioDetails()
-        public
+        external
         view
         returns (string memory, uint, Asset[] memory)
     {

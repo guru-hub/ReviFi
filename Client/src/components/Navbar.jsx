@@ -20,7 +20,7 @@ const pages = ['Products', 'Staking', 'Governance'];
 const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi networks', 'Analysis'];
 
 function ResponsiveAppBar() {
-  const { wallet, hasProvider, isConnecting, connectMetaMask } = useMetaMask();
+  const { wallet, hasProvider, isConnecting, connectMetaMask, PortfolioFactoryEngineContract } = useMetaMask();
   const location = useLocation();
   const [, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);

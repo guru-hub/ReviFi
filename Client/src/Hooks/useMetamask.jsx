@@ -2,11 +2,12 @@ import {
     useState,
     useEffect,
     createContext,
-    PropsWithChildren,
     useContext,
     useCallback,
 } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
+import PortfolioFactoryEngineABI from "../abi/PortfolioFactoryEngine.sol/PortfolioFactoryEngine.json";
+import { ethers } from "ethers";
 
 const disConnectedState = {
     accounts: "",
@@ -24,6 +25,7 @@ export const MetamaskContextProvider = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState("");
     const clearError = () => setErrorMessage("");
     const [wallet, setWallet] = useState(disConnectedState);
+    const [PortfolioFactoryEngineContract, setPortfolioFactoryEngineContract] = useState(null);
 
     const _updateWallet = useCallback(async (providedAccounts) => {
         const accounts = providedAccounts || await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -44,6 +46,7 @@ export const MetamaskContextProvider = ({ children }) => {
             });
         }
         setWallet({ accounts: accounts[0], balance, chainId });
+        setPortfolioFactoryEngineContract(new ethers.Contract(PortfolioFactoryEngineABI.address, PortfolioFactoryEngineABI.abi, new ethers.providers.Web3Provider(window.ethereum).getSigner()));
     }, [])
 
     const updateWalletAndAccounts = useCallback(
@@ -98,7 +101,8 @@ export const MetamaskContextProvider = ({ children }) => {
             errorMessage,
             isConnecting,
             connectMetamask,
-            clearError
+            clearError,
+            PortfolioFactoryEngineContract
         }}>
             {children}
         </MetamaskContext.Provider>
