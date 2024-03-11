@@ -10,9 +10,7 @@ import "./Portfolio.sol";
 contract PortfolioFactoryEngine {
 
     event NewPortfolioCreated(address portfolioAddress);
-    event AssetsUpdated(string[] symbol, uint[] allocation);
-    event PortfolioNameUpdated(string newName);
-    event PortfolioValueUpdated(uint newValue);
+    event PortfolioUpdated(string[] symbol, uint[] allocation, uint256 newValue, string newName);
 
     error PortfolioFactoryEngine__NoPortfolioFound();
 
@@ -42,47 +40,26 @@ contract PortfolioFactoryEngine {
         return address(newPortfolio);
     }
 
-
     /**
-     * @dev Function to update the portfolio Assets
+     * @dev Function to update the portfolio Assets, Name and Value
      * @param _symbols Symbols of the CryptoCurrencies i.e BTC, ETH, etc
      * @param _allocations Allocation of the CryptoCurrencies in the portfolio
+     * @param _newName New name of the portfolio
+     * @param _newValue New value of the portfolio
      */
     function updatePortfolio(
         string[] memory _symbols,
-        uint[] memory _allocations
+        uint[] memory _allocations,
+        string memory _newName,
+        uint256 _newValue
         ) external {
         if(userToPortfolio[msg.sender]==address(0)){
             revert PortfolioFactoryEngine__NoPortfolioFound();
         }
         Portfolio portfolioContract = Portfolio(userToPortfolio[msg.sender]);
-        portfolioContract.updateAssets(_symbols, _allocations, msg.sender);
+        portfolioContract.updateAssets(_symbols, _allocations, _newValue, _newName, msg.sender);
         userToNoOfTransactions[msg.sender] += 1;
-        emit AssetsUpdated(_symbols, _allocations);
-    }
-
-    /**
-     * @dev Function to update the portfolio Name
-     * @param _newName New Name of the Portfolio
-     */
-    function updatePortfolioName(string memory _newName) external {
-        if(userToPortfolio[msg.sender]==address(0)){
-            revert PortfolioFactoryEngine__NoPortfolioFound();
-        }
-        Portfolio portfolioContract = Portfolio(userToPortfolio[msg.sender]);
-        portfolioContract.updatePortfolioName(_newName, msg.sender);
-        userToNoOfTransactions[msg.sender] += 1;
-        emit PortfolioNameUpdated(_newName);
-    }
-
-    function updatePortfolioValue(uint _newValue) external {
-        if(userToPortfolio[msg.sender]==address(0)){
-            revert PortfolioFactoryEngine__NoPortfolioFound();
-        }
-        Portfolio portfolioContract = Portfolio(userToPortfolio[msg.sender]);
-        portfolioContract.updatePortfolioValue(_newValue, msg.sender);
-        userToNoOfTransactions[msg.sender] += 1;
-        emit PortfolioValueUpdated(_newValue);
+        emit PortfolioUpdated(_symbols, _allocations, _newValue, _newName);
     }
 
     /**

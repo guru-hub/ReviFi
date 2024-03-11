@@ -61,6 +61,8 @@ contract Portfolio {
     function updateAssets(
         string[] memory _symbols,
         uint[] memory _allocations,
+        uint256 _portfolioValue,
+        string memory _newName,
         address _owner
     ) external onlyOwner(_owner) {
         if(_symbols.length != _allocations.length) {
@@ -70,22 +72,7 @@ contract Portfolio {
         for (uint i = 0; i < _symbols.length; i++) {
             assets.push(Asset(_symbols[i], _allocations[i]));
         }
-    }
-
-    /**
-     * @dev Function to update the value of the portfolio
-     * @param _portfolioValue New value of the portfolio
-     * @param _owner The owner of the portfolio
-     */
-    function updatePortfolioValue(uint _portfolioValue, address _owner) external onlyOwner(_owner) {
         portfolioValue = _portfolioValue;
-    }
-
-    /**
-     * @dev Function to update the name of the portfolio
-     * @param _newName New name of the portfolio
-     */
-    function updatePortfolioName(string memory _newName, address _owner) external onlyOwner(_owner) {
         portfolioName = _newName;
     }
 
