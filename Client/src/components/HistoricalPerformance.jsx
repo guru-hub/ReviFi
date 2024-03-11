@@ -7,11 +7,12 @@ import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
+import { useMetaMask } from "../Hooks/useMetamask";
 
 const HistoricalPerformance = () => {
+  const { hasPortfolio, crypto } = useMetaMask();
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
-  const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const cryptoData = useSelector((state) => state.data.crypto);
   const [loading, setLoading] = useState(false);
   const totalValue = useSelector((state) => state.data.totalValue);
@@ -65,28 +66,29 @@ const HistoricalPerformance = () => {
   useEffect(() => {
     // if (isConfirmed == true) {
     setLoading(true);
-    const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
-    const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
+    const coins = crypto?.map((crypto) => SymbolToId[crypto.asset]);
+    const allocations = crypto?.map((crypto) => crypto.allocation / 100);
     const data = {
       coins,
       allocations,
       initial_portfolio_value: totalValue,
       time_frame: value,
     };
-    console.log(data);
     const devServer = "http://localhost:5000/historical_performance"
     const prodServer = "https://api.revifi.xyz/historical_performance"
-    axios.post(prodServer, data)
-      .then(response => {
-        const plotData = JSON.parse(response.data.graph);
-        setPlot({
-          data: plotData.data,
-          layout: plotData.layout
-        });
-        setInitialValue(response.data._value);
-      })
+    // if (cryptoData) {
+      axios.post(prodServer, data)
+        .then(response => {
+          const plotData = JSON.parse(response.data.graph);
+          setPlot({
+            data: plotData.data,
+            layout: plotData.layout
+          });
+          setInitialValue(response.data._value);
+        })
+    // }
     setLoading(false);
-  }, [value, totalValue, cryptoData])
+  }, [value, totalValue, crypto])
 
 
   const handleChange = (event, newValue) => {
@@ -116,7 +118,7 @@ const HistoricalPerformance = () => {
             value={value}
             onChange={handleChange}
             aria-label="secondary tabs example"
-            sx={{ width: '34rem', border: '1px solid black', backgroundColor: 'white', "& button.Mui-selected": { background: "linear-gradient(#0047AA, #0085B6)", color: 'white' } }}
+            sx={{ width: 'auto', border: '1px solid black', backgroundColor: 'white', "& button.Mui-selected": { background: "linear-gradient(#0047AA, #0085B6)", color: 'white' } }}
             className='rounded-md'
             TabIndicatorProps={{ style: { background: 'linear-gradient(#0047AA, #0085B6)' } }}
           >
@@ -136,7 +138,7 @@ const HistoricalPerformance = () => {
               <CircularProgress />
             </div>
           ) : (
-            <div className={`${!isConfirmed ? 'blur-md' : 'blur-none'}`}>
+            <div className={`${!hasPortfolio ? 'blur-md' : 'blur-none'}`}>
               <Plot
                 config={{ displayModeBar: false, responsive: true }}
                 data={plot?.data}
@@ -146,7 +148,7 @@ const HistoricalPerformance = () => {
             </div>
           )}
       </div>
-      {!isConfirmed && !loading && plot && (
+      {!hasPortfolio && !loading && plot && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis

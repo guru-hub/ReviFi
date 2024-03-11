@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import Staking from './pages/Staking'
 import Governance from './pages/Governance'
 import Products from './pages/Products'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -16,6 +18,9 @@ function App() {
         <Route path='/governance' element={<Governance />} />
         <Route path='/products' element={<Products />} />
       </Routes>
+      <div>
+        <ToastContainer />
+      </div>
     </>
   )
 }

@@ -1,13 +1,10 @@
-import {
-    useState,
-    useEffect,
-    createContext,
-    useContext,
-    useCallback,
-} from "react";
+import React, { useState, useEffect, createContext, useContext, useCallback } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
 import PortfolioFactoryEngineABI from "../abi/PortfolioFactoryEngine.sol/PortfolioFactoryEngine.json";
 import { ethers } from "ethers";
+import { initializeCrypto } from "../store/slices/dataSlice";
+import { useDispatch } from "react-redux";
+import { formatBalance } from "../utils/utils";
 
 const disConnectedState = {
     accounts: "",
@@ -15,7 +12,12 @@ const disConnectedState = {
     chainId: ""
 }
 
-import { formatBalance } from "../utils/utils";
+const initialData = [
+    { asset: "BTC", allocation: 25, allocatedValue: 0 },
+    { asset: "ETH", allocation: 25, allocatedValue: 0 },
+    { asset: "BNB", allocation: 25, allocatedValue: 0 },
+    { asset: "USDT", allocation: 25, allocatedValue: 0 },
+]
 
 const MetamaskContext = createContext(null);
 
@@ -25,59 +27,62 @@ export const MetamaskContextProvider = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState("");
     const clearError = () => setErrorMessage("");
     const [wallet, setWallet] = useState(disConnectedState);
+    const [crypto, setCrypto] = useState([]);
+    const [name, setName] = useState("");
     const [PortfolioFactoryEngineContract, setPortfolioFactoryEngineContract] = useState(null);
+    const [portfolioValue, setPortfolioValue] = useState(0);
+    const [hasPortfolio, setHasPortfolio] = useState(false);
+    const dispatch = useDispatch();
 
-    const _updateWallet = useCallback(async (providedAccounts) => {
-        const accounts = providedAccounts || await window.ethereum.request({ method: "eth_requestAccounts" });
-        if (accounts.length === 0) {
-            setWallet(disConnectedState);
-            return;
-        }
-        const balance = formatBalance(await window.ethereum.request({
-            method: 'eth_getBalance', params: [accounts[0], "latest"]
-        }));
-        const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-        // Make sure that User is on Sepolia Network
-        console.log(chainId);
-        if (chainId != "0xaa36a7") {
-            await window.ethereum.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0xaa36a7' }]
-            });
-        }
-        setWallet({ accounts: accounts[0], balance, chainId });
-        setPortfolioFactoryEngineContract(new ethers.Contract(PortfolioFactoryEngineABI.address, PortfolioFactoryEngineABI.abi, new ethers.providers.Web3Provider(window.ethereum).getSigner()));
-    }, [])
-
-    const updateWalletAndAccounts = useCallback(
-        () => {
-            _updateWallet();
-        },
-        [_updateWallet]
-    );
-
-    const updateWallet = useCallback(
-        (accounts) => _updateWallet(accounts),
-        [_updateWallet]
-    )
-
-    useEffect(() => {
-        console.log("Detecting Metamask Provider");
-        const getProvider = async () => {
-            const provider = await detectEthereumProvider({ silent: true });
-            setHasProvider(Boolean(provider));
-            if (provider) {
-                updateWalletAndAccounts();
-                window.ethereum.on("accountsChanged", updateWallet);
-                window.ethereum.on("chainChanged", updateWalletAndAccounts);
+    const updateWalletAndAccounts = useCallback(async () => {
+        try {
+            const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+            if (accounts.length === 0) {
+                setWallet(disConnectedState);
+                return;
             }
+    
+            const balance = formatBalance(await window.ethereum.request({
+                method: 'eth_getBalance', params: [accounts[0], "latest"]
+            }));
+    
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+            if (chainId !== "0xaa36a7") {
+                await window.ethereum.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0xaa36a7' }]
+                });
+            }
+    
+            setWallet({ accounts: accounts[0], balance, chainId });
+            let PortfolioFactoryEngine = new ethers.Contract(PortfolioFactoryEngineABI.address, PortfolioFactoryEngineABI.abi, new ethers.providers.Web3Provider(window.ethereum).getSigner());
+            setPortfolioFactoryEngineContract(PortfolioFactoryEngine);
+            const hasPortfolioC = await PortfolioFactoryEngine.hasPortfolio();
+            setHasPortfolio(hasPortfolioC);
+    
+            let updatedCrypto = [];
+            if (hasPortfolioC) {
+                const assets = await PortfolioFactoryEngine.getUserPortfolioAssets();
+                setPortfolioValue(parseFloat(assets[1]));
+                updatedCrypto = assets[2].map((asset) => ({
+                    asset: asset[0],
+                    allocation: parseFloat(asset[1]),
+                    allocatedValue: (parseFloat(asset[1]) / 100) * parseFloat(assets[1])
+                }));
+                setName(assets[0]);
+            } else {
+                updatedCrypto = initialData;
+            }
+    
+            setCrypto(updatedCrypto);
+    
+            dispatch(initializeCrypto(updatedCrypto));
+        } catch (error) {
+            console.error("Error updating wallet and accounts:", error);
+            setErrorMessage(error.message);
         }
-        getProvider();
-        return () => {
-            window.ethereum?.removeListener("accountsChanged", updateWallet);
-            window.ethereum?.removeListener("chainChanged", updateWalletAndAccounts);
-        }
-    }, [updateWallet, updateWalletAndAccounts]);
+    }, []);
+    
 
     const connectMetamask = async () => {
         setIsConnecting(true);
@@ -85,13 +90,31 @@ export const MetamaskContextProvider = ({ children }) => {
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
             clearError();
-            updateWallet(accounts);
+            updateWalletAndAccounts(accounts);
         } catch (error) {
+            console.error("Error connecting Metamask:", error);
             setErrorMessage(error.message);
         } finally {
             setIsConnecting(false);
         }
     }
+
+    useEffect(() => {
+        const getProvider = async () => {
+            const provider = await detectEthereumProvider({ silent: true });
+            setHasProvider(Boolean(provider));
+            if (provider) {
+                updateWalletAndAccounts();
+                window.ethereum.on("accountsChanged", updateWalletAndAccounts);
+                window.ethereum.on("chainChanged", updateWalletAndAccounts);
+            }
+        }
+        getProvider();
+        return () => {
+            window.ethereum?.removeListener("accountsChanged", updateWalletAndAccounts);
+            window.ethereum?.removeListener("chainChanged", updateWalletAndAccounts);
+        }
+    }, [updateWalletAndAccounts]);
 
     return (
         <MetamaskContext.Provider value={{
@@ -102,7 +125,11 @@ export const MetamaskContextProvider = ({ children }) => {
             isConnecting,
             connectMetamask,
             clearError,
-            PortfolioFactoryEngineContract
+            PortfolioFactoryEngineContract,
+            crypto,
+            setCrypto,
+            portfolioValue,
+            hasPortfolio
         }}>
             {children}
         </MetamaskContext.Provider>
@@ -112,7 +139,7 @@ export const MetamaskContextProvider = ({ children }) => {
 export const useMetaMask = () => {
     const context = useContext(MetamaskContext);
     if (!context) {
-        throw new Error("useMetamask must be used within a MetamaskContextProvider");
+        throw new Error("useMetaMask must be used within a MetamaskContextProvider");
     }
     return context;
 }

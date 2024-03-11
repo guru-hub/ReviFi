@@ -15,8 +15,11 @@ import DOTLogo from "../assets/images/polkadot-new-dot-logo.png";
 import AddIcon from '@mui/icons-material/Add';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useMetaMask } from "../Hooks/useMetamask";
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
+  const { crypto } = useMetaMask();
+  console.log(crypto);
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -41,10 +44,10 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const [newAllocation, setNewAllocation] = useState(editAllocationValue);
   const [editingTotalBalance, setEditingTotalBalance] = useState(false);
   const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
-  const inputRef = useRef(null); // Ref to the input field
+  const inputRef = useRef(null)
 
   const handleConfirm = () => {
-    rows.forEach((crypto) => {
+    rows?.forEach((crypto) => {
       const allocatedValue = (parseFloat(crypto.allocation) / 100) * totalValue;
       dispatch(editCrypto({ ...crypto, allocatedValue }));
     });
@@ -58,7 +61,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     setEditingRow(asset);
     setNewAllocation(allocationValue);
     setEditAllocationValue(allocationValue);
-    console.log("Hello Working?");
     if (inputRef.current) {
       inputRef.current.focus();
     }

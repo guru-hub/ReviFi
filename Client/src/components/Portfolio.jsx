@@ -5,10 +5,10 @@ import { Table } from "./Table";
 import { Modal } from "./Modal/Modal";
 import Alert from '@mui/material/Alert';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { useMetaMask } from "../Hooks/useMetamask";
 const Portfolio = () => {
   const dispatch = useDispatch();
+  const { PortfolioFactoryEngineContract } = useMetaMask();
   const cryptoData = useSelector((state) => state.data.crypto);
   let isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalValue = useSelector((state) => state.data.totalValue);
@@ -17,11 +17,10 @@ const Portfolio = () => {
   const [rowToEdit, setRowToEdit] = useState(null);
 
   useEffect(() => {
-    const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+    const totalAllocation = cryptoData ? cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0) : 0;
     if (totalAllocation === 100 && isConfirmed == true) {
       console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
       dispatch(updateIsConfirm(true));
-      console.log("hello");
     } else if (totalAllocation > 100) {
       toast("Total allocation cannot exceed 100%.")
       dispatch(updateIsConfirm(false));
@@ -30,20 +29,64 @@ const Portfolio = () => {
     }
   }, []);
 
-  const onConfirm = () => {
+  const createPortfolio = async (totalValue, symbols, allocations) => {
+    const loadingToastId = toast.loading("Please wait while we create your portfolio", { position: "top-center" });
+    try {
+      const tx = await PortfolioFactoryEngineContract.createPortfolio("My Portfolio", totalValue, symbols, allocations);
+      await tx.wait();
+      toast.update(loadingToastId, {
+        render: "Your portfolio has been created successfully!",
+        type: "success",
+        position: "top-right",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.dismiss(loadingToastId);
+      toast.error("Transaction cancelled. Portfolio creation failed.");
+    }
+  }
+
+  const updatePortfolio = async (symbols, allocations) => {
+    const loadingToastId = toast.loading("Please wait while we update your portfolio", { position: "top-center" });
+    try {
+      const tx = await PortfolioFactoryEngineContract.updatePortfolio(symbols, allocations);
+      await tx.wait();
+      
+      toast.update(loadingToastId, {
+        render: "Your portfolio has been updated successfully!",
+        type: "success",
+        position: "top-right",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } catch (error) {
+      toast.dismiss(loadingToastId);
+      toast.error("Transaction cancelled. Portfolio update failed.");
+    }
+  }
+
+  const onConfirm = async () => {
+    const hasPortfolio = await PortfolioFactoryEngineContract.hasPortfolio();
     const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+    console.log(hasPortfolio);
+    let symbols = cryptoData.map((crypto) => crypto.asset);
+    let allocations = cryptoData.map((crypto) => +crypto.allocation);
+    console.log(symbols, allocations);
     if (totalAllocation === 100) {
+      hasPortfolio ? updatePortfolio(symbols, allocations) : createPortfolio(totalValue, symbols, allocations)
       console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
       dispatch(updateIsConfirm(true));
     } else if (totalAllocation > 100) {
       toast("Total allocation cannot exceed 100%.")
       dispatch(updateIsConfirm(false));
     } else {
+      toast("Total allocation should be 100%.")
       dispatch(updateIsConfirm(false));
     }
   }
 
-  const remainingAllocation = 100 - cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+  const remainingAllocation = 100 - cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
 
   const handleEditRow = (asset) => {
     const index = cryptoData.findIndex((crypto) => crypto.asset === asset);
@@ -104,11 +147,6 @@ const Portfolio = () => {
         />
       )}
       <div style={{ color: "red", borderRadius: "5px" }}>
-        {
-          <div>
-            <ToastContainer />
-          </div>
-        }
         {remainingAllocation !== 0 && (
           <div className="pb-10" >
             <Alert severity="error">Remaining Allocation: {remainingAllocation.toLocaleString('en-US', {

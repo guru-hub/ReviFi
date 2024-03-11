@@ -3,15 +3,14 @@ import axios from 'axios'
 import { Routes, Route } from 'react-router-dom'
 import Coins from '../Coins/Coins'
 import styles from "./styles.module.css"
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { useMetaMask } from "../../Hooks/useMetamask";
 
 const CryptoPrices = () => {
-
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
-  const crypto = useSelector(state => state.data.crypto)
-  const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalvalue = useSelector((state) => state.data.totalValue);
+  const { hasPortfolio, crypto } = useMetaMask();
 
   const SymbolToId = {
     "BTC": "bitcoin",
@@ -32,7 +31,8 @@ const CryptoPrices = () => {
   useEffect(() => {
     // if (isConfirmed == true) {
     setLoading(true)
-    const assetIds = crypto.map(({ asset }) => SymbolToId[asset]).join('%2C%20');
+    const assetIds = crypto?.map(({ asset }) => SymbolToId[asset]).join('%2C%20');
+    console.log(crypto);
     const dynamicUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${assetIds}&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=7d%2C30d&locale=en`;
     axios.get(dynamicUrl)
       .then((response) => {
@@ -43,7 +43,6 @@ const CryptoPrices = () => {
           allocatedValue: crypto[index].allocatedValue,
         }));
         setCoins(updatedCoins);
-        console.log(updatedCoins);
       })
       .catch((error) => {
         console.log(error);

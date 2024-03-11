@@ -7,11 +7,12 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { useSelector } from 'react-redux';
+import { useMetaMask } from "../../Hooks/useMetamask";
 
 const FinMetrics = () => {
+  const { hasPortfolio } = useMetaMask();
   const [selectedMetric, setSelectedMetric] = useState(null);
   const [varResult, setVarResult] = useState(0);
-  const isConfirmed = useSelector((state) => state.data.isConfirmed);
 
   const metrics = [
     {
@@ -71,7 +72,7 @@ const FinMetrics = () => {
           </Select>
         </FormControl>
       </div>
-      <div className={`${isConfirmed ? 'blur-none' : 'blur-md'}`}>
+      <div className={`${hasPortfolio ? 'blur-none' : 'blur-md'}`}>
         {selectedMetric && (
           <div>
             <ul className={styles.list}>
@@ -118,7 +119,7 @@ const FinMetrics = () => {
         )}
       </div>
       {
-        !isConfirmed &&
+        !hasPortfolio &&
         <Alert severity="info" style={{ margin: '0 auto', backdropFilter: 'none', top: '50%', left: '50%', position: 'absolute', transform: "translate(-50%, -50%)" }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis

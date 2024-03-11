@@ -6,12 +6,7 @@ const dataSlice = createSlice({
     initialState: {
         totalValue: 100000,
         currentTotalAllocation: 100,
-        crypto: [
-            { asset: "BTC", allocation: 25, allocatedValue: 0 },
-            { asset: "ETH", allocation: 25, allocatedValue: 0 },
-            { asset: "BNB", allocation: 25, allocatedValue: 0 },
-            { asset: "USDT", allocation: 25, allocatedValue: 0 },
-        ],
+        crypto: null,
         isConfirmed: false,
     },
     reducers: {
@@ -21,6 +16,9 @@ const dataSlice = createSlice({
                 const allocatedValue = (parseFloat(crypto.allocation) / 100) * state.totalValue;
                 crypto.allocatedValue = allocatedValue;
             });
+        },
+        initializeCrypto: (state, action) => {
+            state.crypto = action.payload;
         },
         addCrypto: (state, action) => {
             let { asset, allocation } = action.payload;
@@ -78,5 +76,5 @@ const dataSlice = createSlice({
     },
 });
 
-export const { addCrypto, removeCrypto, editCrypto, updateInitialValue, updateIsConfirm } = dataSlice.actions;
+export const { addCrypto, removeCrypto, editCrypto, updateInitialValue, updateIsConfirm, initializeCrypto } = dataSlice.actions;
 export default dataSlice.reducer;

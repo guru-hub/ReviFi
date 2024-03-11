@@ -8,11 +8,11 @@ import { Provider } from 'react-redux';
 import { MetamaskContextProvider } from './Hooks/useMetamask.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <MetamaskContextProvider>
-    <Provider store={store}>
+  <Provider store={store}>
+    <MetamaskContextProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </Provider>
-  </MetamaskContextProvider>
+    </MetamaskContextProvider>
+  </Provider>
 )

@@ -5,12 +5,13 @@ import moment from 'moment';
 import CircularProgress from '@mui/material/CircularProgress';
 import Plot from 'react-plotly.js';
 import Alert from '@mui/material/Alert';
+import { useMetaMask } from "../../Hooks/useMetamask";
 
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
+  const { hasPortfolio, crypto } = useMetaMask();
   const [loading, setLoading] = useState(false);
   const cryptoData = useSelector((state) => state.data.crypto);
   const totalValue = useSelector((state) => state.data.totalValue);
-  const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [plot, setPlot] = useState(null);
 
   const layout = {
@@ -68,8 +69,8 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
   useEffect(() => {
     setLoading(true);
     if (metricKey) {
-      const coins = cryptoData.map((crypto) => SymbolToId[crypto.asset]);
-      const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
+      const coins = crypto.map((crypto) => SymbolToId[crypto.asset]);
+      const allocations = crypto.map((crypto) => crypto.allocation / 100);
       const metricURL = MetricToURL[metricKey];
       let endDate = moment(new Date()).subtract(1, 'day').format('YYYY-MM-DD');
       let startDate = moment(endDate).subtract(1, 'year').format('YYYY-MM-DD');
@@ -103,7 +104,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         })
     }
     setLoading(false);
-  }, [metricKey, cryptoData, totalValue, setVarResult, MetricToURL, SymbolToId]);
+  }, [metricKey, crypto, totalValue, setVarResult, MetricToURL, SymbolToId]);
 
   return (
     <div>
@@ -118,7 +119,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
           layout={layout}
         />
       )}
-      {!isConfirmed && !loading && plot && (
+      {!hasPortfolio && !loading && plot && (
         <Alert severity="info" style={{ top: '50%', left: '50%', position: 'absolute', transform: 'translate(-50%, -50%)' }}>
           <p className="font-bold text-[15px] font-serif">
             Please click on confirm allocation to access Analysis

@@ -4,35 +4,37 @@ import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Plot from 'react-plotly.js';
-
-const layout = {
-  width: 500,
-  height: 400,
-  margin: {
-    l: 50,  // Left margin
-    r: 50,  // Right margin
-    t: 50,  // Top margin
-    b: 50,  // Bottom margin
-    pad: 4  // Padding
-  },
-  backgroundColor: '#F6F6F6',
-  plot_bgcolor: "#F6F6F6",
-  paper_bgcolor: "#F6F6F6"
-}
+import { useMetaMask } from "../Hooks/useMetamask";
 
 const PieChart = () => {
-  const cryptoData = useSelector((state) => state.data.crypto);
+  const cryptoData = useSelector((state) => state.data?.crypto);
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [loading, setLoading] = useState(false);
   const [plotData, setPlotData] = useState({});
+  const { hasPortfolio, crypto } = useMetaMask();
+
+  const layout = {
+    width: 500,
+    height: 400,
+    margin: {
+      l: 50,  // Left margin
+      r: 50,  // Right margin
+      t: 50,  // Top margin
+      b: 50,  // Bottom margin
+      pad: 4  // Padding
+    },
+    backgroundColor: '#F6F6F6',
+    plot_bgcolor: "#F6F6F6",
+    paper_bgcolor: "#F6F6F6"
+  }
 
   let apiName = 'https://api.revifi.xyz/generate_pie'
 
   useEffect(() => {
     setLoading(true);
-    const coins = cryptoData.map((crypto) => crypto.asset);
-    const allocations = cryptoData.map((crypto) => crypto.allocation / 100);
+    const coins = crypto?.map((crypto) => crypto.asset);
+    const allocations = crypto?.map((crypto) => crypto.allocation / 100);
     let payload = {
       "coins": coins,
       "allocations": allocations,
@@ -42,7 +44,6 @@ const PieChart = () => {
       .then(response => {
         // console.log(response.data);
         const plotData = JSON.parse(response.data.graph);
-        console.log(plotData);
         setPlotData({
           data: plotData.data,
           layout: plotData.layout
@@ -50,7 +51,7 @@ const PieChart = () => {
       })
       .catch(error => console.error('Error fetching pie chart data:', error));
     setLoading(false);
-  }, [totalValue, cryptoData]);
+  }, [totalValue, crypto]);
 
 
   return (
@@ -60,9 +61,9 @@ const PieChart = () => {
           <CircularProgress />
         </div>
         : <div className="">
-          {plotData &&
+          {
             <div>
-              <div className={`${isConfirmed ? 'blur-none' : 'blur-md'} relative`}>
+              <div className={`${hasPortfolio ? 'blur-none' : 'blur-md'} relative`}>
                 <Plot
                   config={{ displayModeBar: false, responsive: true }}
                   data={plotData.data}
@@ -70,12 +71,12 @@ const PieChart = () => {
                 />
               </div>
               <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                {!isConfirmed && <Alert severity="info">
-                  <p className="font-bold text-[15px] font-serif">Please click on confirm allocation to access Analysis</p>
-                </Alert>}
+                {!hasPortfolio &&
+                  <Alert severity="info">
+                    <p className="font-bold text-[15px] font-serif">Please click on confirm allocation to access Analysis</p>
+                  </Alert>}
               </div>
             </div>
-
           }
         </div>}
     </div>
