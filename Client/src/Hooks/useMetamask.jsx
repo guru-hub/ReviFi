@@ -71,10 +71,10 @@ export const MetamaskContextProvider = ({ children }) => {
                     allocatedValue: (parseFloat(asset[1]) / 100) * parseFloat(assets[1])
                 }));
                 setName(assets[0]);
-                console.log(parseFloat(assets[1]));
                 portfolioValue = parseFloat(assets[1]);
             } else {
                 updatedCrypto = initialData;
+                portfolioValue = 100000;
             }
             setCrypto(updatedCrypto);
             dispatch(initializeCrypto(updatedCrypto));

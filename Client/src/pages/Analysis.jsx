@@ -5,8 +5,8 @@ import CryptoPrices from '../components/CryptoPrices/CryptoPrices'
 import FinMetrics from '../components/FinMetrics/FinMetrics'
 import HistoricalPerformance from '../components/HistoricalPerformance'
 import FuturePerformance from '../components/FuturePerformance'
-import styles from './pages.module.css'
-import { useState } from 'react'
+import styles from './pages.module.css';
+import { useState } from 'react';
 import { useMetaMask } from "../Hooks/useMetamask";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 const Analysis = () => {
   const { hasPortfolio } = useMetaMask();
   const cryptoData = useSelector((state) => state.data.crypto);
-  console.log(cryptoData);
   return (
     (!cryptoData && hasPortfolio) ?
       <div className='flex justify-center'>

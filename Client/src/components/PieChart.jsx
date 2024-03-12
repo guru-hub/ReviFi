@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
@@ -7,12 +7,12 @@ import Plot from 'react-plotly.js';
 import { useMetaMask } from "../Hooks/useMetamask";
 
 const PieChart = () => {
-  const cryptoData = useSelector((state) => state.data?.crypto);
+  const dispatch = useDispatch();
   const totalValue = useSelector((state) => state.data.totalValue);
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [loading, setLoading] = useState(false);
   const [plotData, setPlotData] = useState({});
-  const { hasPortfolio, crypto } = useMetaMask();
+  const { hasPortfolio, crypto, PortfolioFactoryEngineContract, setCrypto } = useMetaMask();
 
   const layout = {
     width: 500,
@@ -22,16 +22,16 @@ const PieChart = () => {
       r: 50,  // Right margin
       t: 50,  // Top margin
       b: 50,  // Bottom margin
-      pad: 4  // Padding
+      pad: 4  // Padding
     },
     backgroundColor: '#F6F6F6',
     plot_bgcolor: "#F6F6F6",
     paper_bgcolor: "#F6F6F6"
   }
 
-  let apiName = 'https://api.revifi.xyz/generate_pie'
+  let apiName = 'https://api.revifi.xyz/generate_pie';
 
-  useEffect(() => {
+  const fetchData = () => {
     setLoading(true);
     const coins = crypto?.map((crypto) => crypto.asset);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
@@ -42,17 +42,47 @@ const PieChart = () => {
     }
     axios.post(apiName, payload)
       .then(response => {
-        // console.log(response.data);
         const plotData = JSON.parse(response.data.graph);
         setPlotData({
           data: plotData.data,
           layout: plotData.layout
         });
       })
-      .catch(error => console.error('Error fetching pie chart data:', error));
-    setLoading(false);
-  }, [totalValue, crypto]);
+      .catch(error => console.error('Error fetching pie chart data:', error))
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
+  const fetchDataFromSolidity = async (symbol, allocation, newValue, newName) => {
+    setLoading(true);
+    const crypto = [];
+    // Add new data to crypto array and dispatch it (Symbol is an array of symbols of crypto i.e ['BTC', 'ETH'], allocation is an array of allocation i.e [50, 50] for each particular symbol)
+    for (let i = 0; i < symbol.length; i++) {
+      crypto.push({ asset: symbol[i], allocation: parseFloat(allocation[i]), allocatedValue: (parseFloat(allocation[i]) / 100) * parseFloat(newValue)});
+    }
+    console.log(crypto);
+    setCrypto(crypto);    
+    fetchData();
+  }
+
+  useEffect(() => {
+    fetchData();
+
+    const handlePortfolioUpdated = (symbol, allocation, newValue, newName) => {
+      console.log(symbol, allocation, newValue, newName);
+      // When PortfolioUpdated event is triggered, fetch new data
+      fetchDataFromSolidity(symbol, allocation, newValue, newName);
+    };
+
+    // Listen to PortfolioUpdated event
+    PortfolioFactoryEngineContract?.on("PortfolioUpdated", handlePortfolioUpdated);
+
+    return () => {
+      // Clean up event listener when component unmounts
+      PortfolioFactoryEngineContract?.removeListener("PortfolioUpdated", handlePortfolioUpdated);
+    };
+  }, [totalValue, crypto]);
 
   return (
     <div style={{ position: 'relative' }}>

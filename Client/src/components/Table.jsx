@@ -19,7 +19,6 @@ import { useMetaMask } from "../Hooks/useMetamask";
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
   const { crypto, portfolioValue } = useMetaMask();
-  console.log(crypto);
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
   const cryptoData = useSelector((state) => state.data.crypto);

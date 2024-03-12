@@ -12,13 +12,16 @@ const Portfolio = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   let isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalValue = useSelector((state) => state.data.totalValue);
-  console.log(totalValue);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [rowToEdit, setRowToEdit] = useState(null);
 
   useEffect(() => {
     const totalAllocation = cryptoData ? cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0) : 0;
+    // console.log(PortfolioFactoryEngineContract.on("PortfolioCreated", (portfolioAddress) => {
+    //   console.log(portfolioAddress);
+    // }))
+    console.log();
     if (totalAllocation === 100 && isConfirmed == true) {
       console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
       dispatch(updateIsConfirm(true));
@@ -62,6 +65,9 @@ const Portfolio = () => {
         isLoading: false,
         autoClose: 3000,
       });
+      PortfolioFactoryEngineContract.on("PortfolioUpdated", (symbol, allocation, newValue, newName) => {
+        console.log(symbol, allocation, newValue, newName);
+      })
     } catch (error) {
       toast.dismiss(loadingToastId);
       console.log(error);
