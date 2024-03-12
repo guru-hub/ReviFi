@@ -64,7 +64,7 @@ const PieChart = () => {
     }
     console.log(crypto);
     setCrypto(crypto);
-    setPortfolioValue(newValue);
+    setPortfolioValue(parseFloat(newValue));
     fetchData();
   }
 
