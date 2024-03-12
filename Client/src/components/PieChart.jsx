@@ -35,11 +35,11 @@ const PieChart = () => {
     setLoading(true);
     const coins = crypto?.map((crypto) => crypto.asset);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
-    console.log(coins, allocations);
+    console.log(coins, allocations, portfolioValue);
     let payload = {
       "coins": coins,
       "allocations": allocations,
-      "initial_portfolio_value": portfolioValue
+      "initial_portfolio_value": parseFloat(portfolioValue)
     }
     axios.post(apiName, payload)
       .then(response => {
