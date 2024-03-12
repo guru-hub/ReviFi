@@ -1,24 +1,23 @@
 .title {
-    font-size: 1.8rem;
-    display: "flex";
-    margin-bottom: 1rem;
-    background: -webkit-linear-gradient(#0047aa, #0085b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  .gradient {
-    background: -webkit-linear-gradient(#0047aa, #0085b6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  font-size: 1.8rem;
+  display: "flex";
+  margin-bottom: 1rem;
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
-  .home-container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 12em;
-    padding-top: 8em;
-    background-image: url("../../assets/images/background.png");
-    background-size: cover;
-  }
+.gradient {
+  background: -webkit-linear-gradient(#0047aa, #0085b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-container {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 12em;
+  padding-top: 8em;
+  background-image: url("../assets/images/background.png");
+  background-size: cover;
+}

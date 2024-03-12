@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 
 const Home = () => {
   return (
-    <div style={{}} className={styles["home-container"]}>
+    <div className={styles["home-container"]}>
       <div className="flex-col w-1/2 h-[400px]">
         <div className="text-black">
           <div style={{ fontSize: '62px', fontWeight: '400' }} >
