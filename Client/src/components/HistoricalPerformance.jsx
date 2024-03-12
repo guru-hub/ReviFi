@@ -68,6 +68,7 @@ const HistoricalPerformance = () => {
     setLoading(true);
     const coins = crypto?.map((crypto) => SymbolToId[crypto.asset]);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
+    console.log(coins, allocations, portfolioValue);
     const data = {
       coins,
       allocations,

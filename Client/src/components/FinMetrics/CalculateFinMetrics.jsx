@@ -8,10 +8,8 @@ import Alert from '@mui/material/Alert';
 import { useMetaMask } from "../../Hooks/useMetamask";
 
 const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
-  const { hasPortfolio, crypto } = useMetaMask();
+  const { hasPortfolio, crypto, portfolioValue } = useMetaMask();
   const [loading, setLoading] = useState(false);
-  const cryptoData = useSelector((state) => state.data.crypto);
-  const totalValue = useSelector((state) => state.data.totalValue);
   const [plot, setPlot] = useState(null);
 
   const layout = {
@@ -85,7 +83,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
       const data = {
         coins,
         allocations,
-        initial_portfolio_value: totalValue,
+        initial_portfolio_value: portfolioValue,
         confidence_level: 0.95,
         start_date: startDate,
         end_date: endDate,
@@ -104,7 +102,7 @@ const CalculateFinMetrics = ({ metricKey, setVarResult }) => {
         })
     }
     setLoading(false);
-  }, [metricKey, crypto, totalValue, setVarResult, MetricToURL, SymbolToId]);
+  }, [metricKey, crypto, portfolioValue, setVarResult, MetricToURL, SymbolToId]);
 
   return (
     <div>

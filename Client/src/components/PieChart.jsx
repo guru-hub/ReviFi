@@ -62,7 +62,6 @@ const PieChart = () => {
     for (let i = 0; i < symbol.length; i++) {
       crypto.push({ asset: symbol[i], allocation: parseFloat(allocation[i]), allocatedValue: (parseFloat(allocation[i]) / 100) * parseFloat(newValue) });
     }
-    console.log(crypto);
     setCrypto(crypto);
     setPortfolioValue(parseFloat(newValue));
     fetchData();

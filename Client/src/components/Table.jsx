@@ -15,10 +15,8 @@ import DOTLogo from "../assets/images/polkadot-new-dot-logo.png";
 import AddIcon from '@mui/icons-material/Add';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useMetaMask } from "../Hooks/useMetamask";
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
-  const { crypto, portfolioValue } = useMetaMask();
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
   const cryptoData = useSelector((state) => state.data.crypto);
