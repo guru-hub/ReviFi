@@ -12,6 +12,7 @@ const Portfolio = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   let isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalValue = useSelector((state) => state.data.totalValue);
+  console.log(totalValue);
 
   const [modalOpen, setModalOpen] = useState(false);
   const [rowToEdit, setRowToEdit] = useState(null);
@@ -43,16 +44,17 @@ const Portfolio = () => {
       });
     } catch (error) {
       toast.dismiss(loadingToastId);
+      console.log(error);
       toast.error("Transaction cancelled. Portfolio creation failed.");
     }
   }
 
-  const updatePortfolio = async (symbols, allocations) => {
+  const updatePortfolio = async (symbols, allocations, totalValue) => {
     const loadingToastId = toast.loading("Please wait while we update your portfolio", { position: "top-center" });
     try {
-      const tx = await PortfolioFactoryEngineContract.updatePortfolio(symbols, allocations);
+      const tx = await PortfolioFactoryEngineContract.updatePortfolio(symbols, allocations, "My Portfolio", parseInt(totalValue));
       await tx.wait();
-      
+
       toast.update(loadingToastId, {
         render: "Your portfolio has been updated successfully!",
         type: "success",
@@ -62,6 +64,7 @@ const Portfolio = () => {
       });
     } catch (error) {
       toast.dismiss(loadingToastId);
+      console.log(error);
       toast.error("Transaction cancelled. Portfolio update failed.");
     }
   }
@@ -72,9 +75,10 @@ const Portfolio = () => {
     console.log(hasPortfolio);
     let symbols = cryptoData.map((crypto) => crypto.asset);
     let allocations = cryptoData.map((crypto) => +crypto.allocation);
+
     console.log(symbols, allocations);
     if (totalAllocation === 100) {
-      hasPortfolio ? updatePortfolio(symbols, allocations) : createPortfolio(totalValue, symbols, allocations)
+      hasPortfolio ? updatePortfolio(symbols, allocations, totalValue) : createPortfolio(totalValue, symbols, allocations)
       console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
       dispatch(updateIsConfirm(true));
     } else if (totalAllocation > 100) {

@@ -38,7 +38,7 @@ const PieChart = () => {
     let payload = {
       "coins": coins,
       "allocations": allocations,
-      "initial_portfolio_value": totalValue
+      "initial_portfolio_value": totalValue ? totalValue : 100000
     }
     axios.post(apiName, payload)
       .then(response => {

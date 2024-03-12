@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useContext, useCallback } fr
 import detectEthereumProvider from "@metamask/detect-provider";
 import PortfolioFactoryEngineABI from "../abi/PortfolioFactoryEngine.sol/PortfolioFactoryEngine.json";
 import { ethers } from "ethers";
-import { initializeCrypto } from "../store/slices/dataSlice";
+import { initializeCrypto, updateInitialValue } from "../store/slices/dataSlice";
 import { useDispatch } from "react-redux";
 import { formatBalance } from "../utils/utils";
 
@@ -30,7 +30,7 @@ export const MetamaskContextProvider = ({ children }) => {
     const [crypto, setCrypto] = useState([]);
     const [name, setName] = useState("");
     const [PortfolioFactoryEngineContract, setPortfolioFactoryEngineContract] = useState(null);
-    const [portfolioValue, setPortfolioValue] = useState(0);
+    const [portfolioValue, setPortfolioValue] = useState(100000);
     const [hasPortfolio, setHasPortfolio] = useState(false);
     const dispatch = useDispatch();
 
@@ -41,11 +41,11 @@ export const MetamaskContextProvider = ({ children }) => {
                 setWallet(disConnectedState);
                 return;
             }
-    
+
             const balance = formatBalance(await window.ethereum.request({
                 method: 'eth_getBalance', params: [accounts[0], "latest"]
             }));
-    
+
             const chainId = await window.ethereum.request({ method: 'eth_chainId' });
             if (chainId !== "0xaa36a7") {
                 await window.ethereum.request({
@@ -53,14 +53,15 @@ export const MetamaskContextProvider = ({ children }) => {
                     params: [{ chainId: '0xaa36a7' }]
                 });
             }
-    
+
             setWallet({ accounts: accounts[0], balance, chainId });
             let PortfolioFactoryEngine = new ethers.Contract(PortfolioFactoryEngineABI.address, PortfolioFactoryEngineABI.abi, new ethers.providers.Web3Provider(window.ethereum).getSigner());
             setPortfolioFactoryEngineContract(PortfolioFactoryEngine);
             const hasPortfolioC = await PortfolioFactoryEngine.hasPortfolio();
             setHasPortfolio(hasPortfolioC);
-    
+
             let updatedCrypto = [];
+            let portfolioValue;
             if (hasPortfolioC) {
                 const assets = await PortfolioFactoryEngine.getUserPortfolioAssets();
                 setPortfolioValue(parseFloat(assets[1]));
@@ -70,19 +71,20 @@ export const MetamaskContextProvider = ({ children }) => {
                     allocatedValue: (parseFloat(asset[1]) / 100) * parseFloat(assets[1])
                 }));
                 setName(assets[0]);
+                console.log(parseFloat(assets[1]));
+                portfolioValue = parseFloat(assets[1]);
             } else {
                 updatedCrypto = initialData;
             }
-    
             setCrypto(updatedCrypto);
-    
             dispatch(initializeCrypto(updatedCrypto));
+            dispatch(updateInitialValue(portfolioValue));
         } catch (error) {
             console.error("Error updating wallet and accounts:", error);
             setErrorMessage(error.message);
         }
     }, []);
-    
+
 
     const connectMetamask = async () => {
         setIsConnecting(true);

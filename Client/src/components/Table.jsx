@@ -18,7 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useMetaMask } from "../Hooks/useMetamask";
 
 export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }) => {
-  const { crypto } = useMetaMask();
+  const { crypto, portfolioValue } = useMetaMask();
   console.log(crypto);
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);

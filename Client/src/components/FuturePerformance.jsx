@@ -10,7 +10,7 @@ import Plot from 'react-plotly.js';
 import { useMetaMask } from "../Hooks/useMetamask";
 
 const FuturePerformance = () => {
-  const { hasPortfolio, crypto } = useMetaMask();
+  const { hasPortfolio, crypto, portfolioValue } = useMetaMask();
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
   const cryptoData = useSelector((state) => state.data.crypto);
@@ -71,7 +71,7 @@ const FuturePerformance = () => {
     const data = {
       coins,
       allocations,
-      initial_portfolio_value: totalValue,
+      initial_portfolio_value: portfolioValue,
       time_frame: value,
     };
     // if(cryptoData){
@@ -87,7 +87,7 @@ const FuturePerformance = () => {
     // }
     setLoading(false);
     // }
-  }, [value, totalValue, crypto])
+  }, [value, portfolioValue, crypto])
 
 
   const handleChange = (event, newValue) => {
@@ -106,7 +106,7 @@ const FuturePerformance = () => {
           </div>
           <div className='flex items-end gap-4'>
             <div className='text-5xl font-bold' >
-              ${totalValue.toLocaleString('en-US', {
+              ${portfolioValue.toLocaleString('en-US', {
                 minimumFractionDigits: 2,
                 maximumFractionDigits: 2
               })}

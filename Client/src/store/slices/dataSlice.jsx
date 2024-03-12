@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const dataSlice = createSlice({
     name: "data",
     initialState: {
-        totalValue: 100000,
+        totalValue: 100,
         currentTotalAllocation: 100,
         crypto: null,
         isConfirmed: false,

@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 const Analysis = () => {
   const { hasPortfolio } = useMetaMask();
   const cryptoData = useSelector((state) => state.data.crypto);
+  console.log(cryptoData);
   return (
     (!cryptoData && hasPortfolio) ?
       <div className='flex justify-center'>
