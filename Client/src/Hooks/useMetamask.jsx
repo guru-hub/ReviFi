@@ -131,7 +131,8 @@ export const MetamaskContextProvider = ({ children }) => {
             crypto,
             setCrypto,
             portfolioValue,
-            hasPortfolio
+            hasPortfolio,
+            setPortfolioValue
         }}>
             {children}
         </MetamaskContext.Provider>

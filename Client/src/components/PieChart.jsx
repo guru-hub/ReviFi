@@ -12,7 +12,7 @@ const PieChart = () => {
   const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [loading, setLoading] = useState(false);
   const [plotData, setPlotData] = useState({});
-  const { hasPortfolio, crypto, PortfolioFactoryEngineContract, setCrypto } = useMetaMask();
+  const { hasPortfolio, crypto, PortfolioFactoryEngineContract, setCrypto, setPortfolioValue, portfolioValue } = useMetaMask();
 
   const layout = {
     width: 500,
@@ -35,10 +35,11 @@ const PieChart = () => {
     setLoading(true);
     const coins = crypto?.map((crypto) => crypto.asset);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
+    console.log(coins, allocations);
     let payload = {
       "coins": coins,
       "allocations": allocations,
-      "initial_portfolio_value": totalValue ? totalValue : 100000
+      "initial_portfolio_value": portfolioValue
     }
     axios.post(apiName, payload)
       .then(response => {
@@ -59,10 +60,11 @@ const PieChart = () => {
     const crypto = [];
     // Add new data to crypto array and dispatch it (Symbol is an array of symbols of crypto i.e ['BTC', 'ETH'], allocation is an array of allocation i.e [50, 50] for each particular symbol)
     for (let i = 0; i < symbol.length; i++) {
-      crypto.push({ asset: symbol[i], allocation: parseFloat(allocation[i]), allocatedValue: (parseFloat(allocation[i]) / 100) * parseFloat(newValue)});
+      crypto.push({ asset: symbol[i], allocation: parseFloat(allocation[i]), allocatedValue: (parseFloat(allocation[i]) / 100) * parseFloat(newValue) });
     }
     console.log(crypto);
-    setCrypto(crypto);    
+    setCrypto(crypto);
+    setPortfolioValue(newValue);
     fetchData();
   }
 
@@ -82,7 +84,7 @@ const PieChart = () => {
       // Clean up event listener when component unmounts
       PortfolioFactoryEngineContract?.removeListener("PortfolioUpdated", handlePortfolioUpdated);
     };
-  }, [totalValue, crypto]);
+  }, [portfolioValue, crypto]);
 
   return (
     <div style={{ position: 'relative' }}>
