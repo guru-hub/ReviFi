@@ -17,6 +17,7 @@
     "@mui/lab": "^5.0.0-alpha.162",
     "@mui/material": "^5.15.4",
     "@reduxjs/toolkit": "^2.0.1",
+    "aws-amplify": "^6.0.20",
     "axios": "^1.6.5",
     "ethers": "^5.7.2",
     "moment": "^2.30.1",
