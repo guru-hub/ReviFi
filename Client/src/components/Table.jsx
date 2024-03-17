@@ -20,9 +20,14 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
   const dispatch = useDispatch();
   const currentTotalAllocation = useSelector((state) => state.data.currentTotalAllocation);
   const cryptoData = useSelector((state) => state.data.crypto);
-  const handleDeleteRow = (asset) => {
-    dispatch(removeCrypto(asset));
-  };
+  const [editingRow, setEditingRow] = useState(null);
+  const [editAllocationValue, setEditAllocationValue] = useState(0);
+  const [newAllocation, setNewAllocation] = useState(editAllocationValue);
+  const [editingTotalBalance, setEditingTotalBalance] = useState(false);
+  const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
+  const [confirmingTransaction, setConfirmingTransaction] = useState(false); // State to track if transaction is in progress
+  const inputRef = useRef(null);
+
   const SymbolLogo = {
     "BTC": <img src={BTCLogo} height={30} width={30}></img>,
     "ETH": <img src={ETHLogo} height={30} width={30}></img>,
@@ -36,23 +41,24 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     "DOT": <img src={DOTLogo} height={30} width={30}></img>,
   }
 
-  const [editingRow, setEditingRow] = useState(null);
-  const [editAllocationValue, setEditAllocationValue] = useState(0);
-  const [newAllocation, setNewAllocation] = useState(editAllocationValue);
-  const [editingTotalBalance, setEditingTotalBalance] = useState(false);
-  const [newTotalBalance, setNewTotalBalance] = useState(totalValue);
-  const inputRef = useRef(null)
-
-  const handleConfirm = () => {
-    rows?.forEach((crypto) => {
-      const allocatedValue = (parseFloat(crypto.allocation) / 100) * totalValue;
-      dispatch(editCrypto({ ...crypto, allocatedValue }));
-    });
+  const handleDeleteRow = (asset) => {
+    dispatch(removeCrypto(asset));
   };
 
-  useEffect(() => {
-    handleConfirm();
-  }, []);
+  const handleConfirm = async () => {
+    try {
+      if (!confirmingTransaction) { // Only proceed if not already confirming
+        setConfirmingTransaction(true); // Set state to indicate transaction is in progress
+        await onConfirm();
+        console.log("Why coming down?");
+      }
+    }
+    catch (err) {
+      console.log(err);
+      toast.error("Transaction failed. Please try again.");
+    }
+    setConfirmingTransaction(false); // Reset state after transaction is complete
+  };
 
   const handleEditClick = (asset, allocationValue) => {
     setEditingRow(asset);
@@ -112,7 +118,6 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
     } else {
       console.error("Invalid total balance input");
     }
-
   };
 
   return (
@@ -198,7 +203,11 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
               maximumFractionDigits: 2
             })}%</td>
             <td className="p-[10px]">
-              <button className="font-sans font-bold text-black p-1 rounded-md w-full" style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={setModalOpenFunc}>
+              <button
+                className="font-sans font-bold text-black p-1 rounded-md w-full"
+                style={{ border: '2px solid #0047aa', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                onClick={setModalOpenFunc}
+              >
                 <div>
                   <AddIcon fontSize="small" />
                 </div>
@@ -209,8 +218,13 @@ export const Table = ({ rows, editRow, totalValue, setModalOpenFunc, onConfirm }
         </tfoot>
       </table>
       <div>
-        <button className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-12 bg-white" style={{ border: '2px solid #0047aa' }} onClick={onConfirm}>
-          Confirm Allocation
+        <button
+          className="font-sans font-bold text-black p-1 rounded-md mt-4 w-full mb-12 bg-white"
+          style={{ border: '2px solid #0047aa' }}
+          onClick={handleConfirm}
+          disabled={confirmingTransaction} // Disable if transaction is in progress
+        >
+          {confirmingTransaction ? "Confirming..." : "Confirm Allocation"}
         </button>
       </div>
     </div>

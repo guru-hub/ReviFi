@@ -20,4 +20,6 @@
   padding-top: 8em;
   background-image: url("../assets/images/background.png");
   background-size: cover;
+  min-height: 100vh;
+  overflow-y: auto;
 }

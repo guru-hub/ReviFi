@@ -88,9 +88,9 @@ export const MetamaskContextProvider = ({ children }) => {
 
     const connectMetamask = async () => {
         setIsConnecting(true);
-
         try {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            console.log("Connected to Metamask:", accounts[0]);
             clearError();
             updateWalletAndAccounts(accounts);
         } catch (error) {

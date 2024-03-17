@@ -12,7 +12,6 @@ const Portfolio = () => {
   const cryptoData = useSelector((state) => state.data.crypto);
   let isConfirmed = useSelector((state) => state.data.isConfirmed);
   const totalValue = useSelector((state) => state.data.totalValue);
-
   const [modalOpen, setModalOpen] = useState(false);
   const [rowToEdit, setRowToEdit] = useState(null);
 
@@ -76,27 +75,60 @@ const Portfolio = () => {
   }
 
   const onConfirm = async () => {
-    const hasPortfolio = await PortfolioFactoryEngineContract.hasPortfolio();
-    const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
-    console.log(hasPortfolio);
-    let symbols = cryptoData.map((crypto) => crypto.asset);
-    let allocations = cryptoData.map((crypto) => +crypto.allocation);
+    return new Promise(async (resolve, reject) => {
+      try {
+        const hasPortfolio = await PortfolioFactoryEngineContract.hasPortfolio();
+        const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+        let symbols = cryptoData.map((crypto) => crypto.asset);
+        let allocations = cryptoData.map((crypto) => +crypto.allocation);
 
-    console.log(symbols, allocations);
-    if (totalAllocation === 100) {
-      hasPortfolio ? updatePortfolio(symbols, allocations, totalValue) : createPortfolio(totalValue, symbols, allocations)
-      console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
-      dispatch(updateIsConfirm(true));
-    } else if (totalAllocation > 100) {
-      toast("Total allocation cannot exceed 100%.")
-      dispatch(updateIsConfirm(false));
-    } else {
-      toast("Total allocation should be 100%.")
-      dispatch(updateIsConfirm(false));
-    }
+        if (totalAllocation === 100) {
+          if (hasPortfolio) {
+            await updatePortfolio(symbols, allocations, totalValue);
+          } else {
+            await createPortfolio(totalValue, symbols, allocations);
+          }
+          console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
+          dispatch(updateIsConfirm(true));
+          resolve("Transaction completed successfully");
+        } else if (totalAllocation > 100) {
+          toast("Total allocation cannot exceed 100%.")
+          dispatch(updateIsConfirm(false));
+          reject("Total allocation cannot exceed 100%");
+        } else {
+          toast("Total allocation should be 100%.")
+          dispatch(updateIsConfirm(false));
+          reject("Total allocation should be 100%");
+        }
+      } catch (error) {
+        console.error("Error in onConfirm:", error);
+        reject(error);
+      }
+    });
+  };
+
+  // const onConfirm = async () => {
+  //   const hasPortfolio = await PortfolioFactoryEngineContract.hasPortfolio();
+  //   const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+  //   let symbols = cryptoData.map((crypto) => crypto.asset);
+  //   let allocations = cryptoData.map((crypto) => +crypto.allocation);
+  //   if (totalAllocation === 100) {
+  //     hasPortfolio ? updatePortfolio(symbols, allocations, totalValue) : createPortfolio(totalValue, symbols, allocations)
+  //     console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
+  //     dispatch(updateIsConfirm(true));
+  //   } else if (totalAllocation > 100) {
+  //     toast("Total allocation cannot exceed 100%.")
+  //     dispatch(updateIsConfirm(false));
+  //   } else {
+  //     toast("Total allocation should be 100%.")
+  //     dispatch(updateIsConfirm(false));
+  //   }
+  // }
+
+  let remainingAllocation = 100 - cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
+  if (isNaN(remainingAllocation)) {
+    remainingAllocation = 100;
   }
-
-  const remainingAllocation = 100 - cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
 
   const handleEditRow = (asset) => {
     const index = cryptoData.findIndex((crypto) => crypto.asset === asset);

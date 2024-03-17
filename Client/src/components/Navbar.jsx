@@ -20,7 +20,7 @@ const pages = ['Products', 'Staking', 'Governance'];
 const settings = ['Automatic Balancing', 'ReviFi Trading', 'ReviFi networks', 'Analysis'];
 
 function ResponsiveAppBar() {
-  const { wallet, hasProvider, isConnecting, connectMetaMask, PortfolioFactoryEngineContract } = useMetaMask();
+  const { wallet, hasProvider, isConnecting, connectMetamask, PortfolioFactoryEngineContract } = useMetaMask();
   const location = useLocation();
   const [, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -179,7 +179,7 @@ function ResponsiveAppBar() {
               </Select>
             </FormControl>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-              <Button sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>
+              <Button onClick={connectMetamask} sx={{ background: 'linear-gradient(#0047aa, #0085b6)', color: '#FFFFFF' }}>
                 {!hasProvider ? "Install Metamask" : (isConnecting ? "Connecting..." : (wallet.accounts.length ? wallet.accounts.slice(0, 6) + "..." + wallet.accounts.slice(-4) : "Connect Metamask"))}
               </Button>
             </div>
