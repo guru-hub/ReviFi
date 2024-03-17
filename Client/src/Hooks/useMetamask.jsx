@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext, useCallback } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
-import PortfolioFactoryEngineABI from "../abi/PortfolioFactoryEngine.sol/PortfolioFactoryEngine.json";
+import PortfolioFactoryEngineABI from "../ABI/PortfolioFactoryEngine.sol/PortfolioFactoryEngine.json";
 import { ethers } from "ethers";
 import { initializeCrypto, updateInitialValue } from "../store/slices/dataSlice";
 import { useDispatch } from "react-redux";
