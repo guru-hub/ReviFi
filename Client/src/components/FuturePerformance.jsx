@@ -13,12 +13,10 @@ const FuturePerformance = () => {
   const { hasPortfolio, crypto, portfolioValue } = useMetaMask();
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
-  const cryptoData = useSelector((state) => state.data.crypto);
   const [loading, setLoading] = useState(false);
   const [initialValue, setInitialValue] = useState(0);
   const devServer = "http://localhost:5000/future_performance"
   const prodServer = "https://api.revifi.xyz/future_performance"
-  const totalValue = useSelector((state) => state.data.totalValue);
 
   const layout = {
     width: 1100,

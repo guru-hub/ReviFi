@@ -7,13 +7,9 @@ import Plot from 'react-plotly.js';
 import { useMetaMask } from "../Hooks/useMetamask";
 
 const PieChart = () => {
-  const dispatch = useDispatch();
-  const totalValue = useSelector((state) => state.data.totalValue);
-  const isConfirmed = useSelector((state) => state.data.isConfirmed);
   const [loading, setLoading] = useState(false);
   const [plotData, setPlotData] = useState({});
   const { hasPortfolio, crypto, PortfolioFactoryEngineContract, setCrypto, setPortfolioValue, portfolioValue } = useMetaMask();
-
   const layout = {
     width: 500,
     height: 400,
@@ -35,7 +31,6 @@ const PieChart = () => {
     setLoading(true);
     const coins = crypto?.map((crypto) => crypto.asset);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
-    console.log(coins, allocations, portfolioValue);
     let payload = {
       "coins": coins,
       "allocations": allocations,
@@ -65,12 +60,11 @@ const PieChart = () => {
     setCrypto(crypto);
     setPortfolioValue(parseFloat(newValue));
     fetchData();
-  },[fetchData, setCrypto, setPortfolioValue]);
+  }, [fetchData, setCrypto, setPortfolioValue]);
 
   useEffect(() => {
     fetchData();
     const handlePortfolioUpdated = (symbol, allocation, newValue, newName) => {
-      console.log(symbol, allocation, newValue, newName);
       // When PortfolioUpdated event is triggered, fetch new data
       fetchDataFromSolidity(symbol, allocation, newValue, newName);
     };

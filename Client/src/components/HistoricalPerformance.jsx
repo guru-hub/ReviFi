@@ -13,7 +13,10 @@ const HistoricalPerformance = () => {
   const { hasPortfolio, crypto, portfolioValue } = useMetaMask();
   const [plot, setPlot] = useState(null);
   const [value, setValue] = useState('1W');
+  const cryptoData = useSelector((state) => state.data.crypto);
   const [loading, setLoading] = useState(false);
+  const totalValue = useSelector((state) => state.data.totalValue);
+  const [initialValue, setInitialValue] = useState(0);
 
   const SymbolToId = {
     "BTC": "BTC",
