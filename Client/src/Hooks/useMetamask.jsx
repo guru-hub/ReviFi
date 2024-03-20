@@ -64,14 +64,15 @@ export const MetamaskContextProvider = ({ children }) => {
             let portfolioValue;
             if (hasPortfolioC) {
                 const assets = await PortfolioFactoryEngine.getUserPortfolioAssets();
-                setPortfolioValue(parseFloat(assets[1]));
+                setPortfolioValue(parseFloat(parseFloat(assets[1])/100));
                 updatedCrypto = assets[2].map((asset) => ({
                     asset: asset[0],
-                    allocation: parseFloat(asset[1]),
-                    allocatedValue: (parseFloat(asset[1]) / 100) * parseFloat(assets[1])
+                    allocation: (parseFloat(parseFloat(asset[1]) / 100)).toFixed(2),
+                    allocatedValue: (parseFloat(asset[1]) / 100) * ((parseFloat(parseFloat(asset[1]) / 100)).toFixed(2))
                 }));
+                console.log(updatedCrypto);
                 setName(assets[0]);
-                portfolioValue = parseFloat(assets[1]);
+                portfolioValue = (parseFloat(parseFloat(assets[1]) / 100)).toFixed(2);
             } else {
                 updatedCrypto = initialData;
                 portfolioValue = 100000;

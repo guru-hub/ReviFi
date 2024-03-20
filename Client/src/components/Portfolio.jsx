@@ -17,9 +17,6 @@ const Portfolio = () => {
 
   useEffect(() => {
     const totalAllocation = cryptoData ? cryptoData?.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0) : 0;
-    // console.log(PortfolioFactoryEngineContract.on("PortfolioCreated", (portfolioAddress) => {
-    //   console.log(portfolioAddress);
-    // }))
     console.log();
     if (totalAllocation === 100 && isConfirmed == true) {
       console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
@@ -80,13 +77,13 @@ const Portfolio = () => {
         const hasPortfolio = await PortfolioFactoryEngineContract.hasPortfolio();
         const totalAllocation = cryptoData.reduce((acc, curr) => acc + parseFloat(curr.allocation), 0);
         let symbols = cryptoData.map((crypto) => crypto.asset);
-        let allocations = cryptoData.map((crypto) => +crypto.allocation);
+        let allocations = cryptoData.map((crypto) => (+crypto.allocation)*100);
 
         if (totalAllocation === 100) {
           if (hasPortfolio) {
-            await updatePortfolio(symbols, allocations, totalValue);
+            await updatePortfolio(symbols, allocations, totalValue*100);
           } else {
-            await createPortfolio(totalValue, symbols, allocations);
+            await createPortfolio(totalValue*100, symbols, allocations);
           }
           console.log("Total Allocation is 100%, update PieChart with:", cryptoData);
           dispatch(updateIsConfirm(true));

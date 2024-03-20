@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -31,7 +31,7 @@ const PieChart = () => {
 
   let apiName = 'https://api.revifi.xyz/generate_pie';
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     const coins = crypto?.map((crypto) => crypto.asset);
     const allocations = crypto?.map((crypto) => crypto.allocation / 100);
@@ -53,9 +53,9 @@ const PieChart = () => {
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, [crypto, portfolioValue, apiName]);
 
-  const fetchDataFromSolidity = async (symbol, allocation, newValue, newName) => {
+  const fetchDataFromSolidity = useCallback(async (symbol, allocation, newValue, newName) => {
     setLoading(true);
     const crypto = [];
     // Add new data to crypto array and dispatch it (Symbol is an array of symbols of crypto i.e ['BTC', 'ETH'], allocation is an array of allocation i.e [50, 50] for each particular symbol)
@@ -65,11 +65,10 @@ const PieChart = () => {
     setCrypto(crypto);
     setPortfolioValue(parseFloat(newValue));
     fetchData();
-  }
+  },[fetchData, setCrypto, setPortfolioValue]);
 
   useEffect(() => {
     fetchData();
-
     const handlePortfolioUpdated = (symbol, allocation, newValue, newName) => {
       console.log(symbol, allocation, newValue, newName);
       // When PortfolioUpdated event is triggered, fetch new data
@@ -83,7 +82,7 @@ const PieChart = () => {
       // Clean up event listener when component unmounts
       PortfolioFactoryEngineContract?.removeListener("PortfolioUpdated", handlePortfolioUpdated);
     };
-  }, [portfolioValue, crypto]);
+  }, [portfolioValue, crypto, PortfolioFactoryEngineContract, fetchData, fetchDataFromSolidity]);
 
   return (
     <div style={{ position: 'relative' }}>
