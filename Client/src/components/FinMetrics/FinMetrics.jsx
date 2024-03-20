@@ -36,7 +36,7 @@ const FinMetrics = () => {
       descriptionStart: 'Average loss beyond the Value at Risk : '
     },
     {
-      name: 'Sharp Ratio',
+      name: 'Sharpe Ratio',
       description: 'The Sharpe Ratio calculates the adjusted return of an investment relative to its risk, offering a measure of risk-adjusted performance. It helps portfolio managers identify investments that provide higher returns for the same level of risk, aiding in the selection of optimal assets for a portfolio',
       descriptionStart: 'Risk-adjusted measure of return : '
     },
@@ -93,7 +93,7 @@ const FinMetrics = () => {
                                       maximumFractionDigits: 2
                                     })}
                                   </span>
-                                  {metric.name !== 'Sharp Ratio' ? '%' : ''}
+                                  {metric.name !== 'Sharpe Ratio' ? '%' : ''}
                                 </td>
                               </div>
                             )}
