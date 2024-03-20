@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import ReviFiLogo from "../assets/images/ReviFiLogo.png"
 import { Link, useLocation } from 'react-router-dom';
-import styles from './components.module.css';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import BSCLogo from '../assets/images/binance-coin-bnb-seeklogo.svg';
@@ -49,11 +48,10 @@ function ResponsiveAppBar() {
   const networks = {
     "BSC": <img height={18} width={18} src={BSCLogo} ></img>,
     "Sepolia": <img height={18} width={18} src={EthLogo} ></img>,
-    // "Metamask": <img height={18} width={18} src={metamaskLogo}></img>,
   }
 
   return (
-    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center', paddingLeft: '10rem', paddingRight: '8rem' }}>
+    <AppBar elevation={0} position="static" style={{ backgroundColor: 'white', color: 'black', display: 'flex', justifyContent: 'center' }} className='px-48'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>
@@ -116,7 +114,7 @@ function ResponsiveAppBar() {
             REVIFI
           </Typography> */}
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '3rem', justifyContent: 'flex-end', paddingRight: '8rem', alignItems: 'center' }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, gap: '3rem', justifyContent: 'flex-end', alignItems: 'center' }}>
             {/* <Button
               // onClick={handleOpenUserMenu}
               sx={{ my: 2, display: 'block' }}
